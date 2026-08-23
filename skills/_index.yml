@@ -1,0 +1,29 @@
+generated: '2026-08-23'
+method: generated
+source: openapi/infoworks-rest-api-v3-openapi.yml
+grounding: >-
+  Every operationId referenced in these skills was verified to exist in
+  openapi/infoworks-rest-api-v3-openapi.yml before the skill was written. Nothing is invented. Where an
+  operation has no operationId in the published contract (e.g. GET /security/authenticate), the skill
+  names the method and path instead.
+skills:
+- name: infoworks-authenticate
+  file: infoworks-authenticate.md
+  description: Mint, use, validate and revoke an Infoworks REST API v3 bearer token.
+  operations: 5
+- name: infoworks-onboard-source
+  file: infoworks-onboard-source.md
+  description: Register a source, rehearse with fetch-tables, back up with config-migration, add tables, crawl metadata and run ingestion.
+  operations: 12
+- name: infoworks-run-workflow
+  file: infoworks-run-workflow.md
+  description: Start, monitor, pause, resume, cancel and version an orchestration workflow, and read run/task logs and lineage.
+  operations: 14
+cross_cutting_rules_embedded:
+- 'No idempotency: never blind-retry a POST; poll for the side effect instead.'
+- 'No rate limits and no 429: back off on 5xx, do not expect a Retry-After.'
+- 'Token TTL 15 minutes: re-mint on IW10004, do not loop.'
+- '406 not 401 for bad credentials on /security/authenticate.'
+- 'Every DELETE is permanent; take a config-migration export first.'
+- 'Error help links point at api.infoworks.io, which does not resolve.'
+- 'GET /prodops/jobs/{job_id}/cancel is a state-changing GET — never prefetch it.'

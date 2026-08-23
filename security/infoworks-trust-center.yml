@@ -1,0 +1,57 @@
+generated: '2026-08-23'
+method: searched
+source: https://trust.uniphore.com/
+url: https://trust.uniphore.com/
+status: 200
+platform: SafeBase
+operator: Uniphore
+attribution_note: >-
+  This is Uniphore's corporate trust center. Uniphore acquired Infoworks in 2024 and sells it as the
+  InfoWorks product; the trust center does not name InfoWorks specifically, so these certifications
+  should be read as the operating company's program covering its products rather than as an
+  Infoworks-scoped attestation.
+access_note: >-
+  A bare curl receives an HTTP 403 Cloudflare interstitial ("Just a moment..."). A browser user-agent
+  reaches the page normally. Treated as live, per the rule that a bot challenge is not a dead pointer.
+certifications:
+- ISO/IEC 27001:2022
+- ISO/IEC 27017:2015
+- ISO/IEC 27018:2019
+- ISO/IEC 27701:2019
+- SOC 2 Type 2
+- PCI DSS v4.0.1
+- NIST CSF
+- CASA Tier 2
+- FIPS 140-2
+- FIPS 140-3
+regulatory:
+- GDPR
+- HIPAA
+- EU AI Act
+secondary_source:
+  url: https://www.uniphore.com/security/
+  status: 200
+  states:
+  - 'ISO/IEC 27001 : 2022'
+  - Payment Card Industry Data Security Standard (PCI DSS) — Level 1 Service Provider
+  - SOC2 TypeII certified
+  - OWASP Top 10 referenced as the application-security framework
+contact: uniphore_trust@uniphore.com
+legal_documents:
+- name: Main Services Agreement
+  url: https://www.uniphore.com/legal/msa/
+  status: 200
+- name: Service Level Agreement
+  url: https://www.uniphore.com/legal/sla/
+  status: 200
+- name: Data Processing Addendum
+  url: https://www.uniphore.com/legal/dpa/
+  status: 200
+- name: AI Terms Addendum
+  url: https://www.uniphore.com/legal/aiterms/
+  status: 200
+- name: Privacy Policy
+  url: https://www.uniphore.com/legal/privacy-policy/
+  status: 200
+- name: Acceptable Use Policy
+  url: https://www.uniphore.com/legal/aup/

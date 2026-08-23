@@ -1,0 +1,183 @@
+generated: '2026-08-23'
+method: derived
+source: openapi/infoworks-rest-api-v3-openapi.yml
+docs: https://docs.infoworks.io/developer-resources/rest-api
+summary: >-
+  Cross-cutting request/response semantics for the Infoworks REST API v3, derived from the published
+  510-operation contract and the REST API chapter of the docs. Idempotency is NOT supported and NOT
+  documented — no Idempotency pointer is emitted for this provider.
+authentication:
+  styles: [http_basic, http_bearer_jwt]
+  token_ttl: 15 minutes (default, configurable)
+  see: authentication/infoworks-authentication.yml
+base_path:
+  prefix: /v3
+  server_template: '{protocol}://{host}:{port}/v3'
+  note: >-
+    Templated on purpose. Infoworks is deployed into the customer's own cloud, so {host} is the
+    customer's deployment, not a vendor host. The spec's defaults (localhost:3001) are the in-cluster
+    service address; the Python SDK README uses https / port 443 for an ingress-fronted deployment.
+pagination:
+  style: offset-limit
+  params:
+  - name: offset
+    in: query
+    default: 0
+    description: Number of items to skip before collecting the result set.
+    operations: 65
+  - name: limit
+    in: query
+    default: 10
+    description: Number of items to return.
+    operations: 67
+  - name: sort_by
+    in: query
+    operations: 67
+  - name: order_by
+    in: query
+    enum: [asc, desc]
+    default: asc
+    operations: 67
+  - name: filter
+    in: query
+    description: Filter results query.
+    operations: 65
+  response_fields:
+    - limit
+    - offset
+    - links.base
+    - links.self
+  note: >-
+    List responses echo limit/offset and carry a `links` object with `base` and `self` URIs. There is
+    no cursor and no total-count field in the envelope, so an agent cannot know when it has reached the
+    end without an empty page.
+field_selection:
+  supported: partial
+  mechanisms:
+  - 'resolve_ref (query, 14 operations) — expands referenced entities inline.'
+  - 'selected_keys (query, 2 operations) — restricts returned keys.'
+  - 'fetch_all (query, 2 operations) — bypasses pagination.'
+idempotency:
+  documented: false
+  header: null
+  evidence: >-
+    Zero matches for "idempoten" anywhere in the 4.4 MB contract, and no Idempotency-Key parameter on
+    any of the 510 operations. The write surface includes non-idempotent POSTs that start real,
+    billable compute — POST /sources/{source_id}/jobs, POST /domains/{domain_id}/workflows/{workflow_id}/start,
+    POST /sources/{source_id}/tables/{table_id}/segmentation/start.
+  agent_risk: >-
+    An agent that retries POST /domains/{domain_id}/workflows/{workflow_id}/start after a timeout can
+    launch a second workflow run against the same data, with no replay key to deduplicate it. There is
+    no safe retry primitive on this API.
+  pointer_basis: >-
+    NO `Idempotency` pointer is emitted in apis.yml. The agent-readiness idempotency dimension is a
+    genuine zero for Infoworks, not a missing pointer.
+dry_run_mode:
+  supported: partial
+  evidence: >-
+    Not a general dry-run, but several preview/validation surfaces exist that let an agent rehearse
+    before committing: GET .../topic-mappings/{id}/preview, GET .../file-mappings/{id}/preview,
+    GET .../crawl-schema, GET .../table-schema, POST /sources/{source_id}/fetch-tables (lists tables
+    without adding them) and a two-operation "Validation" tag.
+  documented: false
+reversibility:
+  grade: documented
+  basis: >-
+    Reversal operations exist and are named in the contract, and several are explicit "cancel" verbs
+    rather than deletes. NO time window is stated anywhere in the docs or the spec for any of them, so
+    this grades `documented` (reversal path present) and not `verified` (path + stated window). No
+    window is asserted here because none is published — inventing one would be the most expensive
+    error available in this artifact.
+  window_documented: false
+  surfaces:
+  - operation: cancelWorkflowRun
+    method: POST
+    path: /domains/{domain_id}/workflows/{workflow_id}/runs/{workflow_run_id}/cancel
+    reverses: startWorkflow (POST /domains/{domain_id}/workflows/{workflow_id}/start)
+    window: not stated
+    note: Cancels an in-flight run. Work already committed to the target warehouse is not rolled back.
+  - operation: restartWorkflowRun
+    method: POST
+    path: /domains/{domain_id}/workflows/{workflow_id}/runs/{workflow_run_id}/restart
+    reverses: 'n/a — re-drive, not undo'
+    window: not stated
+  - operation: pauseWorkflow / resumeWorkflow
+    method: POST
+    path: /domains/{domain_id}/workflows/{workflow_id}/pause | /resume
+    reverses: each other
+    window: not stated
+  - operation: cancelJobByIdForProdOps
+    method: GET
+    path: /prodops/jobs/{job_id}/cancel
+    reverses: createJobForSource (POST /sources/{source_id}/jobs)
+    window: not stated
+    note: A cancel exposed as GET — not safe for an agent that prefetches or retries GETs.
+  - operation: cancelSegmentation
+    method: POST
+    path: /sources/{source_id}/tables/{table_id}/segmentation/cancel
+    reverses: startSegmentation
+    window: not stated
+  - operation: cancelMultipleWorkflowRuns / resumeMultipleWorkflows
+    method: POST
+    path: /admin/workflows/cancel | /admin/workflows/resume
+    reverses: bulk workflow execution
+    window: not stated
+  - operation: unlockEntities / unlockEntity
+    method: POST
+    path: /admin/unlock-entities | /admin/unlock-entities/{entity_id}
+    reverses: an entity lock left behind by a failed run
+    window: not stated
+  - operation: deleteAuthToken
+    method: DELETE
+    path: /security/token/access
+    reverses: token minting
+    window: not stated
+  - operation: StopStreaming
+    method: POST
+    path: /sources/{source_id}/stop-streaming
+    reverses: streaming ingestion start
+    window: not stated
+  irreversible:
+  - >-
+    Every DELETE in the contract (sources, tables, domains, pipelines, pipeline versions, workflows,
+    workflow versions, users, secrets, secret stores, service auth, environments, custom tags,
+    validation specs) has NO restore, undelete or trash counterpart. There is no soft-delete verb and
+    no retention window documented anywhere.
+  - >-
+    Configuration import/export (config-migration on sources, pipelines and workflows) is the only
+    published way to recover a deleted configuration, and it requires the export to have been taken
+    beforehand.
+  agent_guidance: >-
+    Treat every DELETE on this API as permanent. Before any destructive call, take a configuration
+    export via GET .../config-migration; that export is the only reversal path the provider publishes.
+versioning:
+  scheme: path
+  current: v3
+  note: >-
+    The API version (v3) is independent of the product version (6.2.x). The docs carry 25 published
+    product versions, each with its own copy of the same v3 reference.
+  see: lifecycle/infoworks-lifecycle.yml
+error_envelope:
+  format: proprietary
+  fields: [message, details, iw_code, help]
+  rfc9457: false
+  see: errors/infoworks-problem-types.yml
+rate_limit_signaling:
+  documented: false
+  headers: []
+  status_on_exhaustion: not declared
+  note: >-
+    No RateLimit-*, X-RateLimit-*, or Retry-After header appears in the contract, and no 429 response
+    is declared on any operation. See rate-limits/infoworks-rate-limits.yml.
+request_tracing:
+  documented: false
+  note: >-
+    No request-id or correlation-id header is documented or declared in the contract. Job- and
+    workflow-scoped log endpoints (GET /admin/jobs/{job_id}/logs, GET .../runs/{run_id}/tasks/{task_id}/logs)
+    are the published diagnostic path instead.
+content_types:
+  request: [application/json, multipart/form-data]
+  response: [application/json, text/plain]
+  note: >-
+    multipart/form-data is used for extension uploads (job hooks, pipeline extensions, source
+    extensions); log endpoints stream text.

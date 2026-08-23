@@ -1,0 +1,108 @@
+generated: '2026-08-23'
+method: derived
+source: openapi/infoworks-rest-api-v3-openapi.yml
+docs: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+format: proprietary
+summary: >-
+  Infoworks does NOT use RFC 9457 problem+json. Every error is application/json carrying a proprietary
+  envelope with a stable Infoworks error code (`iw_code`, form IW#####) and a `help` deep link. The
+  envelope is consistent across all 510 operations, which makes it machine-parseable — but the help
+  links are dead, so the codes cannot be resolved to remediation by anyone outside the product.
+envelope:
+  media_type: application/json
+  fields:
+  - name: message
+    type: string
+    note: Human-readable summary. Frequently the literal placeholder "Something went wrong" in the spec examples.
+  - name: details
+    type: object|string
+    note: Free-form. An object on 4xx/5xx generic errors, a string on the 406 authentication failure.
+  - name: iw_code
+    type: string
+    note: Stable Infoworks error code, form IW#####. This is the field to branch on.
+  - name: help
+    type: string (uri)
+    note: 'Deep link of the form http://api.infoworks.io/help/{iw_code}.'
+  example: |
+    {
+      "message": "Something went wrong",
+      "details": {},
+      "iw_code": "IW10006",
+      "help": "http://api.infoworks.io/help/IW10006"
+    }
+help_links:
+  live: false
+  probed: '2026-08-23'
+  probe: http://api.infoworks.io/help/IW10006
+  status: 0
+  note: >-
+    The host api.infoworks.io does not resolve (DNS NXDOMAIN). Every `help` URL the API returns — on
+    every error, on every one of the 510 operations — points at a host that no longer exists. An agent
+    or an integrator that follows the documented remediation link gets nothing. This is the single
+    highest-value fix available to this provider on the error-semantics dimension.
+status_code_coverage:
+  '200': 510
+  '400': 502
+  '401': 502
+  '403': 493
+  '406': 3
+  '500': 502
+  note: >-
+    Coverage is near-total and uniform — 502 of 510 operations declare 400/401/500 and 493 declare 403.
+    No operation declares 429, and there is no rate-limit error class anywhere in the contract.
+problem_types:
+- code: IW1004
+  status: [400, 401, 403, 500]
+  occurrences: 1080
+  title: Generic Infoworks error
+  meaning: >-
+    The most widely used code in the contract; appears as the example value across all four error
+    classes, so it does not by itself identify the failure. Branch on the HTTP status first.
+  remediation: Read `message` and `details`; the code alone is not discriminating.
+- code: IW10002
+  status: [500]
+  occurrences: 734
+  title: Internal server error
+  meaning: Server-side failure inside the Infoworks deployment.
+  remediation: Retry with backoff; collect the job/service logs from the deployment and open a ticket at support.infoworks.io.
+- code: IW10004
+  status: [401, 403]
+  occurrences: 734
+  title: Authorization failure
+  meaning: >-
+    The bearer token is missing, expired, or the user lacks access to the requested resource. Access
+    tokens expire after 15 minutes by default.
+  remediation: Re-mint the JWT via GET /security/authenticate or GET /security/token/access, then retry once.
+- code: IW10005
+  status: [401]
+  occurrences: 716
+  title: Unauthorized
+  meaning: Authentication did not resolve to a valid principal.
+  remediation: Verify the credential; check whether the deployment uses SAML (Basic auth is rejected for SAML users).
+- code: IW10006
+  status: [400]
+  occurrences: 734
+  title: Invalid request body or parameters
+  meaning: 'Spec description: "Request has invalid body or parameters."'
+  remediation: Validate the request against the operation schema before retrying; this is not retryable unchanged.
+- code: IW10029
+  status: [406]
+  occurrences: 3
+  title: Authentication help code
+  meaning: Emitted in the `help` link of the 406 authentication-failure response on the /security operations.
+  remediation: See IW10031.
+- code: IW10031
+  status: [406]
+  occurrences: 3
+  title: 'Security client error — authentication failed'
+  meaning: 'details: "Authentication Failed: Incorrect user credentials".'
+  remediation: >-
+    Fix the credential. Note the unusual status choice — Infoworks returns 406 Not Acceptable, not 401,
+    for a bad username/password on /security/authenticate. A client that only handles 401 will miss it.
+gaps:
+- >-
+  No 429 response is declared anywhere, and no Retry-After or RateLimit header is documented — an
+  agent has no contractual signal for throttling. See rate-limits/infoworks-rate-limits.yml.
+- >-
+  No public error-code reference page exists. The docs' REST API chapter documents authentication
+  only; the code registry is reachable solely through the dead api.infoworks.io/help/ links.

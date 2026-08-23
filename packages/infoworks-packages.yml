@@ -1,0 +1,106 @@
+generated: '2026-08-23'
+method: searched
+source: >-
+  PyPI JSON metadata (https://pypi.org/pypi/infoworkssdk/json), plus negative sweeps of npm, RubyGems,
+  crates.io, NuGet, pkg.go.dev and Maven Central, plus the GitHub organization https://github.com/Infoworks.
+summary:
+  first_party_sdk_count: 1
+  third_party_package_count: 0
+  note: >-
+    Infoworks ships exactly ONE first-party client library — the Python SDK on PyPI — and it is
+    unambiguously theirs: the package author is "Infoworks CE Team <customer-engineering@infoworks.io>"
+    and the README links the Infoworks docs for obtaining a refresh token. No JavaScript, Java, Go,
+    Ruby, .NET or Rust client is published anywhere.
+packages:
+- language: python
+  registry: pypi
+  name: infoworkssdk
+  url: https://pypi.org/project/infoworkssdk/
+  install: pip install infoworkssdk
+  official: true
+  version: 5.1.2
+  published: '2025-10-21'
+  source: https://pypi.org/pypi/infoworkssdk/json
+  author: Infoworks CE Team <customer-engineering@infoworks.io>
+  docs: https://infoworks.github.io/infoworks-python-sdk/
+  repository: https://github.com/Infoworks/InfoworksPythonSDK
+  description: >-
+    Official Python client for the Infoworks v3 REST API. Initialized with protocol/host/port plus the
+    refresh token copied from the Infoworks UI; wraps source, table, pipeline, workflow and job
+    operations. Declares compatibility with Infoworks v6.2.0 onwards (earlier README text says 5.3+).
+  requires: [requests, bson, urllib3, pandas, networkx, pyyaml, tabulate, jwt]
+  release_history:
+  - version: 5.1.2
+    published: '2025-10-21'
+  - version: 5.1.1
+    published: '2025-09-22'
+  - version: 5.1.0
+    published: '2025-09-17'
+  - version: 5.0.9
+    published: '2025-01-24'
+  - version: 5.0.8
+    published: '2024-12-11'
+  currency_check:
+    sdk_latest: '2025-10-21'
+    api_docs_latest: '2026-05-04'
+    verdict: lagging
+    note: >-
+      The SDK's last release (5.1.2, 2025-10-21) predates the most recent documented product release
+      (v6.2.2, April 2026, published to the docs 2026-05-04) and predates docs versions 6.2.3 and
+      6.2.4 entirely. This is a decay signal, not a defect claim: it means an integrator pinning the
+      SDK is behind the shipping API by at least two minor releases.
+  broken_links:
+  - url: https://github.com/Infoworks/InfoworksPythonSDK
+    status: 404
+    checked: '2026-08-23'
+    note: >-
+      The repository named as the package Homepage in PyPI metadata returns 404. github.com/Infoworks
+      itself is live (200) but exposes only four forks of Apache/Databricks projects, so the SDK
+      source is no longer public.
+  - url: https://infoworks.github.io/infoworks-python-sdk/infoworks.html
+    status: 404
+    checked: '2026-08-23'
+    note: The SDK API documentation site linked from the package README is gone.
+
+third_party_packages: []
+
+github_organization:
+  found: true
+  url: https://github.com/Infoworks
+  status: 200
+  created: '2015-04-22'
+  public_repos: 4
+  first_party_code: false
+  checked: '2026-08-23'
+  note: >-
+    All four public repos are forks of upstream projects Infoworks builds on — incubator-gobblin,
+    nifi, incubator-airflow and databricks-client-java. No first-party Infoworks code is published in
+    the organization; the two repositories referenced from PyPI and the SDK README both 404.
+
+negative_probes:
+- registry: pypi
+  query: pypi.org/pypi/<name>/json
+  names: [infoworks, infoworks-sdk, infoworks-client]
+  result: 404 on every name
+- registry: npm
+  query: registry.npmjs.org/-/v1/search?text=infoworks
+  result: 'total: 0 — no package matches "infoworks" at all'
+- registry: rubygems
+  query: rubygems.org/api/v1/gems/infoworks.json
+  result: 404
+- registry: crates.io
+  query: crates.io/api/v1/crates?q=infoworks
+  result: 'meta.total: 0'
+- registry: nuget
+  query: azuresearch-usnc.nuget.org/query?q=infoworks
+  result: 'totalHits: 0'
+- registry: maven-central
+  query: search.maven.org/solrsearch/select?q=infoworks
+  result: 'numFound: 0'
+- registry: packagist
+  query: packagist.org/search.json?q=infoworks
+  result: no Infoworks-owned package (only unrelated fuzzy matches such as innomatic/innowork-core)
+- registry: go
+  query: proxy.golang.org/github.com/infoworks/@v/list
+  result: 404
+probed: '2026-08-23'

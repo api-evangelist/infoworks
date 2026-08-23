@@ -1,0 +1,32 @@
+generated: '2026-08-23'
+method: searched
+source: https://docs.infoworks.io/developer-resources/rest-api
+derived_from: openapi/infoworks-rest-api-v3-openapi.yml
+limit_count: 0
+rate_limits: []
+headers: []
+status_on_exhaustion: null
+note: >-
+  Infoworks documents NO rate limits, and the contract declares none. This was checked three ways and
+  all three are zero: (1) the 4.4 MB OpenAPI contains no RateLimit-*, X-RateLimit-*, or Retry-After
+  header on any of the 510 operations; (2) no operation declares a 429 response — the declared error
+  classes are 400/401/403/406/500 only; (3) the REST API chapter of the docs covers authentication and
+  nothing else. An honest zero.
+what_bounds_an_agent_instead: >-
+  The real throttle on this API is not request-rate but the single documented time bound in the auth
+  model: access tokens expire after 15 minutes by default (configurable per deployment). A long-running
+  agent must re-mint via GET /security/authenticate or GET /security/token/access rather than back off.
+  Beyond that, capacity is a property of the customer's own Kubernetes/Spark deployment, not of a
+  vendor-enforced quota — Infoworks runs in the customer's cloud, so there is no shared tenant to protect.
+agent_risk: >-
+  With no 429 and no Retry-After, an agent has no contractual signal to distinguish "slow down" from
+  "broken". Combined with the absence of idempotency (see conventions/), a retry storm against
+  POST /domains/{domain_id}/workflows/{workflow_id}/start can launch duplicate compute jobs.
+probes:
+- url: https://docs.infoworks.io/developer-resources/rest-api
+  status: 200
+  checked: '2026-08-23'
+- url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  status: 200
+  checked: '2026-08-23'
+  note: Reference is rendered client-side; the underlying OpenAPI was retrieved and searched directly.

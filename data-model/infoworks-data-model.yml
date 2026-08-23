@@ -1,0 +1,205 @@
+generated: '2026-08-23'
+method: derived
+source: openapi/infoworks-rest-api-v3-openapi.yml
+derivation: >-
+  Derived mechanically from the 369 path templates and their {id} parameters: each `/{collection}/{x_id}/`
+  segment pair yields an ownership edge, and each id-bearing query/body field yields a reference edge.
+  This is a path-structure derivation, NOT a schema derivation — see the caveat below.
+caveat: >-
+  components.schemas is EMPTY. All 510 operations declare their request and response bodies inline, so
+  the contract exposes no reusable object definitions and no $ref graph at all. That is the single
+  biggest quality gap in an otherwise substantial spec: there is nothing for a code generator to name,
+  and the entity model below had to be reconstructed from URL shape rather than read from the document.
+  A future round should NOT upgrade this file to `searched` unless Infoworks publishes an object reference.
+entities:
+- name: Source
+  collection: /sources
+  id: source_id
+  id_form: 24-character hex ObjectId (MongoDB) — spec examples e.g. "5f9708117758f33f8b013824"
+  description: A configured data source (RDBMS, structured files, JSON, CSV, fixed-width, Kafka/Confluent streaming, generic).
+  operations: 11 tagged Sources, plus 54 Tables, 8 Table Groups, 13 Topics, 10 File Mappings, 4 Streaming.
+- name: Table
+  collection: /sources/{source_id}/tables
+  id: table_id
+  description: An ingested table within a source, with crawl/segmentation/validation state.
+- name: TableGroup
+  collection: /sources/{source_id}/table-groups
+  id: table_group_id
+  description: A schedulable batch of tables.
+- name: TopicMapping
+  collection: /sources/{source_id}/topic-mappings
+  id: topic_mapping_id
+  description: Kafka/Confluent topic-to-table mapping for streaming sources.
+- name: FileMapping
+  collection: /sources/{source_id}/file-mappings
+  id: file_mapping_id
+  description: JSON/CSV file-structure-to-table mapping.
+- name: Domain
+  collection: /domains
+  id: domain_id
+  description: The access-control and workspace boundary that owns pipelines, pipeline groups and workflows and grants access to sources.
+- name: Pipeline
+  collection: /domains/{domain_id}/pipelines
+  id: pipeline_id
+  description: A transformation pipeline, versioned and lockable.
+- name: PipelineVersion
+  collection: /domains/{domain_id}/pipelines/{pipeline_id}/versions
+  id: pipeline_version_id
+- name: PipelineGroup
+  collection: /domains/{domain_id}/pipeline-groups
+  id: pipeline_group_id
+- name: Workflow
+  collection: /domains/{domain_id}/workflows
+  id: workflow_id
+  description: An orchestration DAG; versioned since product release 6.2.0.
+- name: WorkflowVersion
+  collection: /domains/{domain_id}/workflows/{workflow_id}/versions
+  id: workflow_version_id
+- name: WorkflowRun
+  collection: /domains/{domain_id}/workflows/{workflow_id}/runs
+  id: workflow_run_id
+  description: One execution of a workflow; carries tasks, task logs and per-run variables.
+- name: Task
+  collection: /domains/{domain_id}/workflows/{workflow_id}/runs/{workflow_run_id}/tasks
+  id: task_id
+- name: Job
+  collection: /admin/jobs
+  id: job_id
+  description: Unit of compute (ingest, crawl, pipeline build, export). Also reachable scoped under sources, tables, pipelines and pipeline groups.
+- name: Environment
+  collection: /admin/environment
+  id: environment_id
+  description: Compute/storage target binding (Databricks, Snowflake, EMR, Synapse, Kubernetes), with storage, compute templates and interactive clusters as sub-entities.
+- name: User
+  collection: /users (mirrored at /admin/users)
+  id: user_id
+  description: Platform principal with accessible domains, presets and notification subscriptions.
+- name: Secret / SecretStore / ServiceAuth
+  collection: /admin/manage-secrets/{secrets,secret-store,service-auth}
+  id: secret_id / secret_store_id / service_auth_id
+- name: JobHook
+  collection: /admin/job-hooks
+  id: job_hook_id
+  description: Uploaded BASH/PYTHON script executed around job lifecycle events (NOT an HTTP webhook).
+- name: Extension
+  collection: /admin/{pipeline-extensions,source-extensions}, /admin/generic-source-type
+  id: pipeline_extension_id / source_extension_id / generic_source_type_id
+- name: Subscriber
+  collection: /subscribers (admin at /admin/subscribers)
+  id: subscriber_id
+relationships:
+- from: Source
+  to: Table
+  type: has_many
+  via: /sources/{source_id}/tables/{table_id}
+  edges_observed: 28
+- from: Source
+  to: TableGroup
+  type: has_many
+  via: /sources/{source_id}/table-groups/{table_group_id}
+  edges_observed: 7
+- from: Source
+  to: TopicMapping
+  type: has_many
+  via: /sources/{source_id}/topic-mappings/{topic_mapping_id}
+  edges_observed: 6
+- from: Source
+  to: FileMapping
+  type: has_many
+  via: /sources/{source_id}/file-mappings/{file_mapping_id}
+  edges_observed: 6
+- from: Source
+  to: Job
+  type: has_many
+  via: /sources/{source_id}/jobs/{job_id}
+  edges_observed: 8
+- from: TopicMapping
+  to: Table
+  type: has_many
+  via: /sources/{source_id}/topic-mappings/{topic_mapping_id}/tables/{table_id}
+- from: FileMapping
+  to: Table
+  type: has_many
+  via: /sources/{source_id}/file-mappings/{file_mapping_id}/tables/{table_id}
+- from: Table
+  to: ValidationSpec
+  type: has_many
+  via: /sources/{source_id}/tables/{table_id}/validation-specs/{validation_spec_id}
+- from: Domain
+  to: Workflow
+  type: has_many
+  via: /domains/{domain_id}/workflows/{workflow_id}
+  edges_observed: 24
+- from: Domain
+  to: Pipeline
+  type: has_many
+  via: /domains/{domain_id}/pipelines/{pipeline_id}
+  edges_observed: 23
+- from: Domain
+  to: PipelineGroup
+  type: has_many
+  via: /domains/{domain_id}/pipeline-groups/{pipeline_group_id}
+  edges_observed: 9
+- from: Domain
+  to: Source
+  type: has_many
+  via: /domains/{domain_id}/accessible-sources
+  note: A grant edge, not ownership — sources are global and made accessible to a domain.
+- from: Pipeline
+  to: PipelineVersion
+  type: has_many
+  via: /domains/{domain_id}/pipelines/{pipeline_id}/versions/{pipeline_version_id}
+  edges_observed: 7
+- from: PipelineVersion
+  to: Node
+  type: has_many
+  via: .../versions/{pipeline_version_id}/nodes/{node_id}
+- from: Workflow
+  to: WorkflowVersion
+  type: has_many
+  via: /domains/{domain_id}/workflows/{workflow_id}/versions/{workflow_version_id}
+  edges_observed: 4
+- from: Workflow
+  to: WorkflowRun
+  type: has_many
+  via: /domains/{domain_id}/workflows/{workflow_id}/runs/{workflow_run_id}
+  edges_observed: 6
+- from: WorkflowRun
+  to: Task
+  type: has_many
+  via: .../runs/{workflow_run_id}/tasks/{task_id}
+- from: PipelineGroup
+  to: Job
+  type: has_many
+  via: /domains/{domain_id}/pipeline-groups/{pipeline_group_id}/jobs/{job_id}
+  edges_observed: 5
+- from: Table
+  to: Job
+  type: has_many
+  via: /sources/{source_id}/tables/{table_id}/jobs/{job_id}
+- from: Environment
+  to: EnvironmentStorage
+  type: has_many
+  via: /admin/environment/{environment_id}/environment-storage/{environment_storage_id}
+- from: Environment
+  to: ComputeTemplate
+  type: has_many
+  via: /admin/environment/{environment_id}/environment-compute-template/{environment_compute_template_id}
+- from: Environment
+  to: InteractiveCluster
+  type: has_many
+  via: /admin/environment/{environment_id}/environment-interactive-clusters/{environment_interactive_clusters_id}
+- from: User
+  to: Domain
+  type: has_many
+  via: /users/{user_id}/accessible-domains
+- from: User
+  to: Preset
+  type: has_many
+  via: /users/self/presets/{preset_id}
+root_entities: [Source, Domain, Environment, User, Job]
+id_conventions:
+  form: 24-character lowercase hex string (MongoDB ObjectId)
+  examples: ['5f9708117758f33f8b013824', 'e77850ad5127a2d7dab870ff']
+  prefixed: false
+  note: IDs carry no type prefix, so an id alone does not identify which entity it belongs to.

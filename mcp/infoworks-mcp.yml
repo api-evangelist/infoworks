@@ -1,0 +1,132 @@
+generated: '2026-08-23'
+method: derived
+status: candidate
+source: openapi/infoworks-rest-api-v3-openapi.yml
+searched:
+- https://docs.infoworks.io/ (8,311-URL sitemap; no MCP page)
+- https://www.uniphore.com/infoworks/
+- https://github.com/Infoworks (4 repos, all upstream forks)
+- 'npm / PyPI registry sweeps for an infoworks MCP package (zero results)'
+- 'DeveloperHub project metadata for docs.infoworks.io: mcpServerEnabled=false, llmEnabled=false'
+summary: >-
+  Infoworks ships NO MCP server — not a hosted endpoint, not an npx/stdio package, not a community one.
+  The tool list below is a CANDIDATE derived from the published OpenAPI so a future round (or the
+  provider) has a starting shape. It is not a product and must not be read as one.
+pointer_basis: >-
+  NO `MCPServer` pointer is emitted in apis.yml. That check asserts the PROVIDER operates an agent
+  surface; deriving a candidate does not make one exist. mcp_server_present is a genuine zero here.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: derived
+  note: >-
+    `mode: none` because nobody ships a server. No endpoint URL is guessed — a fabricated MCP path that
+    happened to answer 200 would read as a verified agent surface, which is the worst possible artifact.
+    If Infoworks were to build one it would be per-deployment, not vendor-hosted: the API lives at
+    {protocol}://{host}:{port}/v3 inside the customer's own cloud, so the natural shape is a local-stdio
+    server configured with the customer's host and refresh token.
+candidate_tools:
+- name: list_sources
+  rest: getSourceList
+  operation: GET /sources
+  category: sources
+- name: get_source
+  rest: getSourceInfo
+  operation: GET /sources/{source_id}
+  category: sources
+- name: create_source
+  rest: createSource
+  operation: POST /sources
+  category: sources
+  consequence: write
+- name: browse_source_tables
+  rest: browseSource
+  operation: GET /sources/{source_id}/source_tables
+  category: discovery
+- name: fetch_source_tables
+  rest: fetchTablesList
+  operation: POST /sources/{source_id}/fetch-tables
+  category: discovery
+  note: Lists tables in the source without adding them — the safe rehearsal step before add_tables_to_source.
+- name: add_tables_to_source
+  rest: getSourceTablesList
+  operation: POST /sources/{source_id}/tables/source_tables
+  category: onboarding
+  consequence: write
+  note: 'Adds tables to a source AND crawls their metadata. OperationId is misleading (a POST named "get...").'
+- name: list_source_tables
+  rest: getTablesList
+  operation: GET /sources/{source_id}/tables
+  category: onboarding
+- name: start_source_job
+  rest: createJobForSource
+  operation: POST /sources/{source_id}/jobs
+  category: jobs
+  consequence: compute
+  reversal: 'GET /prodops/jobs/{job_id}/cancel (cancelJobByIdForProdOps)'
+- name: list_jobs
+  rest: getJobs
+  operation: GET /admin/jobs
+  category: jobs
+- name: get_job
+  rest: getjobs id details
+  operation: GET /admin/jobs/{job_id}
+  category: jobs
+- name: get_job_logs
+  rest: get_job_logs_admin
+  operation: GET /admin/jobs/{job_id}/logs
+  category: jobs
+- name: list_domains
+  rest: getDomains
+  operation: GET /domains
+  category: domains
+- name: list_workflows
+  rest: getDomainWorkflows
+  operation: GET /domains/{domain_id}/workflows
+  category: workflows
+- name: start_workflow
+  rest: startWorkflow
+  operation: POST /domains/{domain_id}/workflows/{workflow_id}/start
+  category: workflows
+  consequence: compute
+  reversal: 'POST .../runs/{workflow_run_id}/cancel (cancelWorkflowRun)'
+  note: NOT idempotent and no replay key exists — a retry launches a second run.
+- name: list_workflow_runs
+  rest: getWorkflowRunsByWorkflowId
+  operation: GET /domains/{domain_id}/workflows/{workflow_id}/runs
+  category: workflows
+- name: get_workflow_run
+  rest: getWorkflowRun
+  operation: GET /domains/{domain_id}/workflows/{workflow_id}/runs/{workflow_run_id}
+  category: workflows
+- name: cancel_workflow_run
+  rest: cancelWorkflowRun
+  operation: POST /domains/{domain_id}/workflows/{workflow_id}/runs/{workflow_run_id}/cancel
+  category: workflows
+  consequence: write
+- name: get_workflow_lineage
+  rest: getWorkflowLineage
+  operation: GET /domains/{domain_id}/workflows/{workflow_id}/lineage
+  category: lineage
+- name: list_pipelines
+  rest: null
+  operation: GET /domains/{domain_id}/pipelines
+  category: pipelines
+- name: export_source_config
+  rest: exportSourceConfiguration
+  operation: GET /sources/{source_id}/config-migration
+  category: backup
+  note: The only reversal primitive on this API — take an export before any destructive call.
+- name: authenticate
+  rest: null
+  operation: GET /security/authenticate
+  category: auth
+  note: Has no operationId in the published contract.
+crosswalk_note: >-
+  No mcp/infoworks-tool-crosswalk.yml is written. A crosswalk binds a REAL MCP tool set (or GraphQL
+  field set) to backing REST operations; with no MCP server and no GraphQL surface there is nothing on
+  the other side of the binding, and a crosswalk of a candidate against the spec it was derived from
+  would be circular.

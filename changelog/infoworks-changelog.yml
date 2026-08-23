@@ -1,0 +1,82 @@
+generated: '2026-08-23'
+method: searched
+source: https://docs.infoworks.io/infoworks-release-notes/release-notes
+summary: >-
+  Infoworks publishes a real, dated, per-release changelog as a dedicated "Infoworks Release Notes"
+  documentation set — 90 release-note pages covering 5.1.0 through 6.2.2. Each page states a release
+  month and separates New Features / Enhancements / Resolved Issues (with JIRA IDs) / Known Issues,
+  which is unusually disciplined. What it does not carry is any statement of API compatibility: not one
+  release note in the recent window says whether the v3 REST contract changed.
+scheme: per-release notes page, product version keyed (major.minor.patch[.patch])
+current_version: 6.2.2
+current_version_date: '2026-04'
+entry_count_published: 90
+api_versioning_note: >-
+  Release notes track the PRODUCT, not the API. The REST API stayed at v3 across every release below,
+  and no release note in the window declares an API breaking change, an added endpoint, or a removed
+  one. An integrator cannot tell from the changelog whether the contract moved.
+entries:
+- version: 6.2.2
+  date: '2026-04'
+  url: https://docs.infoworks.io/infoworks-release-notes/release-notes/v6-2-2
+  breaking: false
+  api_changes_declared: none
+  highlights:
+  - Azure Databricks 16 LTS support.
+  - Unity Catalog-based staging for Snowflake (catalog/schema/volume configurable).
+  - File archival and purge for Structured Files, JSON and Fixed-width source connectors.
+  - GPG/OpenPGP support for CSV ingestion with in-memory decryption.
+  - Custom Sync to Target support.
+  resolved_issue_count: 5
+  known_issues: 4
+- version: 6.2.0.1
+  date: '2025-09'
+  url: https://docs.infoworks.io/infoworks-release-notes/release-notes/v6-2-0-1
+  breaking: false
+  highlights:
+  - Patch release; pipeline-group "no current database" fix and source-ingestion sample data fix.
+- version: 6.2.0
+  date: '2025-09'
+  url: https://docs.infoworks.io/infoworks-release-notes/release-notes/v6-2-0
+  breaking: true
+  breaking_note: 'Support for Apache Spark 2 deprecated as of 6.2.0.'
+  highlights:
+  - Workflow Versioning introduced (backs the Workflow Versions tag, 8 operations).
+  - Expanded audit coverage for topic mapping, file mapping and table-group configuration.
+  - Pipeline and pipeline-group audit logging.
+  - Refresh-token expiry enforcement with administrator configuration and automated notifications.
+  - Cache Manager service (Hazelcast default, optional Redis) with encrypted one-hour-TTL preview cache.
+  - Spark on Kubernetes support (beta).
+  - Spark 2 deprecated.
+- version: 6.1.3.2
+  date: '2025-06'
+  url: https://docs.infoworks.io/infoworks-release-notes/release-notes/v6-1-3-2
+  breaking: false
+  highlights:
+  - 'Infoworks logo replaced with the Uniphore logo in the UI (IPD-28347) — the visible mark of the acquisition.'
+  - Bulk rerun/cancel of multiple jobs from the Ops dashboard.
+- version: 6.1.3.1
+  date: '2025-05'
+  url: https://docs.infoworks.io/infoworks-release-notes/release-notes/v6-1-3-1
+  breaking: false
+  highlights:
+  - Password field no longer logged in job logs.
+- version: 6.1.3
+  date: '2025-05'
+  url: https://docs.infoworks.io/infoworks-release-notes/release-notes/v6-1-3
+  breaking: false
+  highlights:
+  - Custom tags and extensions management opened to Operations Analyst users.
+  - Saved filter presets per user (backs the Presets tag, 5 operations).
+  - Case-sensitive target table/column names for external and export pipeline targets.
+  - OAuth and key-pair authentication for Snowflake sources, sync-to-target and pipeline export.
+- version: 6.1.2
+  date: '2025-01'
+  url: https://docs.infoworks.io/infoworks-release-notes/release-notes/v6-1-2
+  breaking: false
+  highlights:
+  - Azure AD OAuth for Snowflake with user-based rather than client-based tokens.
+gaps:
+- No RSS/Atom feed and no machine-readable changelog format.
+- No per-release API diff; the v3 contract is republished verbatim against each product version.
+- Release-note pages are rendered client-side by the DeveloperHub SPA, so the served HTML is an empty shell.

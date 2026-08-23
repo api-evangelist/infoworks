@@ -1,0 +1,87 @@
+generated: '2026-08-23'
+method: searched
+source: https://docs.infoworks.io/infoworks-release-notes/release-notes/v6-2-2
+derived_from: openapi/infoworks-rest-api-v3-openapi.yml
+versioning:
+  api_scheme: path
+  api_current: v3
+  product_scheme: semver-ish (major.minor.patch, plus patch-of-patch e.g. 6.1.3.2)
+  product_current: 6.2.4
+  product_latest_with_release_note: 6.2.2 (April 2026)
+  published_doc_versions: 25
+  note: >-
+    Documentation is published per product version (25 public versions from 5.3.0 through 6.2.4, plus
+    Replicator 4.0, an Infoworks AI set and a release-notes set). The REST API reference is republished
+    unchanged as "Infoworks Rest API V3" against each product version; the newest version carrying a
+    published API reference is 6.2.2. Product versions 6.2.3 and 6.2.4 ship documentation but no
+    republished API reference.
+release_cadence:
+  observed: roughly quarterly minor releases with monthly patch releases
+  evidence:
+  - 6.2.2 — April 2026
+  - 6.2.0.1 — September 2025
+  - 6.2.0 — September 2025
+  - 6.1.3.2 — June 2025
+  - 6.1.3.1 — May 2025
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation policy, no RFC 8594 Sunset/Deprecation headers, and no stated support window are
+    published anywhere. Deprecations are announced only as a line item inside a release note. Because
+    there is no policy page, NO `Deprecation` pointer is emitted in apis.yml — that check is a genuine
+    zero here.
+  deprecated_operations:
+  - operationId: saveEntityScheduleDetails
+    method: PUT
+    path: /save-entity-schedule
+    marked_in_spec: true
+  - operationId: saveEntityUserDetails
+    method: PUT
+    path: /save-entity-user
+    marked_in_spec: true
+  deprecated_platform_features:
+  - feature: Apache Spark 2
+    announced_in: 6.2.0 (September 2025)
+    statement: '"Spark 2 Deprecated: Starting from version 6.2.0, support for Spark 2 has been deprecated."'
+    source: https://docs.infoworks.io/infoworks-release-notes/release-notes/v6-2-0
+status_page:
+  found: false
+  probed: '2026-08-23'
+  probes:
+  - url: https://status.infoworks.io/
+    status: 0
+    note: does not resolve
+  note: >-
+    No status page exists, and structurally cannot: Infoworks runs inside each customer's own cloud
+    account, so there is no vendor-operated service whose availability could be reported. NO
+    `StatusPage` pointer is emitted.
+sla:
+  published: true
+  url: https://www.uniphore.com/legal/sla/
+  status: 200
+  note: >-
+    A Service Level Agreement is published by Uniphore, which has operated Infoworks since the 2024
+    acquisition. It is a corporate SLA covering Uniphore services rather than an Infoworks-specific
+    uptime commitment.
+support:
+  channel: https://support.infoworks.io/support/home
+  status: 200
+  platform: Freshdesk
+  note: Still branded Infoworks and still on the infoworks.io domain post-acquisition.
+end_of_life:
+  policy_published: false
+  note: No published EOL matrix for product versions. The docs simply retain every version back to 5.3.0.
+corporate:
+  acquisition:
+    acquirer: Uniphore
+    year: 2024
+    evidence:
+    - 'https://www.uniphore.com/infoworks/ (og:description: "Uniphore has acquired Infoworks...")'
+    - 'Release note 6.1.3.2, IPD-28347: "Replaced Infoworks logo with Uniphore logo in the UI."'
+    surface_impact: >-
+      www.infoworks.io 301s to www.uniphore.com/infoworks/; the corporate site, blog, legal terms and
+      trust center are Uniphore's. Documentation (docs.infoworks.io), the support desk
+      (support.infoworks.io) and the SDK contact (customer-engineering@infoworks.io) remain on
+      infoworks.io.

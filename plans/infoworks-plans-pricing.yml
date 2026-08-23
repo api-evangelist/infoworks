@@ -1,0 +1,37 @@
+generated: '2026-08-23'
+method: searched
+source: https://www.uniphore.com/infoworks/
+plan_count: 0
+pricing_model: enterprise-negotiated
+self_serve_signup: false
+free_tier: false
+plans: []
+note: >-
+  Infoworks publishes NO pricing of any kind. There is no /pricing page on uniphore.com (404), no
+  plan tiers, no free tier, no trial and no self-serve signup — the product is a licensed platform
+  deployed into the customer's own cloud account and sold through a sales motion. The only public
+  commercial documents are Uniphore's Main Services Agreement and SLA, neither of which carries a
+  price. An honest zero, recorded rather than omitted.
+probes:
+- url: https://www.uniphore.com/pricing/
+  status: 404
+  checked: '2026-08-23'
+- url: https://www.uniphore.com/infoworks/
+  status: 200
+  checked: '2026-08-23'
+  note: Product page; call-to-action is a contact/demo form, no pricing.
+- url: https://www.uniphore.com/legal/msa/
+  status: 200
+  checked: '2026-08-23'
+  note: Main Services Agreement — commercial terms, no rate card.
+marketplace_listings:
+  aws:
+    seller_profile: https://aws.amazon.com/marketplace/seller-profile?id=60616c7a-6243-4f9a-aa15-4f82927b3a09
+    note: >-
+      An AWS Marketplace seller profile for Infoworks exists. Marketplace listings for this product are
+      private-offer / contract-based rather than published-price, so no rate is recorded here.
+  azure: available per vendor marketing (fully managed on Azure); no public price
+  gcp: available per vendor marketing; no public price
+pointer_basis: >-
+  A `Plans` pointer is emitted because this artifact records a measured commercial posture. NO `Pricing`
+  pointer is emitted, because no pricing page exists to link — that check is a genuine zero.

@@ -64,5 +64,17 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Infoworks is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/infoworks_stock/
+Infoworks is an Enterprise Data Operations and Orchestration (EDO2) platform that automates data
+onboarding, preparation and operationalization onto Databricks, Snowflake, BigQuery, Synapse and
+Apache Spark. It is deployed into the customer's own cloud account rather than run as a multi-tenant
+SaaS, so the published contract carries a templated server and there is no vendor-hosted API endpoint.
+Uniphore acquired Infoworks in 2024 and sells it as InfoWorks inside the Uniphore Business AI platform.
+
+This profile is built from the provider's own published OpenAPI 3.0.1 for the Infoworks REST API v3
+(369 paths / 510 operations / 62 tags), retrieved from the Infoworks documentation host on 2026-08-23.
+
+- Product: https://www.uniphore.com/infoworks/
+- Documentation: https://docs.infoworks.io/
+- API reference: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- Support: https://support.infoworks.io/support/home
+- Python SDK: https://pypi.org/project/infoworkssdk/

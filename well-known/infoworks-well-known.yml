@@ -1,0 +1,123 @@
+generated: '2026-08-23'
+method: probed
+source: live probes of /.well-known/ on every Infoworks + Uniphore host reachable on 2026-08-23
+summary: >-
+  Nothing is served. Not one /.well-known/ path on any Infoworks-controlled host returned a real
+  document, so NO WellKnown pointer and NO SecurityTxt pointer are emitted in apis.yml. This file
+  records the absence, which is valid data — it is not a presence.
+false_positive_watch: >-
+  docs.infoworks.io answers HTTP 200 with the identical 18,776-byte DeveloperHub Angular SPA shell
+  (text/html, starts "<!doctype html>") for EVERY /.well-known/* path, including paths that cannot
+  exist. Those 200s are recorded below as MISSES, not hits. Any future round that reads a
+  docs.infoworks.io /.well-known/ 200 as a served document is wrong.
+hosts:
+- host: https://docs.infoworks.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    result: miss
+    note: SPA shell (text/html, 18776 bytes) — not a document.
+  - path: /.well-known/openid-configuration
+    status: 200
+    result: miss
+    note: SPA shell.
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    result: miss
+    note: SPA shell.
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    result: miss
+    note: SPA shell.
+  - path: /.well-known/api-catalog
+    status: 200
+    result: miss
+    note: SPA shell.
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    result: miss
+    note: SPA shell.
+  - path: /.well-known/agent-card.json
+    status: 200
+    result: miss
+    note: SPA shell — body is HTML, not an AgentCard JSON object. Rejected.
+  - path: /.well-known/agent.json
+    status: 200
+    result: miss
+    note: SPA shell — body is HTML, not an AgentCard JSON object. Rejected.
+  - path: /llms.txt
+    status: 403
+    result: miss
+    note: 'Body is exactly "Access denied." — DeveloperHub llmEnabled is false for this project.'
+  - path: /robots.txt
+    status: 200
+    result: hit
+    note: 'Allows all; declares Sitemap: https://docs.infoworks.io/sitemap.xml (8,311 URLs). Not a
+      .well-known document, recorded because it is the one machine-readable index the docs host serves.'
+- host: https://www.infoworks.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 301
+    result: miss
+    note: Every path 301s to https://www.uniphore.com/infoworks/ after the 2024 Uniphore acquisition.
+  - path: /.well-known/agent-card.json
+    status: 301
+    result: miss
+  - path: /.well-known/agent.json
+    status: 301
+    result: miss
+  - path: /.well-known/api-catalog
+    status: 301
+    result: miss
+- host: https://www.uniphore.com
+  note: >-
+    Probed because www.infoworks.io redirects here — Uniphore acquired Infoworks in 2024 and operates
+    the corporate web presence for the InfoWorks product.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    result: miss
+    note: nginx 404, 548 bytes.
+  - path: /security.txt
+    status: 404
+    result: miss
+  - path: /.well-known/agent-card.json
+    status: 404
+    result: miss
+    note: WordPress 404 page (text/html).
+  - path: /.well-known/agent.json
+    status: 404
+    result: miss
+  - path: /.well-known/api-catalog
+    status: 404
+    result: miss
+  - path: /llms.txt
+    status: 200
+    result: hit-other-company
+    note: >-
+      A real 15,840-byte llms.txt IS served here, but it describes Uniphore's Business AI platform
+      and does not document the Infoworks REST API. It is NOT saved as this provider's llms.txt and
+      NOT wired as a pointer — see llms/infoworks-llms.txt for the generated one.
+- host: https://infoworks.io
+  documents:
+  - path: /.well-known/security.txt
+    status: 0
+    result: unreachable
+    note: >-
+      TLS handshake fails — "no alternative certificate subject name matches target host name
+      'infoworks.io'". The apex serves a certificate that does not cover it, so no /.well-known/
+      probe can complete. Unreachable, not confirmed-absent.
+- host: http://archiveddocs.infoworks.io
+  documents:
+  - path: /
+    status: 530
+    result: unreachable
+    note: '"530 - Site is frozen". The legacy 2.x/3.1 documentation host is dead; HTTPS does not answer at all.'
+a2a:
+  found: false
+  checked: '2026-08-23'
+  note: >-
+    /.well-known/agent-card.json and /.well-known/agent.json were probed on every host above. No host
+    returned a JSON object with AgentCard shape. Per the pipeline rule, NOTHING is written under a2a/
+    and no AgentCard pointer is emitted — an agent card is search-only and may never be authored on a
+    provider's behalf.

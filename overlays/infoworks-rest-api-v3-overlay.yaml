@@ -1,0 +1,106 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Infoworks REST API v3
+  version: 1.0.0
+extends: ../openapi/infoworks-rest-api-v3-openapi.yml
+x-provenance:
+  generated: '2026-08-23'
+  method: generated
+  source: >-
+    Enhancements derived by API Evangelist from the provider's own published material — the REST API
+    chapter at https://docs.infoworks.io/developer-resources/rest-api, the release notes, the PyPI
+    package metadata for infoworkssdk, and Uniphore's published legal pages. Nothing here invents API
+    behaviour; every value is traceable to a provider-published source. The original contract at
+    openapi/infoworks-rest-api-v3-openapi.yml is never mutated.
+actions:
+- target: $.info
+  description: >-
+    Add the contact and terms metadata the published contract leaves empty (info.contact is literally
+    `{}`), so a generated client can name a support route and a legal basis.
+  update:
+    contact:
+      name: Infoworks Support (Uniphore)
+      url: https://support.infoworks.io/support/home
+      email: customer-engineering@infoworks.io
+    termsOfService: https://www.uniphore.com/legal/msa/
+    x-documentation: https://docs.infoworks.io/developer-resources/rest-api
+    x-api-reference: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+    x-product-version-at-capture: 6.2.2
+    x-vendor: Uniphore (acquired Infoworks, 2024)
+- target: $.servers[0]
+  description: >-
+    Document what the templated server actually means. Infoworks is deployed into the customer's own
+    cloud, so {host} is the customer's deployment; the spec's localhost:3001 default is the in-cluster
+    service address, while the first-party Python SDK README uses https on port 443 for an
+    ingress-fronted deployment.
+  update:
+    description: >-
+      Per-deployment base URL. Infoworks runs in the customer's own cloud account (Kubernetes on
+      AKS/EKS/GKE, or VM-based), so {host} and {port} are the customer's own values. Defaults
+      (http/localhost/3001) are the in-cluster service address. For an ingress-fronted deployment use
+      protocol=https and port=443, as the official Python SDK does.
+- target: $
+  description: >-
+    Attach the derived artifact set so a consumer of the contract can reach the semantics the contract
+    itself does not carry — error codes, conventions, reversibility, entity graph and auth flows.
+  update:
+    x-api-evangelist:
+      authentication: authentication/infoworks-authentication.yml
+      conventions: conventions/infoworks-conventions.yml
+      errors: errors/infoworks-problem-types.yml
+      data_model: data-model/infoworks-data-model.yml
+      lifecycle: lifecycle/infoworks-lifecycle.yml
+      conformance: conformance/infoworks-conformance.yml
+      skills: skills/_index.yml
+- target: $
+  description: >-
+    Record the measured contract-quality gaps as machine-readable findings rather than only in prose.
+    These are counts taken from the document itself on 2026-08-23, not opinions.
+  update:
+    x-contract-findings:
+      operations: 510
+      paths: 369
+      tags_declared: 41
+      tags_used_on_operations: 62
+      undeclared_tags: 21
+      undeclared_tags_note: >-
+        21 tags are applied to operations but never declared in the root tags[] array, so they carry no
+        description and no ordering in any rendered reference.
+      components_schemas: 0
+      components_schemas_note: >-
+        Every request and response body is inline. There is no reusable schema and no $ref graph, so no
+        code generator can produce named models from this contract.
+      operations_without_operation_id: 179
+      duplicate_operation_ids: 13
+      duplicate_operation_id_examples:
+      - 'GetUsers — GET /admin/users AND GET /users'
+      - 'deleteUserForAdmin — DELETE /admin/users/{user_id} AND DELETE /users/{user_id}'
+      - 'listServiceAuth — GET /admin/manage-secrets/service-auth AND GET /engagement/data/aggregate (clearly wrong)'
+      mislabelled_operation_ids:
+      - 'DELETE /domains/{domain_id}/workflows/{workflow_id} carries operationId `submitJob`'
+      - 'POST /sources/{source_id}/tables/source_tables carries operationId `getSourceTablesList`'
+      unsafe_verb_choices:
+      - 'GET /prodops/jobs/{job_id}/cancel — a state-changing cancel exposed as GET.'
+      - 'GET /security/authenticate returns a bearer token from a GET.'
+      status_code_anomalies:
+      - '406 Not Acceptable is returned for failed authentication on /security/authenticate, where 401 is expected.'
+      declared_error_help_links_dead: true
+      declared_error_help_links_note: >-
+        Every error response embeds help: http://api.infoworks.io/help/{iw_code}. api.infoworks.io does
+        not resolve (NXDOMAIN, probed 2026-08-23), so every remediation link in the contract is dead.
+- target: $.tags[?(@.name=='Security')]
+  description: Give the auth tag the description the contract leaves empty, from the provider's own REST API chapter.
+  update:
+    description: >-
+      Token minting, validation and revocation. Exchange HTTP Basic (username:password) or a refresh
+      token from My Profile > Settings for a short-lived JWT (15 minutes by default), then send it as
+      a bearer token. Also carries SAML SSO initiation and LDAP authorisation/sync.
+- target: $.tags[?(@.name=='Job Hooks')]
+  description: >-
+    Disambiguate a tag whose name reliably misleads integrators — Job Hooks are NOT HTTP webhooks.
+  update:
+    description: >-
+      Uploaded BASH or PYTHON scripts executed around job lifecycle events inside the deployment
+      (multipart/form-data upload; execution_type enum [BASH, PYTHON]; optional failJobIfHookFails).
+      These are in-process extensions, not outbound HTTP webhooks — Infoworks publishes no webhook or
+      AsyncAPI event contract.

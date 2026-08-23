@@ -1,0 +1,142 @@
+generated: '2026-08-23'
+method: derived
+source: openapi/infoworks-rest-api-v3-openapi.yml
+searched:
+- https://docs.infoworks.io/developer-resources/rest-api
+- https://www.uniphore.com/security/
+- https://trust.uniphore.com/
+summary: >-
+  Infoworks publishes a valid OpenAPI 3.0.1 contract and a conventional bearer-token auth model, but
+  implements none of the cross-cutting HTTP standards an agent leans on — no RFC 9457 problem details,
+  no RFC 8594 sunset signalling, no RFC 9116 security.txt, no OAuth 2.0 / OIDC discovery, no
+  RFC 6585 / draft RateLimit headers. Compliance certifications ARE published, but by Uniphore, the
+  company that acquired Infoworks in 2024 and now operates it.
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: >-
+    OpenAPI 3.0.1 document published and downloadable from the provider's own documentation host,
+    https://docs.infoworks.io/infoworks-rest-api-v3/ref — 369 paths, 510 operations, 62 tag groupings (only 41 declared in root tags[]). Captured
+    verbatim 2026-08-23 to openapi/infoworks-rest-api-v3-openapi.yml.
+- id: openapi-3.1
+  conforms: false
+  evidence: Document declares openapi 3.0.1.
+- id: http-bearer-auth
+  conforms: true
+  evidence: 'components.securitySchemes.BearerAuth — type http, scheme bearer, bearerFormat JWT.'
+- id: http-basic-auth
+  conforms: true
+  evidence: 'components.securitySchemes.BasicAuth — type http, scheme basic, used to mint the JWT.'
+- id: jwt
+  conforms: true
+  evidence: bearerFormat JWT; tokens are short-lived (15 min default) and revocable via DELETE /security/token/access.
+- id: saml2
+  conforms: true
+  evidence: 'GET /security/sso/initialise — "Get SAML Redirect URL"; the docs note Basic auth cannot be used for SAML users.'
+- id: ldap
+  conforms: true
+  evidence: 'POST /security/get/user/data ("LDAP Authorise User") and POST /security/bulk-ldap-sync.'
+- id: oauth2
+  conforms: false
+  evidence: >-
+    No oauth2 securityScheme in the contract and no authorization server. (OAuth appears in the product
+    only as an option for authenticating to Snowflake/Azure AD as a data SOURCE, not for the Infoworks API.)
+- id: oidc-discovery
+  conforms: false
+  evidence: /.well-known/openid-configuration returns the docs SPA shell on docs.infoworks.io and 404 on uniphore.com.
+- id: rfc8414-authorization-server-metadata
+  conforms: false
+  evidence: Not served on any host.
+- id: rfc9728-protected-resource-metadata
+  conforms: false
+  evidence: Not served on any host.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    Errors are application/json with a proprietary {message, details, iw_code, help} envelope. Zero
+    application/problem+json media types in the contract. See errors/infoworks-problem-types.yml.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation header anywhere in the contract; no deprecation policy published.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt is the SPA shell on docs.infoworks.io and 404 on www.uniphore.com.
+- id: ratelimit-headers
+  conforms: false
+  evidence: No RateLimit-*, X-RateLimit-* or Retry-After header, and no 429 response, in 510 operations.
+- id: idempotency-key
+  conforms: false
+  evidence: Zero occurrences of "idempoten" in the 4.4 MB contract.
+- id: pagination
+  conforms: true
+  evidence: >-
+    Consistent offset/limit/sort_by/order_by/filter query parameters across 65-67 list operations, with
+    limit/offset and a links{base,self} object echoed in the response envelope.
+- id: rest
+  conforms: true
+  evidence: Resource-oriented paths with conventional GET/POST/PATCH/PUT/DELETE semantics.
+- id: mcp
+  conforms: false
+  evidence: >-
+    No hosted or stdio MCP server is published by Infoworks or Uniphore for this API. The docs platform's
+    own MCP feature flag is off for this project (DeveloperHub project mcpServerEnabled=false).
+- id: a2a
+  conforms: false
+  evidence: No agent card at /.well-known/agent-card.json or /.well-known/agent.json on any host.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    No AsyncAPI document and no outbound HTTP webhook contract. The platform's event surface is
+    in-product: "Job Hooks" are uploaded BASH/PYTHON scripts executed in-process (multipart/form-data
+    upload with execution_type enum [BASH, PYTHON]), and Event Notifications / Subscribers /
+    notification subscribe-unsubscribe drive email notifications. Neither is a callable event contract,
+    so no Webhooks pointer is emitted.
+- id: graphql
+  conforms: false
+  evidence: No GraphQL surface in the contract or the docs.
+- id: grpc
+  conforms: false
+  evidence: No .proto published in the GitHub organization, on buf.build, or in the docs.
+- id: soap-wsdl
+  conforms: false
+  evidence: >-
+    No ?wsdl or ?singleWsdl surface. Infoworks is a v3 JSON/REST product; no SOAP contract is referenced
+    anywhere in 8,311 indexed documentation URLs.
+domain_standards:
+  applicable: false
+  market: data engineering / data pipeline orchestration
+  note: >-
+    REWARD-ONLY CHECK, LEFT EMPTY DELIBERATELY. The data-engineering market has no adopted contract-level
+    interchange standard that this API could declare — there is no SCIM URN, OData $metadata, OpenRTB
+    endpoint, Sparkplug namespace, LTI/OneRoster shape, OAI-PMH verb or ISO-20022 message type that
+    belongs here. OpenLineage is the closest candidate and is absent from the contract (zero matches).
+    Infoworks integrates with Databricks, Snowflake, BigQuery, Kafka/Confluent, Hive, Parquet and Avro
+    as ADAPTERS — those are targets and formats, not a contract standard it conforms to. Nothing is
+    invented to fill this slot.
+compliance:
+  published: true
+  operator: Uniphore
+  attribution_note: >-
+    Uniphore acquired Infoworks in 2024 and operates it as the InfoWorks product; the corporate site
+    serves the product page at uniphore.com/infoworks/ and release note 6.1.3.2 records the Infoworks
+    logo being replaced with the Uniphore logo in the product UI. The certifications below are
+    Uniphore's corporate program, and the trust center does not name InfoWorks specifically.
+  certifications:
+  - ISO/IEC 27001:2022
+  - ISO/IEC 27017:2015
+  - ISO/IEC 27018:2019
+  - ISO/IEC 27701:2019
+  - SOC 2 Type 2
+  - PCI DSS v4.0.1 (Level 1 Service Provider)
+  - HIPAA
+  - GDPR
+  - NIST CSF
+  - CASA Tier 2
+  - FIPS 140-2 / FIPS 140-3
+  - EU AI Act
+  sources:
+  - url: https://www.uniphore.com/security/
+    status: 200
+  - url: https://trust.uniphore.com/
+    status: 200
+    note: SafeBase-hosted trust center; a bare curl gets a Cloudflare 403 interstitial, a browser user-agent gets the page.
