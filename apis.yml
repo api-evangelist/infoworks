@@ -38,36 +38,1409 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 apis:
-- name: Infoworks REST API v3
-  description: >-
-    The Infoworks v3 REST API — 369 paths and 510 operations across 62 tag groupings — for onboarding sources,
-    crawling and ingesting tables, building pipelines and pipeline groups, scheduling and running
-    workflows and jobs, and administering environments, clusters, secrets, service authentication,
-    subscribers, job hooks and users. Authentication is a short-lived JWT bearer token minted from
-    either HTTP Basic (username:password) or a long-lived refresh token copied from the Infoworks UI.
-    The server block is templated ({protocol}://{host}:{port}/v3) because Infoworks runs in the
-    customer's own cloud, not on a vendor-operated host.
+- aid: infoworks:infoworks-admin-configurations-api
+  name: Infoworks Admin Configurations API
+  description: The Admin Configurations API from Infoworks — 10 operation(s) for admin configurations.
   humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
   baseURL: https://{host}:{port}/v3
-  x-base-url: >-
-    NO FIXED BASE URL EXISTS, and this is a product fact rather than a gap in our research. Infoworks is
-    licensed software deployed into the customer's own cloud account, so every deployment answers on its
-    own host. The provider's own OpenAPI declares a fully templated server ({protocol}://{host}:{port}/v3
-    with defaults http/localhost/3001, the in-cluster service address) and the official Python SDK is
-    initialized with protocol/host/port supplied by the operator. repair-api-bases.py returns
-    `no-usable-base` for exactly this reason; nothing is guessed from the domain to fill it.
   tags:
-  - Data Engineering
-  - Data Integration
-  - Data Ingestion
-  - Workflow Orchestration
-  - Databricks
-  - ETL
+  - Admin Configurations
   properties:
   - type: OpenAPI
-    url: openapi/infoworks-rest-api-v3-openapi.yml
-  - type: Overlay
-    url: overlays/infoworks-rest-api-v3-overlay.yaml
+    url: openapi/infoworks-admin-configurations-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-admin-metadata-backup-api
+  name: Infoworks Admin Metadata Backup API
+  description: The Admin Metadata Backup API from Infoworks — 1 operation(s) for admin metadata backup.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Admin Metadata Backup
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-admin-metadata-backup-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-admin-metadata-cleanup-api
+  name: Infoworks Admin Metadata Cleanup API
+  description: >-
+    The Admin Metadata Cleanup API from Infoworks — 8 operation(s) for admin metadata cleanup.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Admin Metadata Cleanup
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-admin-metadata-cleanup-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-admin-schedules-api
+  name: Infoworks Admin Schedules API
+  description: The Admin Schedules API from Infoworks — 1 operation(s) for admin schedules.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Admin Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-admin-schedules-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-admin-subscribers-api
+  name: Infoworks Admin Subscribers API
+  description: The Admin Subscribers API from Infoworks — 4 operation(s) for admin subscribers.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Admin Subscribers
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-admin-subscribers-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-admin-workflows-api
+  name: Infoworks Admin Workflows API
+  description: The Admin Workflows API from Infoworks — 9 operation(s) for admin workflows.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Admin Workflows
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-admin-workflows-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-audits-api
+  name: Infoworks Audits API
+  description: The Audits API from Infoworks — 2 operation(s) for audits.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Audits
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-audits-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-billing-metering-data-api
+  name: Infoworks Billing Metering Data API
+  description: The Billing Metering Data API from Infoworks — 6 operation(s) for billing metering data.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Billing Metering Data
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-billing-metering-data-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-clear-cache-api
+  name: Infoworks Clear Cache API
+  description: The Clear Cache API from Infoworks — 1 operation(s) for clear cache.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Clear Cache
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-clear-cache-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-configurations-api
+  name: Infoworks Configurations API
+  description: The Configurations API from Infoworks — 2 operation(s) for configurations.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Configurations
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-configurations-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-connections-api
+  name: Infoworks Connections API
+  description: The Connections API from Infoworks — 1 operation(s) for connections.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Connections
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-connections-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-custom-audit-columns-api
+  name: Infoworks Custom Audit Columns API
+  description: The Custom Audit Columns API from Infoworks — 3 operation(s) for custom audit columns.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Custom Audit Columns
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-custom-audit-columns-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-custom-tags-api
+  name: Infoworks Custom Tags API
+  description: Custom Tags
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Custom Tags
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-custom-tags-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-data-catalog-api
+  name: Infoworks Data Catalog API
+  description: Read Operation for Data Catalog
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Data Catalog
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-data-catalog-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-domains-api
+  name: Infoworks Domains API
+  description: The Domains API from Infoworks — 21 operation(s) for domains.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Domains
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-domains-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-engagement-metrics-api
+  name: Infoworks Engagement Metrics API
+  description: Read Operation for engagement metrics
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Engagement Metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-engagement-metrics-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-environment-api
+  name: Infoworks Environment API
+  description: The Environment API from Infoworks — 11 operation(s) for environment.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Environment
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-environment-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-environment-cluster-api
+  name: Infoworks Environment Cluster API
+  description: Environment Cluster to start/stop/restart cluster
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Environment Cluster
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-environment-cluster-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-event-notifications-api
+  name: Infoworks Event Notifications API
+  description: Read Operation for event notifications
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Event Notifications
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-event-notifications-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-favorites-api
+  name: Infoworks Favorites API
+  description: The Favorites API from Infoworks — 2 operation(s) for favorites.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Favorites
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-favorites-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-file-mappings-api
+  name: Infoworks File Mappings API
+  description: The File Mappings API from Infoworks — 7 operation(s) for file mappings.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - File Mappings
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-file-mappings-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-general-configs-api
+  name: Infoworks General Configs API
+  description: The General Configs API from Infoworks — 2 operation(s) for general configs.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - General Configs
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-general-configs-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-generic-source-types-api
+  name: Infoworks Generic Source Types API
+  description: The Generic Source Types API from Infoworks — 4 operation(s) for generic source types.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Generic Source Types
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-generic-source-types-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-get-cdata-connectors-api
+  name: Infoworks Get Cdata Connectors API
+  description: The Get Cdata Connectors API from Infoworks — 1 operation(s) for get cdata connectors.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Get Cdata Connectors
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-get-cdata-connectors-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-getting-server-timezone-api
+  name: Infoworks Getting Server Timezone API
+  description: >-
+    The Getting Server Timezone API from Infoworks — 1 operation(s) for getting server timezone.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Getting Server Timezone
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-getting-server-timezone-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-job-hooks-api
+  name: Infoworks Job Hooks API
+  description: The Job Hooks API from Infoworks — 9 operation(s) for job hooks.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Job Hooks
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-job-hooks-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-jobflows-api
+  name: Infoworks Jobflows API
+  description: Operations to manage Jobflows
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Jobflows
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-jobflows-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-jobs-api
+  name: Infoworks Jobs API
+  description: The Jobs API from Infoworks — 33 operation(s) for jobs.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-jobs-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-license-api
+  name: Infoworks License API
+  description: The License API from Infoworks — 3 operation(s) for license.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - License
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-license-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-locked-entities-api
+  name: Infoworks Locked Entities API
+  description: The Locked Entities API from Infoworks — 7 operation(s) for locked entities.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Locked Entities
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-locked-entities-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-metrics-api
+  name: Infoworks Metrics API
+  description: The Metrics API from Infoworks — 15 operation(s) for metrics.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-metrics-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-misc-api
+  name: Infoworks Misc API
+  description: The Misc API from Infoworks — 2 operation(s) for misc.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Misc
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-misc-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-pipeline-extensions-api
+  name: Infoworks Pipeline Extensions API
+  description: The Pipeline Extensions API from Infoworks — 4 operation(s) for pipeline extensions.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Pipeline Extensions
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-pipeline-extensions-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-pipeline-groups-api
+  name: Infoworks Pipeline Groups API
+  description: The Pipeline Groups API from Infoworks — 6 operation(s) for pipeline groups.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Pipeline Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-pipeline-groups-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-pipeline-version-lock-api
+  name: Infoworks Pipeline Version Lock API
+  description: The Pipeline Version Lock API from Infoworks — 2 operation(s) for pipeline version lock.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Pipeline Version Lock
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-pipeline-version-lock-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-pipeline-version-locks-api
+  name: Infoworks Pipeline Version Locks API
+  description: CRUD operations from pipeline version locks
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Pipeline Version Locks
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-pipeline-version-locks-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-pipelines-api
+  name: Infoworks Pipelines API
+  description: The Pipelines API from Infoworks — 22 operation(s) for pipelines.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Pipelines
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-pipelines-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-presets-api
+  name: Infoworks Presets API
+  description: CRUD Operations to manage user specific presets
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Presets
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-presets-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-scheduling-information-api
+  name: Infoworks Scheduling Information API
+  description: >-
+    The Scheduling Information API from Infoworks — 5 operation(s) for scheduling information.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Scheduling Information
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-scheduling-information-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-secret-store-api
+  name: Infoworks Secret Store API
+  description: CRUD Operations to manage Secret Stores
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Secret Store
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-secret-store-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-secrets-api
+  name: Infoworks Secrets API
+  description: CRUD Operations to manage Secrets
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Secrets
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-secrets-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-security-api
+  name: Infoworks Security API
+  description: The Security API from Infoworks — 8 operation(s) for security.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Security
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-security-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-self-api
+  name: Infoworks Self API
+  description: The Self API from Infoworks — 2 operation(s) for self.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Self
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-self-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-server-time-api
+  name: Infoworks Server Time API
+  description: The Server Time API from Infoworks — 1 operation(s) for server time.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Server Time
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-server-time-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-service-authentication-api
+  name: Infoworks Service Authentication API
+  description: CRUD Operations to manage Service Authentication mechanisms
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Service Authentication
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-service-authentication-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-service-authentication-cache-api
+  name: Infoworks Service Authentication Cache API
+  description: >-
+    The Service Authentication Cache API from Infoworks — 1 operation(s) for service authentication cache.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Service Authentication Cache
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-service-authentication-cache-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-source-configurations-api
+  name: Infoworks Source Configurations API
+  description: The Source Configurations API from Infoworks — 3 operation(s) for source configurations.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Source Configurations
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-source-configurations-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-source-extensions-api
+  name: Infoworks Source Extensions API
+  description: The Source Extensions API from Infoworks — 4 operation(s) for source extensions.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Source Extensions
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-source-extensions-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-sources-api
+  name: Infoworks Sources API
+  description: The Sources API from Infoworks — 8 operation(s) for sources.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-sources-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-stopstreaming-api
+  name: Infoworks Stop Streaming API
+  description: The StopStreaming API from Infoworks — 1 operation(s) for stopstreaming.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - StopStreaming
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-stopstreaming-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-streaming-api
+  name: Infoworks Streaming API
+  description: The Streaming API from Infoworks — 3 operation(s) for streaming.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Streaming
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-streaming-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-subscribers-api
+  name: Infoworks Subscribers API
+  description: The Subscribers API from Infoworks — 2 operation(s) for subscribers.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Subscribers
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-subscribers-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-table-group-schedule-api
+  name: Infoworks Table Group Schedule API
+  description: Enable/Disable schedule for table groups
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Table Group Schedule
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-table-group-schedule-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-table-groups-api
+  name: Infoworks Table Groups API
+  description: The Table Groups API from Infoworks — 5 operation(s) for table groups.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Table Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-table-groups-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-tables-api
+  name: Infoworks Tables API
+  description: The Tables API from Infoworks — 37 operation(s) for tables.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Tables
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-tables-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-target-data-connections-api
+  name: Infoworks Target Data Connections API
+  description: Target Data Connections
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Target Data Connections
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-target-data-connections-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-topics-api
+  name: Infoworks Topics API
+  description: The Topics API from Infoworks — 9 operation(s) for topics.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Topics
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-topics-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-user-notification-subscribe-api
+  name: Infoworks User Notification Subscribe API
+  description: >-
+    The User Notification Subscribe API from Infoworks — 3 operation(s) for user notification subscribe.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - User Notification Subscribe
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-user-notification-subscribe-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-users-api
+  name: Infoworks Users API
+  description: The Users API from Infoworks — 13 operation(s) for users.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-users-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-validation-api
+  name: Infoworks Validation API
+  description: The Validation API from Infoworks — 2 operation(s) for validation.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Validation
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-validation-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-workflow-run-metering-variables-api
+  name: Infoworks Workflow Run Metering variables API
+  description: >-
+    The Workflow Run Metering variables API from Infoworks — 1 operation(s) for workflow run metering
+    variables.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Workflow Run Metering variables
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-workflow-run-metering-variables-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-workflow-versions-api
+  name: Infoworks Workflow Versions API
+  description: Workflow Versions CRUD Operations
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Workflow Versions
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-workflow-versions-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-workflows-api
+  name: Infoworks Workflows API
+  description: The Workflows API from Infoworks — 20 operation(s) for workflows.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Workflows
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-workflows-api-openapi.yml
+  - type: Authentication
+    url: authentication/infoworks-authentication.yml
+  - type: ErrorCatalog
+    url: errors/infoworks-problem-types.yml
+  - type: Conventions
+    url: conventions/infoworks-conventions.yml
+  - type: DataModel
+    url: data-model/infoworks-data-model.yml
+  - type: Documentation
+    url: https://docs.infoworks.io/developer-resources/rest-api
+  - type: APIReference
+    url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+- aid: infoworks:infoworks-workflows-schedules-api
+  name: Infoworks Workflows Schedules API
+  description: The Workflows Schedules API from Infoworks — 5 operation(s) for workflows schedules.
+  humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
+  baseURL: https://{host}:{port}/v3
+  tags:
+  - Workflows Schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/infoworks-workflows-schedules-api-openapi.yml
   - type: Authentication
     url: authentication/infoworks-authentication.yml
   - type: ErrorCatalog
@@ -81,6 +1454,8 @@ apis:
   - type: APIReference
     url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
 common:
+- type: Overlay
+  url: overlays/infoworks-rest-api-v3-overlay.yaml
 - type: Website
   url: https://www.uniphore.com/infoworks/
 - type: Documentation
