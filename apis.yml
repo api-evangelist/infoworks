@@ -12,6 +12,18 @@ description: >-
   Python SDK on PyPI. Infoworks was acquired by Uniphore in 2024 and is sold as InfoWorks inside the
   Uniphore Business AI platform; the corporate site now redirects to uniphore.com while the product
   documentation, support desk and API reference remain on infoworks.io.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://uploads.developerhub.io/prod/Bqr9/thfuawsbhl64giqmsect3d7t9soygddj2m5jd6spkfpphxzhyiyr28crjxt3yycf.png
 url: https://raw.githubusercontent.com/api-evangelist/infoworks/refs/heads/main/apis.yml
 x-type: company
