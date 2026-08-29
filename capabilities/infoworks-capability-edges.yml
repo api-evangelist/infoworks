@@ -1,0 +1,78 @@
+slug: infoworks
+provider: Infoworks
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 6
+edges:
+- tag: Security
+  spec_file: infoworks-security-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: '''Get `authentication_token` with `username` and `password`.''; ''Get SAML Redirect URL.'';
+    ''bulk sync (add/update) ldap user by providing login attribute'''
+  reason: Authentication tokens, SAML SSO initiation and LDAP user synchronisation are identity and access
+    management operations.
+- tag: Users
+  spec_file: infoworks-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: PATCH /admin/users/{user_id}/reset-password "Reset password for user"; "Toggle user login
+    ability"; POST /admin/users/{user_id}/accessible-domains "Add the domain to the user"
+  reason: 'Operations create/update/delete user accounts, reset passwords, toggle login ability and grant
+    access to domains — administrative identity and access management for the platform. Not HR employee
+    records: no employment attributes appear.'
+- tag: Environment
+  spec_file: infoworks-environment-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /admin/environment CreateEnvironment  Create a new environment; POST /admin/environment/{environment_id}/environment-storage  Create
+    storage for environment id; CreateEnvironmentsComputeTemplate  Create ephemeral cluster
+  reason: Manages compute and storage environments (ephemeral clusters, storage) for data processing —
+    cloud compute/storage infrastructure management rather than dev/test environment provisioning for
+    software release.
+- tag: Environment Cluster
+  spec_file: infoworks-environment-cluster-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.7
+  evidence: POST /admin/environment/cluster/ cluster create  Create the cluster; PUT /admin/environment/cluster/restart  Restart
+    the cluster; Terminate the persistent cluster
+  reason: Lifecycle control of compute clusters (create, stop, restart, terminate) is cloud compute infrastructure
+    management; could also be read as day-to-day IT operations.
+- tag: Pipelines
+  spec_file: infoworks-pipelines-api-openapi.yml
+  capability_id: BC-610
+  capability_id_l1: BC-610
+  capability_name: Information & Data Management
+  confidence: 0.7
+  evidence: createPipeline 'create new pipeline for domain with `domain_id`'; getPipelineAnalyticsModelForMLEngine
+    'Gets all `pipeline analytics models` for ML Engine'
+  reason: Core surface for defining and versioning data pipelines on a data onboarding/preparation platform,
+    which realises Information & Data Management; no single L2 (architecture vs analytics vs AI) is clearly
+    dominant.
+- tag: Sources
+  spec_file: infoworks-sources-api-openapi.yml
+  capability_id: BC-610
+  capability_id_l1: BC-610
+  capability_name: Information & Data Management
+  confidence: 0.7
+  evidence: POST /sources  createSource  Create source ... GET /sources/{source_id}/crawl-schema  Crawl
+    Entity Schema
+  reason: 'Core data-onboarding surface: registering data sources, browsing them and crawling entity schemas
+    — information & data management (data ingestion/metadata), not a narrower named sub-capability.'

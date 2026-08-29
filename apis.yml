@@ -1466,6 +1466,9 @@ apis:
   - type: APIReference
     url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
 common:
+- type: CapabilityMap
+  url: capabilities/infoworks-capability-edges.yml
+  name: Infoworks Business Capability Map
 - type: Overlay
   url: overlays/infoworks-rest-api-v3-overlay.yaml
 - type: Website
