@@ -1,0 +1,205 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Pipeline Version Locks API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Pipeline Version Locks
+  description: CRUD operations from pipeline version locks
+paths:
+  /pipeline-version-locks/pipelines/{pipeline_id}:
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getPipelineVersionLocks
+      tags:
+      - Pipeline Version Locks
+      summary: Get all pipeline version locks for pipeline with pipeline_id
+      description: Get all pipeline version locks for pipeline with pipeline_id
+      parameters:
+      - name: pipeline_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: array
+                  items:
+                    type: object
+                    properties:
+                      result:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: 63cd71df9f1c1e258c6e991b
+                            pipeline_id:
+                              type: string
+                              example: 63cd71df9f1c1e258c6e991b
+                            pipeline_version_id:
+                              type: string
+                              example: 63cd71df9f1c1e258c6e991b
+                            version_name:
+                              type: string
+                              example: 1
+                            modified_at:
+                              type: string
+                              example: 2023-01-22T17:26:55:895Z
+                            created_by:
+                              type: string
+                              example: 6RkfybTRQQByEey3v
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

@@ -1,0 +1,56 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Getting Server Timezone API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Getting Server Timezone
+  description: ''
+paths:
+  /server-timezone:
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Getting Server Timezone
+      summary: Use to get server timezone
+      description: Use to get server timezone
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                - properties:
+                    result:
+                      type: string
+                      example: IST
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

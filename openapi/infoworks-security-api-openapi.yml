@@ -1,0 +1,1023 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Security API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Security
+  description: ''
+paths:
+  /security/authenticate:
+    get:
+      tags:
+      - Security
+      summary: Get `authentication_token` with `username` and `password`.
+      description: Get `authentication_token` with `username` and `password`.
+      parameters:
+      - name: service_id
+        in: query
+        description: Used to represent the way user has login into infoworks
+        schema:
+          type: number
+          example: 1
+      security:
+      - BasicAuth: []
+      responses:
+        '200':
+          description: Authentication success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Authentication Success
+                  result:
+                    type: object
+                    properties:
+                      authentication_token:
+                        type: string
+                        example: eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjUwMzc2MTcsInN1YiI6IntcbiAgXCJlbWFpbFwiIDogXCJhZG1pbkBpbmZvd29ya3MuaW9cIixcbiAgXCJzY29wZVwiIDoge1xuICAgIFwiYWN0aW9uXCIgOiBcInJlZnJlc2hfdG9rZW5cIlxuICB9XG59IiwianRpIjoiOTFlZGZkMWYtN2Y5My00NjM0LTg4MjctZTZlYjViYWJmNDJkIiwiZXhwIjoxNjI1MDM4NTE3fQ.aCTMjNebvC2Rf1CrJp_wA0dsozJd-uKpTcdEvDyigSU
+                      is_authenticated:
+                        type: boolean
+                        example: true
+                      user_id:
+                        type: string
+                        example: 6RkfybTRQQByEey3v
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '406':
+          description: Authentication Failed response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Security Client Errors
+                  details:
+                    type: string
+                    example: 'Authentication Failed: Incorrect user credentials'
+                  iw_code:
+                    type: string
+                    example: IW10031
+                  help:
+                    type: string
+                    example: http://api.infoworks.io/help/IW10029
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /security/token/access:
+    get:
+      tags:
+      - Security
+      summary: Get `authentication_token` with `refresh_token`.
+      description: Get `authentication_token` with `refresh_token`.
+      parameters:
+      - name: Authorization
+        in: header
+        description: refresh token auth header put `Basic {refresh_token}`
+        required: true
+        schema:
+          type: string
+          example: zThziQ7MoJJPYAha+U/+PBSTZG944F+SHBDs+m/z2qn8+m/ax8Prpzla1MHzQ5EBLzB2Bw8a+Qs9r6En5BEN2DsmUVJ6sKFb2yI2
+      responses:
+        '200':
+          description: Authentication success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Authentication Success
+                  result:
+                    type: object
+                    properties:
+                      authentication_token:
+                        type: string
+                        example: eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE2MjUwMzc2MTcsInN1YiI6IntcbiAgXCJlbWFpbFwiIDogXCJhZG1pbkBpbmZvd29ya3MuaW9cIixcbiAgXCJzY29wZVwiIDoge1xuICAgIFwiYWN0aW9uXCIgOiBcInJlZnJlc2hfdG9rZW5cIlxuICB9XG59IiwianRpIjoiOTFlZGZkMWYtN2Y5My00NjM0LTg4MjctZTZlYjViYWJmNDJkIiwiZXhwIjoxNjI1MDM4NTE3fQ.aCTMjNebvC2Rf1CrJp_wA0dsozJd-uKpTcdEvDyigSU
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '406':
+          description: Authentication Failed response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Security Client Errors
+                  details:
+                    type: string
+                    example: 'Authentication Failed: Incorrect user credentials'
+                  iw_code:
+                    type: string
+                    example: IW10031
+                  help:
+                    type: string
+                    example: http://api.infoworks.io/help/IW10029
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    delete:
+      operationId: deleteAuthToken
+      tags:
+      - Security
+      summary: Purge authentication token
+      description: Purges authentication token and logs out the user. The user will need to generate a new authentication token for subsequent API calls.
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: string
+                      example: Token successfully blacklisted
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /security/token/validate:
+    get:
+      tags:
+      - Security
+      summary: Validate `authentication_token` if its active or not.
+      description: Validate `authentication_token` if its active or not.
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: Valid Token Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: ''
+                  result:
+                    type: object
+                    properties:
+                      is_valid:
+                        type: boolean
+                        example: true
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /security/token/refresh:
+    delete:
+      tags:
+      - Security
+      summary: Regenerate Refresh Token and blacklist old token.
+      description: Regenerate Refresh Token and blacklist old token.
+      security:
+      - BasicAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Platform Security Response
+                  result:
+                    type: string
+                    example: Successfully Blacklisted Refresh Token.
+          description: ''
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /security/authorise/user:
+    post:
+      tags:
+      - Security
+      summary: Authorise User.
+      description: Authorise User.
+      security:
+      - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entityType:
+                  type: string
+                action:
+                  type: string
+                entityId:
+                  type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  result:
+                    type: object
+                    properties:
+                      delegation_token:
+                        type: string
+                      is_authorised:
+                        type: boolean
+          description: ''
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /security/sso/initialise:
+    get:
+      tags:
+      - Security
+      summary: Get SAML Redirect URL.
+      description: Get SAML Redirect URL.
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: Valid Token Response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Location:
+                    type: string
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /security/get/user/data:
+    post:
+      tags:
+      - Security
+      summary: LDAP Authorise User.
+      description: LDAP Authorise User.
+      security:
+      - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userIds:
+                  type: array
+                  items:
+                    type: string
+                searchAttribute:
+                  type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      type: string
+          description: ''
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /security/bulk-ldap-sync:
+    post:
+      tags:
+      - Security
+      summary: bulk sync (add/update) ldap user by providing login attribute
+      description: bulk sync (add/update) ldap user by providing login attribute
+      security:
+      - BasicAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                search_on:
+                  type: string
+                  example: email
+                search_list:
+                  type: array
+                  items:
+                    type: string
+                    example: admin@infoworks.io
+                should_update:
+                  type: boolean
+                  example: true
+                  default: true
+                should_add:
+                  type: boolean
+                  example: true
+                  default: true
+      responses:
+        '200':
+          description: bulk ldap users sync response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Successfully synced ldap users
+                  result:
+                    type: object
+                    properties:
+                      new_users_count:
+                        type: integer
+                        example: 1
+                      existing_user_count:
+                        type: integer
+                        example: 20
+                      added:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                              example: modeller@infoworks.io
+                            id:
+                              type: string
+                              example: 8qvdcWsT5foNuryNF
+                      updated:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                              example: admin@infoworks.io
+                            id:
+                              type: string
+                              example: 6RkfybTRQQByEey3v
+                      failed:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                              example: prodops@infoworks.io
+                            id:
+                              type: string
+                              example: 9DvdcZsH5foNuryVN
+                            error:
+                              type: string
+                              example: No valid role found for the User.
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '406':
+          description: Authentication Failed response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Security Client Errors
+                  details:
+                    type: string
+                    example: 'Authentication Failed: Incorrect user credentials'
+                  iw_code:
+                    type: string
+                    example: IW10031
+                  help:
+                    type: string
+                    example: http://api.infoworks.io/help/IW10029
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

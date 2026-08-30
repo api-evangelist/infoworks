@@ -1,0 +1,682 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Streaming API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Streaming
+  description: ''
+paths:
+  /sources/{source_id}/table/{table_id}/configurations/streaming:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    - name: table_id
+      in: path
+      description: Table Id.
+      required: true
+      schema:
+        type: string
+    put:
+      security:
+      - BearerAuth: []
+      tags:
+      - Streaming
+      summary: Add/Edit Configuration for streaming options of a table group.
+      description: Add/Edit Configuration for streaming options of a table group.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                state:
+                  type: string
+                  enum:
+                  - enabled
+                  - disabled
+                engine:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      enum:
+                      - spark
+                    master:
+                      type: string
+                      enum:
+                      - yarn
+                      - standalone
+                    deploy_mode:
+                      type: string
+                      enum:
+                      - client
+                      - cluster
+                topic_identifier:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                      - list
+                      - regex
+                    value:
+                      type: string
+                streaming_frequency:
+                  type: string
+                  enum:
+                  - minutes
+                  - hours
+                  - days
+                streaming_value:
+                  type: integer
+                record_type:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: delimited
+                    column_separator:
+                      type: string
+                    column_enclosed_by:
+                      type: string
+                    escape_character:
+                      type: string
+                    character_encoding:
+                      type: string
+                      enum:
+                      - utf-8
+                      - ascii
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      status:
+                        type: string
+                        example: success
+                      id:
+                        type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Streaming
+      summary: Get streaming configuration of given table.
+      description: Get streaming configuration of given table.
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  table_id:
+                    type: string
+                  status:
+                    type: string
+                  job_id:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+  /sources/{source_id}/streaming-tables:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Streaming
+      summary: Get tables for whom streaming configurations are set in a particular source.
+      description: Get tables for whom streaming configurations are set in a particular source.
+      parameters:
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                - type: object
+                  properties:
+                    result:
+                      type: object
+                      properties:
+                        table_id:
+                          type: string
+                        status:
+                          type: string
+                        job_id:
+                          type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+  /sources/{source_id}/streaming-tables/{table_id}:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    - name: table_id
+      in: path
+      description: Table Id.
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Streaming
+      summary: Get streaming table info.
+      description: Get streaming table info.
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  table_id:
+                    type: string
+                  status:
+                    type: string
+                  job_id:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

@@ -1,0 +1,420 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Audits API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Audits
+paths:
+  /sources/{source_id}/audit-logs:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Audits
+      summary: Get the audit logs of the source
+      description: Get the audit logs of the source
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: array
+                      items:
+                        allOf:
+                        - type: object
+                          properties:
+                            id:
+                              type: string
+                              example: e77850ad5127a2d7dab870ff
+                        - type: object
+                          properties:
+                            entity_type:
+                              type: string
+                              example: table_group
+                        - type: object
+                          properties:
+                            entity_id:
+                              type: string
+                              example: e77850ad5127a2d7dab870ff
+                        - properties:
+                            modification:
+                              type: string
+                              example: Changed connection type to tpt from jdbc
+                        - type: object
+                          properties:
+                            modified_at:
+                              type: string
+                              example: '2019-11-21T12:54:05.875Z'
+                        - type: object
+                          properties:
+                            modified_by:
+                              type: string
+                              example: 6RkfybTRQQByEey3v
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+  /sources/{source_id}/tables/{table_id}/audit-logs:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+    - name: table_id
+      in: path
+      description: Table Id.
+      required: true
+      schema:
+        type: string
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Audits
+      summary: Get the audit logs of the table
+      description: Get the audit logs of the table
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: array
+                      items:
+                        allOf:
+                        - type: object
+                          properties:
+                            id:
+                              type: string
+                              example: e77850ad5127a2d7dab870ff
+                        - type: object
+                          properties:
+                            entity_type:
+                              type: string
+                              example: table_group
+                        - type: object
+                          properties:
+                            entity_id:
+                              type: string
+                              example: e77850ad5127a2d7dab870ff
+                        - properties:
+                            modification:
+                              type: string
+                              example: Changed connection type to tpt from jdbc
+                        - type: object
+                          properties:
+                            modified_at:
+                              type: string
+                              example: '2019-11-21T12:54:05.875Z'
+                        - type: object
+                          properties:
+                            modified_by:
+                              type: string
+                              example: 6RkfybTRQQByEey3v
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

@@ -1,0 +1,597 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Jobflows API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Jobflows
+  description: Operations to manage Jobflows
+paths:
+  /admin/jobflows:
+    get:
+      operationId: listJobflows
+      summary: List Jobflows
+      description: Retrieves the list of all jobflows
+      tags:
+      - Jobflows
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                - type: object
+                  properties:
+                    result:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 653f60e6be4fada0100078e7
+                          name:
+                            type: string
+                            example: Source_Crawl_Jobflow
+                          custom_tags:
+                            type: array
+                            items: {}
+                          description:
+                            type: string
+                            example: Jobflow for Source Crawl
+                          created_at:
+                            type: string
+                            format: date-time
+                            example: '2023-10-30T07:51:21.468Z'
+                          created_by:
+                            type: string
+                            example: System
+                          modified_at:
+                            type: string
+                            format: date-time
+                            example: '2024-01-12T10:00:21.468Z'
+                          jobflow_graph:
+                            type: object
+                            required:
+                            - tasks
+                            - edges
+                            properties:
+                              tasks:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    is_group:
+                                      type: boolean
+                                    task_type:
+                                      type: string
+                                    task_id:
+                                      type: string
+                                    title:
+                                      type: string
+                                    description:
+                                      type: string
+                                    task_properties:
+                                      type: object
+                                      properties:
+                                        job_type:
+                                          type: string
+                                        entity_type:
+                                          type: string
+                                      required:
+                                      - job_type
+                                      - entity_type
+                                    run_properties:
+                                      type: object
+                                      properties:
+                                        trigger_rule:
+                                          type: string
+                                      required:
+                                      - trigger_rule
+                              edges:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    from_task:
+                                      type: string
+                                    to_task:
+                                      type: string
+                                    category:
+                                      type: string
+                        example:
+                          id: 653f60e6be4fada0100078e7
+                          name: Source_Crawl_Jobflow
+                          custom_tags: []
+                          description: Jobflow with Dummy Node
+                          created_at: '2023-10-30T07:51:21.468Z'
+                          created_by: System
+                          modified_at: '2024-01-12T10:00:21.468Z'
+                          jobflow_graph:
+                            tasks:
+                            - is_group: false
+                              task_type: entity_state_update
+                              task_id: BS_A8E9
+                              title: Entity state update
+                              description: ''
+                              task_properties:
+                                job_type: source_crawl
+                                entity_type: source
+                              run_properties:
+                                trigger_rule: all_success
+                            - is_group: false
+                              task_type: ingestion_pre_execute_task
+                              task_id: BS_A8E5
+                              title: Pre-ingestion-ob
+                              description: ''
+                              task_properties:
+                                job_type: source_crawl
+                                entity_type: source
+                              run_properties:
+                                trigger_rule: all_success
+                            - is_group: false
+                              task_type: job_submission_task
+                              task_id: BS_A8E6
+                              title: Job submission task
+                              description: ''
+                              task_properties:
+                                job_type: source_crawl
+                                entity_type: source
+                              run_properties:
+                                trigger_rule: all_success
+                            - is_group: false
+                              task_type: job_cleanup_task
+                              task_id: BS_A8E8
+                              title: Job cleanup tasks
+                              description: ''
+                              task_properties: {}
+                              run_properties:
+                                trigger_rule: all_done
+                            edges:
+                            - from_task: BS_A8E9
+                              to_task: BS_A8E5
+                              category: LINK
+                            - from_task: BS_A8E5
+                              to_task: BS_A8E6
+                              category: LINK
+                            - from_task: BS_A8E6
+                              to_task: BS_A8E8
+                              category: LINK
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/jobflows/{jobflow_id_or_name}:
+    parameters:
+    - name: jobflow_id_or_name
+      in: path
+      description: Job Flow Id or Name
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      summary: Get Jobflow
+      description: Retrieves the jobflow details
+      operationId: getJobflow
+      tags:
+      - Jobflows
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      oneOf:
+                      - type: object
+                        properties:
+                          id:
+                            type: string
+                            example: 653f60e6be4fada0100078e7
+                          name:
+                            type: string
+                            example: Source_Crawl_Jobflow
+                          custom_tags:
+                            type: array
+                            items: {}
+                          description:
+                            type: string
+                            example: Jobflow for Source Crawl
+                          created_at:
+                            type: string
+                            format: date-time
+                            example: '2023-10-30T07:51:21.468Z'
+                          created_by:
+                            type: string
+                            example: System
+                          modified_at:
+                            type: string
+                            format: date-time
+                            example: '2024-01-12T10:00:21.468Z'
+                          jobflow_graph:
+                            type: object
+                            required:
+                            - tasks
+                            - edges
+                            properties:
+                              tasks:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    is_group:
+                                      type: boolean
+                                    task_type:
+                                      type: string
+                                    task_id:
+                                      type: string
+                                    title:
+                                      type: string
+                                    description:
+                                      type: string
+                                    task_properties:
+                                      type: object
+                                      properties:
+                                        job_type:
+                                          type: string
+                                        entity_type:
+                                          type: string
+                                      required:
+                                      - job_type
+                                      - entity_type
+                                    run_properties:
+                                      type: object
+                                      properties:
+                                        trigger_rule:
+                                          type: string
+                                      required:
+                                      - trigger_rule
+                              edges:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    from_task:
+                                      type: string
+                                    to_task:
+                                      type: string
+                                    category:
+                                      type: string
+                        example:
+                          id: 653f60e6be4fada0100078e7
+                          name: Source_Crawl_Jobflow
+                          custom_tags: []
+                          description: Jobflow with Dummy Node
+                          created_at: '2023-10-30T07:51:21.468Z'
+                          created_by: System
+                          modified_at: '2024-01-12T10:00:21.468Z'
+                          jobflow_graph:
+                            tasks:
+                            - is_group: false
+                              task_type: entity_state_update
+                              task_id: BS_A8E9
+                              title: Entity state update
+                              description: ''
+                              task_properties:
+                                job_type: source_crawl
+                                entity_type: source
+                              run_properties:
+                                trigger_rule: all_success
+                            - is_group: false
+                              task_type: ingestion_pre_execute_task
+                              task_id: BS_A8E5
+                              title: Pre-ingestion-ob
+                              description: ''
+                              task_properties:
+                                job_type: source_crawl
+                                entity_type: source
+                              run_properties:
+                                trigger_rule: all_success
+                            - is_group: false
+                              task_type: job_submission_task
+                              task_id: BS_A8E6
+                              title: Job submission task
+                              description: ''
+                              task_properties:
+                                job_type: source_crawl
+                                entity_type: source
+                              run_properties:
+                                trigger_rule: all_success
+                            - is_group: false
+                              task_type: job_cleanup_task
+                              task_id: BS_A8E8
+                              title: Job cleanup tasks
+                              description: ''
+                              task_properties: {}
+                              run_properties:
+                                trigger_rule: all_done
+                            edges:
+                            - from_task: BS_A8E9
+                              to_task: BS_A8E5
+                              category: LINK
+                            - from_task: BS_A8E5
+                              to_task: BS_A8E6
+                              category: LINK
+                            - from_task: BS_A8E6
+                              to_task: BS_A8E8
+                              category: LINK
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

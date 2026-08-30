@@ -1,0 +1,309 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Misc API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Misc
+paths:
+  /schema/exists:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+    post:
+      security:
+      - BearerAuth: []
+      tags:
+      - Misc
+      summary: Check if schema is unique
+      description: Check if schema is unique
+      operationId: checkUniqueSchema
+      requestBody:
+        description: Source configurations
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                schema:
+                  type: string
+                  example: Ebola
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      exists:
+                        type: boolean
+                        example: false
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+      x-codegen-request-body-name: schema
+  /path/exists:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+    post:
+      security:
+      - BearerAuth: []
+      tags:
+      - Misc
+      summary: Check if path is unique
+      description: Check if path is unique
+      operationId: checkUniquePath
+      requestBody:
+        description: Source configurations
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                path:
+                  type: string
+                  example: Ebola
+                storage_type:
+                  type: string
+                  example: Ebola
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      exists:
+                        type: boolean
+                        example: false
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+      x-codegen-request-body-name: path
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

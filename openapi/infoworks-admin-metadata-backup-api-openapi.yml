@@ -1,0 +1,508 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Admin Metadata Backup API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Admin Metadata Backup
+paths:
+  /admin/mongo-backup/configuration:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+        - multipart/form-data
+        - text/plain
+        default: application/json
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Admin Metadata Backup
+      summary: Get Backup configs for metadata backup job
+      description: Get Backup configs for metadata backup job
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: array
+                      items:
+                        oneOf:
+                        - type: object
+                          properties:
+                            backup_type:
+                              type: string
+                              enum:
+                              - local
+                              example: local
+                            target_path:
+                              type: string
+                              example: /opt/infoworks/mongo-backups/
+                        - type: object
+                          required:
+                          - backup_type
+                          - target_path
+                          - bucket_name
+                          - authentication_mechanism
+                          - upload_option
+                          - file
+                          properties:
+                            backup_type:
+                              type: string
+                              enum:
+                              - gcs
+                              example: gcs
+                            target_path:
+                              type: string
+                              example: /opt/infoworks/mongo-backups/
+                            bucket_name:
+                              type: string
+                              example: temp-bucket
+                            authentication_mechanism:
+                              type: string
+                              enum:
+                              - service_credential_file
+                              example: service_credential_file
+                            upload_option:
+                              type: string
+                              enum:
+                              - fileUpload
+                              - serverLocation
+                              example: fileUpload
+                            server_path:
+                              type: string
+                              example: /opt/infoworks/conf/creds.json
+                            files:
+                              description: Required file if upload_option is fileUpload
+                              type: string
+                              format: binary
+                        - type: object
+                          required:
+                          - backup_type
+                          - target_path
+                          - container_name
+                          - storage_account_name
+                          - account_key
+                          properties:
+                            backup_type:
+                              type: string
+                              enum:
+                              - wasb
+                              example: wasb
+                            target_path:
+                              type: string
+                              example: /opt/infoworks/mongo-backups/
+                            container_name:
+                              type: string
+                              example: temp
+                            storage_account_name:
+                              type: string
+                              example: account1
+                            account_key:
+                              oneOf:
+                              - type: string
+                              - type: object
+                                required:
+                                - password_type
+                                properties:
+                                  password_type:
+                                    type: string
+                                    enum:
+                                    - infoworks_managed
+                                    - secret_store
+                                  secret_id:
+                                    type: string
+                                    example: e77850ad5127a2d7dab870ff
+                                  password:
+                                    type: string
+                        - type: object
+                          required:
+                          - backup_type
+                          - target_path
+                          - bucket_name
+                          - access_key
+                          - secret_key
+                          properties:
+                            backup_type:
+                              type: string
+                              enum:
+                              - s3
+                              example: s3
+                            target_path:
+                              type: string
+                              example: /opt/infoworks/mongo-backups/
+                            bucket_name:
+                              type: string
+                              example: temp
+                            access_key:
+                              type: string
+                              example: askjbfkajfbajsbI3
+                            secret_key:
+                              type: string
+                              example: sfhBsnfaoHi24
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    post:
+      security:
+      - BearerAuth: []
+      tags:
+      - Admin Metadata Backup
+      summary: Add Backup configs for metadata backup job
+      description: Add Backup configs for metadata backup job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - type: object
+                properties:
+                  backup_type:
+                    type: string
+                    enum:
+                    - local
+                    example: local
+                  target_path:
+                    type: string
+                    example: /opt/infoworks/mongo-backups/
+              - type: object
+                required:
+                - backup_type
+                - target_path
+                - bucket_name
+                - authentication_mechanism
+                - upload_option
+                - file
+                properties:
+                  backup_type:
+                    type: string
+                    enum:
+                    - gcs
+                    example: gcs
+                  target_path:
+                    type: string
+                    example: /opt/infoworks/mongo-backups/
+                  bucket_name:
+                    type: string
+                    example: temp-bucket
+                  authentication_mechanism:
+                    type: string
+                    enum:
+                    - service_credential_file
+                    example: service_credential_file
+                  upload_option:
+                    type: string
+                    enum:
+                    - fileUpload
+                    - serverLocation
+                    example: fileUpload
+                  server_path:
+                    type: string
+                    example: /opt/infoworks/conf/creds.json
+                  files:
+                    description: Required file if upload_option is fileUpload
+                    type: string
+                    format: binary
+              - type: object
+                required:
+                - backup_type
+                - target_path
+                - container_name
+                - storage_account_name
+                - account_key
+                properties:
+                  backup_type:
+                    type: string
+                    enum:
+                    - wasb
+                    example: wasb
+                  target_path:
+                    type: string
+                    example: /opt/infoworks/mongo-backups/
+                  container_name:
+                    type: string
+                    example: temp
+                  storage_account_name:
+                    type: string
+                    example: account1
+                  account_key:
+                    oneOf:
+                    - type: string
+                    - type: object
+                      required:
+                      - password_type
+                      properties:
+                        password_type:
+                          type: string
+                          enum:
+                          - infoworks_managed
+                          - secret_store
+                        secret_id:
+                          type: string
+                          example: e77850ad5127a2d7dab870ff
+                        password:
+                          type: string
+              - type: object
+                required:
+                - backup_type
+                - target_path
+                - bucket_name
+                - access_key
+                - secret_key
+                properties:
+                  backup_type:
+                    type: string
+                    enum:
+                    - s3
+                    example: s3
+                  target_path:
+                    type: string
+                    example: /opt/infoworks/mongo-backups/
+                  bucket_name:
+                    type: string
+                    example: temp
+                  access_key:
+                    type: string
+                    example: askjbfkajfbajsbI3
+                  secret_key:
+                    type: string
+                    example: sfhBsnfaoHi24
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: e77850ad5127a2d7dab870ff
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

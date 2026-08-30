@@ -1,0 +1,3280 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Job Hooks API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Job Hooks
+  description: ''
+paths:
+  /admin/job-hooks:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+        - multipart/form-data
+        - text/plain
+        default: application/json
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Job Hooks
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      summary: Get Job Hooks List
+      description: Get Job Hooks List
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: List of Job Hooks.
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 6fb069238f33b86d4262dcdc
+                        execution_type:
+                          type: string
+                          example: PYTHON
+                        name:
+                          type: string
+                          example: test
+                        parameters:
+                          type: string
+                          example: ''
+                        fail_job_if_hook_fails:
+                          type: boolean
+                          example: true
+                        executable_file_name:
+                          type: string
+                          example: test.py
+                        file_details:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              file_name:
+                                type: string
+                                example: terajdbc4.jar
+                              file_path:
+                                type: string
+                                example: /opt/infoworks/lib/ingestion/drivers/test/terajdbc4.jar
+                              file_size:
+                                type: integer
+                                example: 963400
+                              uploaded_by:
+                                type: string
+                                example: 6RkfybTRQQByEey3v
+                              last_modified:
+                                type: string
+                                example: '2019-11-21T12:54:05.875Z'
+                        environment_variables_conf:
+                          type: array
+                          items:
+                            type: object
+                            required:
+                            - name
+                            - config_type
+                            properties:
+                              name:
+                                type: string
+                                example: RDBMS_PASSWORD
+                              config_type:
+                                type: string
+                                example: KEYVAULT
+                                enum:
+                                - KEYVAULT
+                                - ADMIN
+                              config_name:
+                                type: string
+                                example: iw_admin_conf
+                              secret_id:
+                                type: string
+                                example: e77850ad5127a2d7dab870ff
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    post:
+      security:
+      - BearerAuth: []
+      tags:
+      - Job Hooks
+      summary: Create a Job Hook
+      description: Create a Job Hook
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - name
+              - executable_file_name
+              - execution_type
+              - files
+              properties:
+                name:
+                  type: string
+                  example: test
+                  pattern: ^[a-z0-9A-Z_-]+$
+                execution_type:
+                  type: string
+                  example: PYTHON
+                  enum:
+                  - BASH
+                  - PYTHON
+                executable_file_name:
+                  type: string
+                  example: test.py
+                failJobIfHookFails:
+                  type: boolean
+                  example: false
+                parameters:
+                  type: string
+                  example: ''
+                files:
+                  description: Required files if upload_option is fileUpload
+                  type: string
+                  format: binary
+                  example: test.py
+                environment_variables_conf:
+                  description: Additional environment variables to pass in process
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - name
+                    - config_type
+                    properties:
+                      name:
+                        type: string
+                        example: RDBMS_PASSWORD
+                      config_type:
+                        type: string
+                        example: KEYVAULT
+                        enum:
+                        - KEYVAULT
+                        - ADMIN
+                      config_name:
+                        type: string
+                        example: iw_admin_conf
+                      secret_id:
+                        type: string
+                        example: e77850ad5127a2d7dab870ff
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Successfully created job hook.
+                  result:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 5f9708117758f33f8b013824
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/job-hooks/{job_hook_id}:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+        - multipart/form-data
+        - text/plain
+        default: application/json
+    - name: job_hook_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Job Hooks
+      summary: Get Job Hook By Id
+      description: Get Job Hook By Id
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Found Generic Source Type.
+                  result:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 6fb069238f33b86d4262dcdc
+                      execution_type:
+                        type: string
+                        example: PYTHON
+                      name:
+                        type: string
+                        example: test
+                      parameters:
+                        type: string
+                        example: ''
+                      fail_job_if_hook_fails:
+                        type: boolean
+                        example: true
+                      executable_file_name:
+                        type: string
+                        example: test.py
+                      file_details:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            file_name:
+                              type: string
+                              example: terajdbc4.jar
+                            file_path:
+                              type: string
+                              example: /opt/infoworks/lib/ingestion/drivers/test/terajdbc4.jar
+                            file_size:
+                              type: integer
+                              example: 963400
+                            uploaded_by:
+                              type: string
+                              example: 6RkfybTRQQByEey3v
+                            last_modified:
+                              type: string
+                              example: '2019-11-21T12:54:05.875Z'
+                      environment_variables_conf:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                          - name
+                          - config_type
+                          properties:
+                            name:
+                              type: string
+                              example: RDBMS_PASSWORD
+                            config_type:
+                              type: string
+                              example: KEYVAULT
+                              enum:
+                              - KEYVAULT
+                              - ADMIN
+                            config_name:
+                              type: string
+                              example: iw_admin_conf
+                            secret_id:
+                              type: string
+                              example: e77850ad5127a2d7dab870ff
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    patch:
+      security:
+      - BearerAuth: []
+      tags:
+      - Job Hooks
+      summary: Update Job Hook Type By Id
+      description: Update Job Hook Type By Id
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: test
+                  pattern: ^[a-z0-9A-Z_-]+$
+                execution_type:
+                  type: string
+                  example: PYTHON
+                  enum:
+                  - BASH
+                  - PYTHON
+                executable_file_name:
+                  type: string
+                  example: test.py
+                failJobIfHookFails:
+                  type: boolean
+                  example: false
+                parameters:
+                  type: string
+                  example: ''
+                files:
+                  description: Required files if upload_option is fileUpload
+                  type: string
+                  format: binary
+                  example: test.py
+                environment_variables_conf:
+                  description: Additional environment variables to pass in process
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - name
+                    - config_type
+                    properties:
+                      name:
+                        type: string
+                        example: RDBMS_PASSWORD
+                      config_type:
+                        type: string
+                        example: KEYVAULT
+                        enum:
+                        - KEYVAULT
+                        - ADMIN
+                      config_name:
+                        type: string
+                        example: iw_admin_conf
+                      secret_id:
+                        type: string
+                        example: e77850ad5127a2d7dab870ff
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Updates Job Hook
+                  result:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 5f9708117758f33f8b013824
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    delete:
+      security:
+      - BearerAuth: []
+      tags:
+      - Job Hooks
+      summary: Delete Job Hook By Id
+      description: Delete Job Hook By Id
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Deleted Job Hook
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/job-hooks/{job_hook_id}/files:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+        - multipart/form-data
+        - text/plain
+        default: application/json
+    - name: job_hook_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Job Hooks
+      summary: Get all files in Job Hook by id
+      description: Get all files in Job Hook by `job_hook_id`
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          file_name:
+                            type: string
+                            example: terajdbc4.jar
+                          file_path:
+                            type: string
+                            example: /opt/infoworks/lib/ingestion/drivers/test/terajdbc4.jar
+                          file_size:
+                            type: integer
+                            example: 963400
+                          uploaded_by:
+                            type: string
+                            example: 6RkfybTRQQByEey3v
+                          last_modified:
+                            type: string
+                            example: '2019-11-21T12:54:05.875Z'
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    post:
+      security:
+      - BearerAuth: []
+      tags:
+      - Job Hooks
+      summary: add file in Job Hook by id
+      description: add file in Job Hook by `job_hook_id`
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+              example: test
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/audit/job-hooks/global:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+        - multipart/form-data
+        - text/plain
+        default: application/json
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Job Hooks
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      summary: Get Global Audit Job Hooks List
+      description: Get Global Audit Job Hooks List
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: List of Job Hooks.
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 2ece3a493ee726793b2c3fcd
+                        extension_id:
+                          type: string
+                          example: 2ece3a493ee726793b2c3fcd
+                        modifiedAt:
+                          type: string
+                          example: '2022-09-28T09:10:34.860Z'
+                        modifiedBy:
+                          type: string
+                          example: 6RkfybTRQQByEey3v
+                        action:
+                          type: string
+                          example: create
+                        audit_details:
+                          type: object
+                          properties:
+                            sub_action:
+                              type: string
+                            name:
+                              type: string
+                            new_name:
+                              type: string
+                            old_name:
+                              type: string
+                            new_type:
+                              type: string
+                            old_type:
+                              type: string
+                        new_Configurations:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: 6fb069238f33b86d4262dcdc
+                            execution_type:
+                              type: string
+                              example: PYTHON
+                            name:
+                              type: string
+                              example: test
+                            parameters:
+                              type: string
+                              example: ''
+                            fail_job_if_hook_fails:
+                              type: boolean
+                              example: true
+                            executable_file_name:
+                              type: string
+                              example: test.py
+                            file_details:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  file_name:
+                                    type: string
+                                    example: terajdbc4.jar
+                                  file_path:
+                                    type: string
+                                    example: /opt/infoworks/lib/ingestion/drivers/test/terajdbc4.jar
+                                  file_size:
+                                    type: integer
+                                    example: 963400
+                                  uploaded_by:
+                                    type: string
+                                    example: 6RkfybTRQQByEey3v
+                                  last_modified:
+                                    type: string
+                                    example: '2019-11-21T12:54:05.875Z'
+                            environment_variables_conf:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - name
+                                - config_type
+                                properties:
+                                  name:
+                                    type: string
+                                    example: RDBMS_PASSWORD
+                                  config_type:
+                                    type: string
+                                    example: KEYVAULT
+                                    enum:
+                                    - KEYVAULT
+                                    - ADMIN
+                                  config_name:
+                                    type: string
+                                    example: iw_admin_conf
+                                  secret_id:
+                                    type: string
+                                    example: e77850ad5127a2d7dab870ff
+                        old_Configurations:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: 6fb069238f33b86d4262dcdc
+                            execution_type:
+                              type: string
+                              example: PYTHON
+                            name:
+                              type: string
+                              example: test
+                            parameters:
+                              type: string
+                              example: ''
+                            fail_job_if_hook_fails:
+                              type: boolean
+                              example: true
+                            executable_file_name:
+                              type: string
+                              example: test.py
+                            file_details:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  file_name:
+                                    type: string
+                                    example: terajdbc4.jar
+                                  file_path:
+                                    type: string
+                                    example: /opt/infoworks/lib/ingestion/drivers/test/terajdbc4.jar
+                                  file_size:
+                                    type: integer
+                                    example: 963400
+                                  uploaded_by:
+                                    type: string
+                                    example: 6RkfybTRQQByEey3v
+                                  last_modified:
+                                    type: string
+                                    example: '2019-11-21T12:54:05.875Z'
+                            environment_variables_conf:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - name
+                                - config_type
+                                properties:
+                                  name:
+                                    type: string
+                                    example: RDBMS_PASSWORD
+                                  config_type:
+                                    type: string
+                                    example: KEYVAULT
+                                    enum:
+                                    - KEYVAULT
+                                    - ADMIN
+                                  config_name:
+                                    type: string
+                                    example: iw_admin_conf
+                                  secret_id:
+                                    type: string
+                                    example: e77850ad5127a2d7dab870ff
+                        username:
+                          type: string
+                          example: Admin
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/audit/job-hooks/{extension_id}:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+        - multipart/form-data
+        - text/plain
+        default: application/json
+    - name: extension_id
+      in: path
+      description: Audit Extension Id
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Job Hooks
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      summary: Get Audit Job Hooks List
+      description: Get Audit Job Hooks List
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: List of Job Hooks.
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 2ece3a493ee726793b2c3fcd
+                        extension_id:
+                          type: string
+                          example: 2ece3a493ee726793b2c3fcd
+                        modifiedAt:
+                          type: string
+                          example: '2022-09-28T09:10:34.860Z'
+                        modifiedBy:
+                          type: string
+                          example: 6RkfybTRQQByEey3v
+                        action:
+                          type: string
+                          example: create
+                        audit_details:
+                          type: object
+                          properties:
+                            sub_action:
+                              type: string
+                            name:
+                              type: string
+                            new_name:
+                              type: string
+                            old_name:
+                              type: string
+                            new_type:
+                              type: string
+                            old_type:
+                              type: string
+                        new_Configurations:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: 1e4b221a10e1a64e4a429e10
+                            name:
+                              type: string
+                              example: test
+                            type:
+                              type: string
+                              example: generic_jdbc
+                            execution_type:
+                              type: string
+                              example: JAVA
+                              enum:
+                              - JAVA
+                              - PYTHON
+                            supported_execution_engines:
+                              type: array
+                              items:
+                                type: string
+                                enum:
+                                - HIVE
+                                - SPARK
+                                - IMPALA
+                            path:
+                              type: string
+                              example: /opt/infoworks/drivers
+                            upload_option:
+                              type: string
+                              enum:
+                              - fileUpload
+                              - serverLocation
+                              example: fileUpload
+                            file_details:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  file_name:
+                                    type: string
+                                    example: terajdbc4.jar
+                                  file_path:
+                                    type: string
+                                    example: /opt/infoworks/lib/ingestion/drivers/test/terajdbc4.jar
+                                  file_size:
+                                    type: integer
+                                    example: 963400
+                                  uploaded_by:
+                                    type: string
+                                    example: 6RkfybTRQQByEey3v
+                                  last_modified:
+                                    type: string
+                                    example: '2019-11-21T12:54:05.875Z'
+                            transformations:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - alias
+                                - class_name
+                                properties:
+                                  alias:
+                                    type: string
+                                    example: test
+                                  class_name:
+                                    type: string
+                                    example: transform
+                            additional_config_parameters:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - name
+                                - config_type
+                                properties:
+                                  name:
+                                    type: string
+                                    example: RDBMS_PASSWORD
+                                  config_type:
+                                    type: string
+                                    example: KEYVAULT
+                                    enum:
+                                    - KEYVAULT
+                                    - ADMIN
+                                  config_name:
+                                    type: string
+                                    example: iw_admin_conf
+                                  secret_id:
+                                    type: string
+                                    example: e77850ad5127a2d7dab870ff
+                        old_Configurations:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: 1e4b221a10e1a64e4a429e10
+                            name:
+                              type: string
+                              example: test
+                            type:
+                              type: string
+                              example: generic_jdbc
+                            execution_type:
+                              type: string
+                              example: JAVA
+                              enum:
+                              - JAVA
+                              - PYTHON
+                            supported_execution_engines:
+                              type: array
+                              items:
+                                type: string
+                                enum:
+                                - HIVE
+                                - SPARK
+                                - IMPALA
+                            path:
+                              type: string
+                              example: /opt/infoworks/drivers
+                            upload_option:
+                              type: string
+                              enum:
+                              - fileUpload
+                              - serverLocation
+                              example: fileUpload
+                            file_details:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  file_name:
+                                    type: string
+                                    example: terajdbc4.jar
+                                  file_path:
+                                    type: string
+                                    example: /opt/infoworks/lib/ingestion/drivers/test/terajdbc4.jar
+                                  file_size:
+                                    type: integer
+                                    example: 963400
+                                  uploaded_by:
+                                    type: string
+                                    example: 6RkfybTRQQByEey3v
+                                  last_modified:
+                                    type: string
+                                    example: '2019-11-21T12:54:05.875Z'
+                            transformations:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - alias
+                                - class_name
+                                properties:
+                                  alias:
+                                    type: string
+                                    example: test
+                                  class_name:
+                                    type: string
+                                    example: transform
+                            additional_config_parameters:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - name
+                                - config_type
+                                properties:
+                                  name:
+                                    type: string
+                                    example: RDBMS_PASSWORD
+                                  config_type:
+                                    type: string
+                                    example: KEYVAULT
+                                    enum:
+                                    - KEYVAULT
+                                    - ADMIN
+                                  config_name:
+                                    type: string
+                                    example: iw_admin_conf
+                                  secret_id:
+                                    type: string
+                                    example: e77850ad5127a2d7dab870ff
+                        username:
+                          type: string
+                          example: Admin
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/audit/pipeline-extensions/global:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+        - multipart/form-data
+        - text/plain
+        default: application/json
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Job Hooks
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      summary: Get Global Audit Pipeline Extension List
+      description: Get Global Audit Pipeline Extension List
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: List of Job Hooks.
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 2ece3a493ee726793b2c3fcd
+                        extension_id:
+                          type: string
+                          example: 2ece3a493ee726793b2c3fcd
+                        modifiedAt:
+                          type: string
+                          example: '2022-09-28T09:10:34.860Z'
+                        modifiedBy:
+                          type: string
+                          example: 6RkfybTRQQByEey3v
+                        action:
+                          type: string
+                          example: create
+                        audit_details:
+                          type: object
+                          properties:
+                            sub_action:
+                              type: string
+                            name:
+                              type: string
+                            new_name:
+                              type: string
+                            old_name:
+                              type: string
+                            new_type:
+                              type: string
+                            old_type:
+                              type: string
+                        new_Configurations:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: 1e4b221a10e1a64e4a429e10
+                            name:
+                              type: string
+                              example: test
+                            type:
+                              type: string
+                              example: generic_jdbc
+                            execution_type:
+                              type: string
+                              example: JAVA
+                              enum:
+                              - JAVA
+                              - PYTHON
+                            supported_execution_engines:
+                              type: array
+                              items:
+                                type: string
+                                enum:
+                                - HIVE
+                                - SPARK
+                                - IMPALA
+                            path:
+                              type: string
+                              example: /opt/infoworks/drivers
+                            upload_option:
+                              type: string
+                              enum:
+                              - fileUpload
+                              - serverLocation
+                              example: fileUpload
+                            file_details:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  file_name:
+                                    type: string
+                                    example: terajdbc4.jar
+                                  file_path:
+                                    type: string
+                                    example: /opt/infoworks/lib/ingestion/drivers/test/terajdbc4.jar
+                                  file_size:
+                                    type: integer
+                                    example: 963400
+                                  uploaded_by:
+                                    type: string
+                                    example: 6RkfybTRQQByEey3v
+                                  last_modified:
+                                    type: string
+                                    example: '2019-11-21T12:54:05.875Z'
+                            transformations:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - alias
+                                - class_name
+                                properties:
+                                  alias:
+                                    type: string
+                                    example: test
+                                  class_name:
+                                    type: string
+                                    example: transform
+                            additional_config_parameters:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - name
+                                - config_type
+                                properties:
+                                  name:
+                                    type: string
+                                    example: RDBMS_PASSWORD
+                                  config_type:
+                                    type: string
+                                    example: KEYVAULT
+                                    enum:
+                                    - KEYVAULT
+                                    - ADMIN
+                                  config_name:
+                                    type: string
+                                    example: iw_admin_conf
+                                  secret_id:
+                                    type: string
+                                    example: e77850ad5127a2d7dab870ff
+                        old_Configurations:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: 1e4b221a10e1a64e4a429e10
+                            name:
+                              type: string
+                              example: test
+                            type:
+                              type: string
+                              example: generic_jdbc
+                            execution_type:
+                              type: string
+                              example: JAVA
+                              enum:
+                              - JAVA
+                              - PYTHON
+                            supported_execution_engines:
+                              type: array
+                              items:
+                                type: string
+                                enum:
+                                - HIVE
+                                - SPARK
+                                - IMPALA
+                            path:
+                              type: string
+                              example: /opt/infoworks/drivers
+                            upload_option:
+                              type: string
+                              enum:
+                              - fileUpload
+                              - serverLocation
+                              example: fileUpload
+                            file_details:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  file_name:
+                                    type: string
+                                    example: terajdbc4.jar
+                                  file_path:
+                                    type: string
+                                    example: /opt/infoworks/lib/ingestion/drivers/test/terajdbc4.jar
+                                  file_size:
+                                    type: integer
+                                    example: 963400
+                                  uploaded_by:
+                                    type: string
+                                    example: 6RkfybTRQQByEey3v
+                                  last_modified:
+                                    type: string
+                                    example: '2019-11-21T12:54:05.875Z'
+                            transformations:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - alias
+                                - class_name
+                                properties:
+                                  alias:
+                                    type: string
+                                    example: test
+                                  class_name:
+                                    type: string
+                                    example: transform
+                            additional_config_parameters:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - name
+                                - config_type
+                                properties:
+                                  name:
+                                    type: string
+                                    example: RDBMS_PASSWORD
+                                  config_type:
+                                    type: string
+                                    example: KEYVAULT
+                                    enum:
+                                    - KEYVAULT
+                                    - ADMIN
+                                  config_name:
+                                    type: string
+                                    example: iw_admin_conf
+                                  secret_id:
+                                    type: string
+                                    example: e77850ad5127a2d7dab870ff
+                        username:
+                          type: string
+                          example: Admin
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/audit/pipeline-extensions/{extension_id}:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+        - multipart/form-data
+        - text/plain
+        default: application/json
+    - name: extension_id
+      in: path
+      description: Audit Extension Id
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Job Hooks
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      summary: Get Audit Pipeline Extension List
+      description: Get Audit Pipeline Extension List
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: List of Job Hooks.
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 2ece3a493ee726793b2c3fcd
+                        extension_id:
+                          type: string
+                          example: 2ece3a493ee726793b2c3fcd
+                        modifiedAt:
+                          type: string
+                          example: '2022-09-28T09:10:34.860Z'
+                        modifiedBy:
+                          type: string
+                          example: 6RkfybTRQQByEey3v
+                        action:
+                          type: string
+                          example: create
+                        audit_details:
+                          type: object
+                          properties:
+                            sub_action:
+                              type: string
+                            name:
+                              type: string
+                            new_name:
+                              type: string
+                            old_name:
+                              type: string
+                            new_type:
+                              type: string
+                            old_type:
+                              type: string
+                        new_Configurations:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: 6fb069238f33b86d4262dcdc
+                            execution_type:
+                              type: string
+                              example: PYTHON
+                            name:
+                              type: string
+                              example: test
+                            parameters:
+                              type: string
+                              example: ''
+                            fail_job_if_hook_fails:
+                              type: boolean
+                              example: true
+                            executable_file_name:
+                              type: string
+                              example: test.py
+                            file_details:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  file_name:
+                                    type: string
+                                    example: terajdbc4.jar
+                                  file_path:
+                                    type: string
+                                    example: /opt/infoworks/lib/ingestion/drivers/test/terajdbc4.jar
+                                  file_size:
+                                    type: integer
+                                    example: 963400
+                                  uploaded_by:
+                                    type: string
+                                    example: 6RkfybTRQQByEey3v
+                                  last_modified:
+                                    type: string
+                                    example: '2019-11-21T12:54:05.875Z'
+                            environment_variables_conf:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - name
+                                - config_type
+                                properties:
+                                  name:
+                                    type: string
+                                    example: RDBMS_PASSWORD
+                                  config_type:
+                                    type: string
+                                    example: KEYVAULT
+                                    enum:
+                                    - KEYVAULT
+                                    - ADMIN
+                                  config_name:
+                                    type: string
+                                    example: iw_admin_conf
+                                  secret_id:
+                                    type: string
+                                    example: e77850ad5127a2d7dab870ff
+                        old_Configurations:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: 6fb069238f33b86d4262dcdc
+                            execution_type:
+                              type: string
+                              example: PYTHON
+                            name:
+                              type: string
+                              example: test
+                            parameters:
+                              type: string
+                              example: ''
+                            fail_job_if_hook_fails:
+                              type: boolean
+                              example: true
+                            executable_file_name:
+                              type: string
+                              example: test.py
+                            file_details:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  file_name:
+                                    type: string
+                                    example: terajdbc4.jar
+                                  file_path:
+                                    type: string
+                                    example: /opt/infoworks/lib/ingestion/drivers/test/terajdbc4.jar
+                                  file_size:
+                                    type: integer
+                                    example: 963400
+                                  uploaded_by:
+                                    type: string
+                                    example: 6RkfybTRQQByEey3v
+                                  last_modified:
+                                    type: string
+                                    example: '2019-11-21T12:54:05.875Z'
+                            environment_variables_conf:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - name
+                                - config_type
+                                properties:
+                                  name:
+                                    type: string
+                                    example: RDBMS_PASSWORD
+                                  config_type:
+                                    type: string
+                                    example: KEYVAULT
+                                    enum:
+                                    - KEYVAULT
+                                    - ADMIN
+                                  config_name:
+                                    type: string
+                                    example: iw_admin_conf
+                                  secret_id:
+                                    type: string
+                                    example: e77850ad5127a2d7dab870ff
+                        username:
+                          type: string
+                          example: Admin
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/audit/source-extensions/global:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+        - multipart/form-data
+        - text/plain
+        default: application/json
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Job Hooks
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      summary: Get Global Audit Source Extension List
+      description: Get Global Audit Source Extension List
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: List of Job Hooks.
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 2ece3a493ee726793b2c3fcd
+                        extension_id:
+                          type: string
+                          example: 2ece3a493ee726793b2c3fcd
+                        modifiedAt:
+                          type: string
+                          example: '2022-09-28T09:10:34.860Z'
+                        modifiedBy:
+                          type: string
+                          example: 6RkfybTRQQByEey3v
+                        action:
+                          type: string
+                          example: create
+                        audit_details:
+                          type: object
+                          properties:
+                            sub_action:
+                              type: string
+                            name:
+                              type: string
+                            new_name:
+                              type: string
+                            old_name:
+                              type: string
+                            new_type:
+                              type: string
+                            old_type:
+                              type: string
+                        new_Configurations:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: 1e4b221a10e1a64e4a429e10
+                            name:
+                              type: string
+                              example: test
+                            upload_option:
+                              type: string
+                              enum:
+                              - fileUpload
+                              - serverLocation
+                              example: fileUpload
+                            extension_type:
+                              type: string
+                              example: Custom
+                              enum:
+                              - Hive_UDF
+                              - Custom
+                            execution_type:
+                              type: string
+                              example: JAVA
+                              enum:
+                              - JAVA
+                            server_path:
+                              type: string
+                              example: /opt/infoworks/drivers
+                            file_details:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  file_name:
+                                    type: string
+                                    example: terajdbc4.jar
+                                  file_path:
+                                    type: string
+                                    example: /opt/infoworks/lib/ingestion/drivers/test/terajdbc4.jar
+                                  file_size:
+                                    type: integer
+                                    example: 963400
+                                  uploaded_by:
+                                    type: string
+                                    example: 6RkfybTRQQByEey3v
+                                  last_modified:
+                                    type: string
+                                    example: '2019-11-21T12:54:05.875Z'
+                            transformations:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - alias
+                                properties:
+                                  alias:
+                                    type: string
+                                    example: test
+                                  class_name:
+                                    type: string
+                                    example: transform
+                                  additional_params_count:
+                                    type: number
+                                    example: 3
+                                  params_details:
+                                    type: array
+                                    items:
+                                      type: object
+                            registered_udf:
+                              type: boolean
+                              example: true
+                            ingestion_extension_type:
+                              type: string
+                              example: source_extension
+                              enum:
+                              - source_extension
+                              - streaming_extension
+                        old_Configurations:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: 1e4b221a10e1a64e4a429e10
+                            name:
+                              type: string
+                              example: test
+                            upload_option:
+                              type: string
+                              enum:
+                              - fileUpload
+                              - serverLocation
+                              example: fileUpload
+                            extension_type:
+                              type: string
+                              example: Custom
+                              enum:
+                              - Hive_UDF
+                              - Custom
+                            execution_type:
+                              type: string
+                              example: JAVA
+                              enum:
+                              - JAVA
+                            server_path:
+                              type: string
+                              example: /opt/infoworks/drivers
+                            file_details:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  file_name:
+                                    type: string
+                                    example: terajdbc4.jar
+                                  file_path:
+                                    type: string
+                                    example: /opt/infoworks/lib/ingestion/drivers/test/terajdbc4.jar
+                                  file_size:
+                                    type: integer
+                                    example: 963400
+                                  uploaded_by:
+                                    type: string
+                                    example: 6RkfybTRQQByEey3v
+                                  last_modified:
+                                    type: string
+                                    example: '2019-11-21T12:54:05.875Z'
+                            transformations:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - alias
+                                properties:
+                                  alias:
+                                    type: string
+                                    example: test
+                                  class_name:
+                                    type: string
+                                    example: transform
+                                  additional_params_count:
+                                    type: number
+                                    example: 3
+                                  params_details:
+                                    type: array
+                                    items:
+                                      type: object
+                            registered_udf:
+                              type: boolean
+                              example: true
+                            ingestion_extension_type:
+                              type: string
+                              example: source_extension
+                              enum:
+                              - source_extension
+                              - streaming_extension
+                        username:
+                          type: string
+                          example: Admin
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/audit/source-extensions/{extension_id}:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+        enum:
+        - application/json
+        - multipart/form-data
+        - text/plain
+        default: application/json
+    - name: extension_id
+      in: path
+      description: Audit Extension Id
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Job Hooks
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      summary: Get Audit Source Extension List
+      description: Get Audit Source Extension List
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: List of Job Hooks.
+                  result:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 2ece3a493ee726793b2c3fcd
+                        extension_id:
+                          type: string
+                          example: 2ece3a493ee726793b2c3fcd
+                        modifiedAt:
+                          type: string
+                          example: '2022-09-28T09:10:34.860Z'
+                        modifiedBy:
+                          type: string
+                          example: 6RkfybTRQQByEey3v
+                        action:
+                          type: string
+                          example: create
+                        audit_details:
+                          type: object
+                          properties:
+                            sub_action:
+                              type: string
+                            name:
+                              type: string
+                            new_name:
+                              type: string
+                            old_name:
+                              type: string
+                            new_type:
+                              type: string
+                            old_type:
+                              type: string
+                        new_Configurations:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: 1e4b221a10e1a64e4a429e10
+                            name:
+                              type: string
+                              example: test
+                            upload_option:
+                              type: string
+                              enum:
+                              - fileUpload
+                              - serverLocation
+                              example: fileUpload
+                            extension_type:
+                              type: string
+                              example: Custom
+                              enum:
+                              - Hive_UDF
+                              - Custom
+                            execution_type:
+                              type: string
+                              example: JAVA
+                              enum:
+                              - JAVA
+                            server_path:
+                              type: string
+                              example: /opt/infoworks/drivers
+                            file_details:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  file_name:
+                                    type: string
+                                    example: terajdbc4.jar
+                                  file_path:
+                                    type: string
+                                    example: /opt/infoworks/lib/ingestion/drivers/test/terajdbc4.jar
+                                  file_size:
+                                    type: integer
+                                    example: 963400
+                                  uploaded_by:
+                                    type: string
+                                    example: 6RkfybTRQQByEey3v
+                                  last_modified:
+                                    type: string
+                                    example: '2019-11-21T12:54:05.875Z'
+                            transformations:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - alias
+                                properties:
+                                  alias:
+                                    type: string
+                                    example: test
+                                  class_name:
+                                    type: string
+                                    example: transform
+                                  additional_params_count:
+                                    type: number
+                                    example: 3
+                                  params_details:
+                                    type: array
+                                    items:
+                                      type: object
+                            registered_udf:
+                              type: boolean
+                              example: true
+                            ingestion_extension_type:
+                              type: string
+                              example: source_extension
+                              enum:
+                              - source_extension
+                              - streaming_extension
+                        old_Configurations:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: 1e4b221a10e1a64e4a429e10
+                            name:
+                              type: string
+                              example: test
+                            upload_option:
+                              type: string
+                              enum:
+                              - fileUpload
+                              - serverLocation
+                              example: fileUpload
+                            extension_type:
+                              type: string
+                              example: Custom
+                              enum:
+                              - Hive_UDF
+                              - Custom
+                            execution_type:
+                              type: string
+                              example: JAVA
+                              enum:
+                              - JAVA
+                            server_path:
+                              type: string
+                              example: /opt/infoworks/drivers
+                            file_details:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  file_name:
+                                    type: string
+                                    example: terajdbc4.jar
+                                  file_path:
+                                    type: string
+                                    example: /opt/infoworks/lib/ingestion/drivers/test/terajdbc4.jar
+                                  file_size:
+                                    type: integer
+                                    example: 963400
+                                  uploaded_by:
+                                    type: string
+                                    example: 6RkfybTRQQByEey3v
+                                  last_modified:
+                                    type: string
+                                    example: '2019-11-21T12:54:05.875Z'
+                            transformations:
+                              type: array
+                              items:
+                                type: object
+                                required:
+                                - alias
+                                properties:
+                                  alias:
+                                    type: string
+                                    example: test
+                                  class_name:
+                                    type: string
+                                    example: transform
+                                  additional_params_count:
+                                    type: number
+                                    example: 3
+                                  params_details:
+                                    type: array
+                                    items:
+                                      type: object
+                            registered_udf:
+                              type: boolean
+                              example: true
+                            ingestion_extension_type:
+                              type: string
+                              example: source_extension
+                              enum:
+                              - source_extension
+                              - streaming_extension
+                        username:
+                          type: string
+                          example: Admin
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

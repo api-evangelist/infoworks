@@ -1,0 +1,1603 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Admin Workflows API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Admin Workflows
+paths:
+  /admin/workflows/pause:
+    post:
+      security:
+      - BearerAuth: []
+      operationId: pauseMultipleWorkflows
+      tags:
+      - Admin Workflows
+      summary: Pause Multiple Workflows
+      description: Pause Multiple Workflows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - workflows
+              properties:
+                workflows:
+                  type: array
+                  description: List of workflows and their versions to pause or resume.
+                  items:
+                    type: object
+                    required:
+                    - workflow_id
+                    - workflow_version_id
+                    properties:
+                      workflow_id:
+                        type: string
+                        example: e77850ad5127a2d7dab870ff
+                      workflow_version_id:
+                        type: string
+                        example: e77850ad5127a2d7dab870ff
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - properties:
+                    result:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          description: Summary message of the operation.
+                          example: Successfully Resumed Workflow
+                        result:
+                          type: array
+                          description: List of resumed workflows with their versions.
+                          items:
+                            type: object
+                            required:
+                            - workflow_id
+                            - workflow_version_id
+                            properties:
+                              workflow_id:
+                                type: string
+                                example: e77850ad5127a2d7dab870ff
+                              workflow_version_id:
+                                type: string
+                                example: e77850ad5127a2d7dab870ff
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/workflows/resume:
+    post:
+      security:
+      - BearerAuth: []
+      operationId: resumeMultipleWorkflows
+      tags:
+      - Admin Workflows
+      summary: Resume Multiple Workflows
+      description: Resume Multiple Workflows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - workflows
+              properties:
+                workflows:
+                  type: array
+                  description: List of workflows and their versions to pause or resume.
+                  items:
+                    type: object
+                    required:
+                    - workflow_id
+                    - workflow_version_id
+                    properties:
+                      workflow_id:
+                        type: string
+                        example: e77850ad5127a2d7dab870ff
+                      workflow_version_id:
+                        type: string
+                        example: e77850ad5127a2d7dab870ff
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - properties:
+                    result:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          description: Summary message of the operation.
+                          example: Successfully Resumed Workflow
+                        result:
+                          type: array
+                          description: List of resumed workflows with their versions.
+                          items:
+                            type: object
+                            required:
+                            - workflow_id
+                            - workflow_version_id
+                            properties:
+                              workflow_id:
+                                type: string
+                                example: e77850ad5127a2d7dab870ff
+                              workflow_version_id:
+                                type: string
+                                example: e77850ad5127a2d7dab870ff
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/workflows/restart:
+    post:
+      security:
+      - BearerAuth: []
+      operationId: restartMultipleWorkflowRuns
+      tags:
+      - Admin Workflows
+      summary: Restart Multiple Workflows
+      description: Restart Multiple Workflows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      workflow_id:
+                        type: string
+                        example: e77850ad5127a2d7dab870ff
+                      run_id:
+                        type: string
+                        example: e77850ad5127a2d7dab870ff
+                      skip_nodes:
+                        type: array
+                        items:
+                          type: string
+                          example: DM_AA38
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - properties:
+                    result:
+                      type: object
+                      properties:
+                        ids:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              workflow_id:
+                                type: string
+                                example: e77850ad5127a2d7dab870ff
+                              run_id:
+                                type: string
+                                example: e77850ad5127a2d7dab870ff
+                              error:
+                                type:
+                                - string
+                                - 'null'
+                                example: Example Error Message
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/workflows/cancel:
+    post:
+      security:
+      - BearerAuth: []
+      operationId: cancelMultipleWorkflowRuns
+      tags:
+      - Admin Workflows
+      summary: Cancel Multiple Workflows
+      description: Cancel Multiple Workflows
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      workflow_id:
+                        type: string
+                        example: e77850ad5127a2d7dab870ff
+                      run_id:
+                        type: string
+                        example: e77850ad5127a2d7dab870ff
+                      skip_nodes:
+                        type: array
+                        items:
+                          type: string
+                          example: DM_AA38
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/workflows:
+    get:
+      security:
+      - BearerAuth: []
+      summary: Retrieves the status of workflow
+      description: Retrieves the status of workflows for the Admin user.
+      operationId: getAdminWorkflows
+      tags:
+      - Admin Workflows
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - properties:
+                    result:
+                      type: object
+                      properties:
+                        total_count:
+                          type: integer
+                          minimum: 0
+                          description: Total count of workflows
+                          example: 10
+                        items:
+                          type: array
+                          items:
+                            type: object
+                            allOf:
+                            - type: object
+                              properties:
+                                created_by:
+                                  type: string
+                                  example: 6RkfybTRQQByEey3v
+                            - properties:
+                                created_by_user_email:
+                                  type: string
+                                  description: User email
+                                  example: admin@infoworks.io
+                                created_by_user_name:
+                                  type: string
+                                  description: User name
+                                  example: Infoworks Admin
+                                domain_id:
+                                  type: string
+                                  example: e77850ad5127a2d7dab870ff
+                                domain_name:
+                                  type: string
+                                  description: Domain name
+                                is_paused:
+                                  type: boolean
+                                  example: false
+                                last_exec_end_time:
+                                  type: string
+                                  example: '2022-06-14 07:55:57.334000+00:00'
+                                last_exec_start_time:
+                                  type: string
+                                  example: '2022-06-14 07:55:55.549158+00:00'
+                                last_exec_status:
+                                  type: string
+                                  example: success
+                                workflow_id:
+                                  type: string
+                                  example: e77850ad5127a2d7dab870ff
+                                workflow_name:
+                                  type: string
+                                  example: new_workflow
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/workflow-versions:
+    get:
+      security:
+      - BearerAuth: []
+      summary: Gets workflow versions
+      description: Retrieves the list of workflow versions for the Admin user.
+      operationId: getAdminWorkflowVersions
+      tags:
+      - Admin Workflows
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - properties:
+                    result:
+                      type: array
+                      description: List of workflow version objects.
+                      items:
+                        type: object
+                        properties:
+                          workflow_id:
+                            type: string
+                            description: Unique ID of the parent workflow.
+                            example: 686e20a16f25c44e155ba21d
+                          version:
+                            type: integer
+                            description: Version number of the workflow.
+                            example: 1
+                          last_execution_details:
+                            type: object
+                            properties:
+                              run_id:
+                                type: string
+                                description: ID of the last workflow execution run.
+                                example: 686e24e46f25c44e155ba227
+                              start_date:
+                                type: string
+                                format: date-time
+                                description: Start time of the last execution.
+                                example: '2025-07-09T08:14:29.498325+00:00'
+                              end_date:
+                                type: string
+                                format: date-time
+                                description: End time of the last execution.
+                                example: '2025-07-09T08:14:33.119Z'
+                              status:
+                                type: string
+                                description: Status of the last execution.
+                                example: success
+                          is_paused:
+                            type: boolean
+                            description: Indicates if the workflow version is paused.
+                            example: true
+                          domain_id:
+                            type: string
+                            example: e77850ad5127a2d7dab870ff
+                          domain_name:
+                            type: string
+                            description: Name of the domain to which the workflow belongs.
+                            example: Data_Engineering
+                          workflow_name:
+                            type: string
+                            description: Name of the workflow.
+                            example: w1
+                          workflow_version_id:
+                            type: string
+                            description: Unique ID of the workflow version.
+                            example: 686e20a16f25c44e155ba220
+                          created_by_username:
+                            type: string
+                            description: Name of the user who created the workflow version.
+                            example: Infoworks Admin
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/workflows/runs:
+    get:
+      security:
+      - BearerAuth: []
+      summary: Get Workflows
+      description: Get Workflows runs
+      tags:
+      - Admin Workflows
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - properties:
+                    result:
+                      type: object
+                      properties:
+                        total_count:
+                          type: integer
+                          minimum: 0
+                          description: Total count of workflows
+                          example: 10
+                        items:
+                          type: array
+                          items:
+                            type: object
+                            allOf:
+                            - type: object
+                              properties:
+                                created_by:
+                                  type: string
+                                  example: 6RkfybTRQQByEey3v
+                            - properties:
+                                created_by_user_email:
+                                  type: string
+                                  description: User email
+                                  example: admin@infoworks.io
+                                created_by_user_name:
+                                  type: string
+                                  description: User name
+                                  example: Infoworks Admin
+                                domain_id:
+                                  type: string
+                                  example: e77850ad5127a2d7dab870ff
+                                domain_name:
+                                  type: string
+                                  description: Domain name
+                                is_paused:
+                                  type: boolean
+                                  example: false
+                                last_exec_end_time:
+                                  type: string
+                                  example: '2022-06-14 07:55:57.334000+00:00'
+                                last_exec_start_time:
+                                  type: string
+                                  example: '2022-06-14 07:55:55.549158+00:00'
+                                last_exec_status:
+                                  type: string
+                                  example: success
+                                workflow_id:
+                                  type: string
+                                  example: e77850ad5127a2d7dab870ff
+                                workflow_name:
+                                  type: string
+                                  example: new_workflow
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/workflows/tasks:
+    get:
+      security:
+      - BearerAuth: []
+      summary: Get Workflows tasks
+      description: Get Workflows tasks
+      tags:
+      - Admin Workflows
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - properties:
+                    result:
+                      allOf:
+                      - type: object
+                        properties:
+                          count:
+                            type: integer
+                            example: 10
+                      - type: object
+                        properties:
+                          items:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                duration:
+                                  type: string
+                                  example: 1.657273
+                                end_date:
+                                  type: string
+                                  example: '2010-01-18T10:29:40.667Z'
+                                execution_date:
+                                  type: string
+                                  example: '2010-01-18T10:29:35.000Z'
+                                hostname:
+                                  type: string
+                                  example: iw-10.internal.cloudapp.net
+                                run_id:
+                                  type: string
+                                  example: e77850ad5127a2d7dab870ff
+                                start_date:
+                                  type: string
+                                  example: '2010-01-18T10:29:39.009Z'
+                                task_id:
+                                  type: string
+                                  example: DM_GNIA
+                                task_status:
+                                  type: string
+                                  example: success
+                                task_type:
+                                  type: string
+                                  example: dummy
+                                workflow_id:
+                                  type: string
+                                  example: e77850ad5127a2d7dab870ff
+                                workflow_name:
+                                  type: string
+                                  example: new_workflow
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/workflows/{workflow_id}/runs/{run_id}:
+    parameters:
+    - name: run_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: workflow_id
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      summary: Get Workflow run Id details
+      description: Get Workflow run Id details
+      tags:
+      - Admin Workflows
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - properties:
+                    result:
+                      allOf:
+                      - type: object
+                        properties:
+                          id:
+                            type: string
+                            example: e77850ad5127a2d7dab870ff
+                      - properties:
+                          workflow_id:
+                            type: string
+                            example: e77850ad5127a2d7dab870ff
+                          build_number:
+                            type: integer
+                            example: 2
+                          workflow_name:
+                            type: string
+                            example: new_workflow
+                          user_auth_token:
+                            type: string
+                            example: sugsv***
+                      - type: object
+                        allOf:
+                        - type: object
+                          properties:
+                            created_at:
+                              type: string
+                              example: '2019-11-21T12:54:05.875Z'
+                        - type: object
+                          properties:
+                            created_by:
+                              type: string
+                              example: 6RkfybTRQQByEey3v
+                        - type: object
+                          properties:
+                            modified_at:
+                              type: string
+                              example: '2019-11-21T12:54:05.875Z'
+                        - type: object
+                          properties:
+                            modified_by:
+                              type: string
+                              example: 6RkfybTRQQByEey3v
+                      - properties:
+                          triggered_at:
+                            type: string
+                            example: Wed Nov 18 2020 05:34:11 GMT+0000 (UTC)
+                          tasks_status:
+                            type: array
+                            items:
+                              type: boolean
+                              example: null
+                          workflow_status:
+                            properties:
+                              state:
+                                type: string
+                                example: failed
+                          triggered_by:
+                            type: object
+                            allOf:
+                            - type: object
+                              properties:
+                                id:
+                                  type: string
+                                  example: e77850ad5127a2d7dab870ff
+                            - properties:
+                                type:
+                                  type: string
+                                  example: user
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

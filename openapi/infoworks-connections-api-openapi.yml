@@ -1,0 +1,2173 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Connections API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Connections
+  description: ''
+paths:
+  /sources/{source_id}/configurations/connection:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Connections
+      summary: Get source connection details
+      description: Get source connection details
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      properties:
+                        enable_log_based_cdc:
+                          type: boolean
+                          example: false
+                        driver_name:
+                          type: string
+                          example: oracle.jdbc.driver.OracleDriver
+                        connection_url:
+                          type: string
+                          example: bc:oracle:thin:@0.0.0.0
+                        username:
+                          example: automation_db
+                        password:
+                          oneOf:
+                          - type: string
+                            minLength: 1
+                            example:
+                            - passw@rd_plain
+                            - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                          - type: object
+                            properties:
+                              password_type:
+                                type: string
+                                enum:
+                                - infoworks_managed
+                              password:
+                                type: string
+                                minLength: 1
+                                example:
+                                - passw@rd_plain
+                                - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                          - type: object
+                            properties:
+                              password_type:
+                                type: string
+                                enum:
+                                - secret_store
+                              secret_id:
+                                type: string
+                                example: e77850ad5127a2d7dab870ff
+                        source_schema:
+                          type: string
+                          example: AUTOMATION_DB
+                        connection_mode:
+                          type: string
+                          example: JDBC
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+    put:
+      security:
+      - BearerAuth: []
+      tags:
+      - Connections
+      summary: Update an existing source connection
+      description: Update an existing source connection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - allOf:
+                - type: object
+                  required:
+                  - source_schema
+                  - username
+                  - password
+                  - database
+                  properties:
+                    connection_mode:
+                      type: string
+                      example: jdbc
+                      enum:
+                      - jdbc
+                    connection_url:
+                      type: string
+                      example: jdbc:teradata://ip/TMODE=ANSIdatabase=automation_db
+                    source_schema:
+                      type: string
+                      example: test_schema
+                    username:
+                      type: string
+                      example: Lucifer
+                    password:
+                      oneOf:
+                      - type: string
+                        minLength: 1
+                        example:
+                        - passw@rd_plain
+                        - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                      - type: object
+                        properties:
+                          password_type:
+                            type: string
+                            enum:
+                            - infoworks_managed
+                          password:
+                            type: string
+                            minLength: 1
+                            example:
+                            - passw@rd_plain
+                            - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                      - type: object
+                        properties:
+                          password_type:
+                            type: string
+                            enum:
+                            - secret_store
+                          secret_id:
+                            type: string
+                            example: e77850ad5127a2d7dab870ff
+                    database:
+                      type: string
+                      example: automation_db
+                    snowflake_profile:
+                      type: string
+                      example: profile1
+                    warehouse:
+                      type: string
+                      example: DEMO_WH
+                - type: object
+                  properties:
+                    enable_log_based_cdc:
+                      type: boolean
+                      example: true
+                    staging_database:
+                      type: string
+                      example: db_staging
+                    enable_dictionary_rebuild_for_each_job:
+                      type: boolean
+                      example: true
+                    dictionary_path:
+                      type: string
+                      example: /tmp/dict
+                    dictionary_type:
+                      type: string
+                      example: online
+                      enum:
+                      - online
+                      - offline
+                      - redo_log
+              - allOf:
+                - type: object
+                  required:
+                  - source_schema
+                  - username
+                  - password
+                  - database
+                  properties:
+                    connection_mode:
+                      type: string
+                      example: jdbc
+                      enum:
+                      - jdbc
+                    connection_url:
+                      type: string
+                      example: jdbc:teradata://ip/TMODE=ANSIdatabase=automation_db
+                    source_schema:
+                      type: string
+                      example: test_schema
+                    username:
+                      type: string
+                      example: Lucifer
+                    password:
+                      oneOf:
+                      - type: string
+                        minLength: 1
+                        example:
+                        - passw@rd_plain
+                        - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                      - type: object
+                        properties:
+                          password_type:
+                            type: string
+                            enum:
+                            - infoworks_managed
+                          password:
+                            type: string
+                            minLength: 1
+                            example:
+                            - passw@rd_plain
+                            - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                      - type: object
+                        properties:
+                          password_type:
+                            type: string
+                            enum:
+                            - secret_store
+                          secret_id:
+                            type: string
+                            example: e77850ad5127a2d7dab870ff
+                    database:
+                      type: string
+                      example: automation_db
+                    snowflake_profile:
+                      type: string
+                      example: profile1
+                    warehouse:
+                      type: string
+                      example: DEMO_WH
+              - allOf:
+                - type: object
+                  required:
+                  - source_schema
+                  - username
+                  - password
+                  - database
+                  properties:
+                    connection_mode:
+                      type: string
+                      example: jdbc
+                      enum:
+                      - jdbc
+                    connection_url:
+                      type: string
+                      example: jdbc:teradata://ip/TMODE=ANSIdatabase=automation_db
+                    source_schema:
+                      type: string
+                      example: test_schema
+                    username:
+                      type: string
+                      example: Lucifer
+                    password:
+                      oneOf:
+                      - type: string
+                        minLength: 1
+                        example:
+                        - passw@rd_plain
+                        - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                      - type: object
+                        properties:
+                          password_type:
+                            type: string
+                            enum:
+                            - infoworks_managed
+                          password:
+                            type: string
+                            minLength: 1
+                            example:
+                            - passw@rd_plain
+                            - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                      - type: object
+                        properties:
+                          password_type:
+                            type: string
+                            enum:
+                            - secret_store
+                          secret_id:
+                            type: string
+                            example: e77850ad5127a2d7dab870ff
+                    database:
+                      type: string
+                      example: automation_db
+                    snowflake_profile:
+                      type: string
+                      example: profile1
+                    warehouse:
+                      type: string
+                      example: DEMO_WH
+              - allOf:
+                - type: object
+                  required:
+                  - source_schema
+                  - username
+                  - password
+                  - database
+                  properties:
+                    connection_mode:
+                      type: string
+                      example: jdbc
+                      enum:
+                      - jdbc
+                    connection_url:
+                      type: string
+                      example: jdbc:teradata://ip/TMODE=ANSIdatabase=automation_db
+                    source_schema:
+                      type: string
+                      example: test_schema
+                    username:
+                      type: string
+                      example: Lucifer
+                    password:
+                      oneOf:
+                      - type: string
+                        minLength: 1
+                        example:
+                        - passw@rd_plain
+                        - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                      - type: object
+                        properties:
+                          password_type:
+                            type: string
+                            enum:
+                            - infoworks_managed
+                          password:
+                            type: string
+                            minLength: 1
+                            example:
+                            - passw@rd_plain
+                            - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                      - type: object
+                        properties:
+                          password_type:
+                            type: string
+                            enum:
+                            - secret_store
+                          secret_id:
+                            type: string
+                            example: e77850ad5127a2d7dab870ff
+                    database:
+                      type: string
+                      example: automation_db
+                    snowflake_profile:
+                      type: string
+                      example: profile1
+                    warehouse:
+                      type: string
+                      example: DEMO_WH
+                - type: object
+                  properties:
+                    enable_teradata_wallet:
+                      type: boolean
+                      example: true
+                    teradata_wallet_key_used_for_password:
+                      type: string
+                    storage:
+                      oneOf:
+                      - allOf:
+                        - type: object
+                          properties:
+                            storage_type:
+                              type: string
+                              enum:
+                              - dbfs
+                              - remote
+                              - cloud
+                      - allOf:
+                        - type: object
+                          properties:
+                            storage_type:
+                              type: string
+                              enum:
+                              - dbfs
+                              - remote
+                              - cloud
+                        - type: object
+                          required:
+                          - sftp_host
+                          - sftp_port
+                          - username
+                          - password
+                          - auth_type
+                          properties:
+                            sftp_host:
+                              type: string
+                              example: 192.168.1.1
+                            sftp_port:
+                              type: integer
+                              example: 22
+                            username:
+                              type: string
+                              example: Lucifer
+                            password:
+                              oneOf:
+                              - type: string
+                                minLength: 1
+                                example:
+                                - passw@rd_plain
+                                - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                              - type: object
+                                properties:
+                                  password_type:
+                                    type: string
+                                    enum:
+                                    - infoworks_managed
+                                  password:
+                                    type: string
+                                    minLength: 1
+                                    example:
+                                    - passw@rd_plain
+                                    - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                              - type: object
+                                properties:
+                                  password_type:
+                                    type: string
+                                    enum:
+                                    - secret_store
+                                  secret_id:
+                                    type: string
+                                    example: e77850ad5127a2d7dab870ff
+                            auth_type:
+                              type: string
+                              example: password
+                            credential:
+                              oneOf:
+                              - type: object
+                                required:
+                                - type
+                                - username
+                                - password
+                                properties:
+                                  type:
+                                    type: string
+                                    example: basic
+                                  username:
+                                    type: string
+                                    example: sftp-user
+                                  password:
+                                    oneOf:
+                                    - type: string
+                                      minLength: 1
+                                      example:
+                                      - passw@rd_plain
+                                      - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                                    - type: object
+                                      properties:
+                                        password_type:
+                                          type: string
+                                          enum:
+                                          - infoworks_managed
+                                        password:
+                                          type: string
+                                          minLength: 1
+                                          example:
+                                          - passw@rd_plain
+                                          - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                                    - type: object
+                                      properties:
+                                        password_type:
+                                          type: string
+                                          enum:
+                                          - secret_store
+                                        secret_id:
+                                          type: string
+                                          example: e77850ad5127a2d7dab870ff
+                              - type: object
+                                required:
+                                - type
+                                - username
+                                - private_key_path
+                                - passphrase
+                                properties:
+                                  type:
+                                    type: string
+                                    example: key
+                                  username:
+                                    type: string
+                                    example: sftp-user
+                                  private_key_path:
+                                    type: string
+                                    example: /opt/infoworks/key
+                                  passphrase:
+                                    type: string
+                                    example: J9moLFp0XjMhsLu
+                      - oneOf:
+                        - allOf:
+                          - type: object
+                            properties:
+                              storage_type:
+                                type: string
+                                enum:
+                                - dbfs
+                                - remote
+                                - cloud
+                          - type: object
+                            properties:
+                              cloud_type:
+                                type: string
+                                enum:
+                                - s3
+                                - wasb
+                                - gs
+                          - type: object
+                            required:
+                            - type
+                            - base_path
+                            - credential
+                            properties:
+                              account_type:
+                                type: string
+                              access_id:
+                                type: string
+                              secret_key:
+                                oneOf:
+                                - type: string
+                                  minLength: 1
+                                  example:
+                                  - passw@rd_plain
+                                  - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                                - type: object
+                                  properties:
+                                    password_type:
+                                      type: string
+                                      enum:
+                                      - infoworks_managed
+                                    password:
+                                      type: string
+                                      minLength: 1
+                                      example:
+                                      - passw@rd_plain
+                                      - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                                - type: object
+                                  properties:
+                                    password_type:
+                                      type: string
+                                      enum:
+                                      - secret_store
+                                    secret_id:
+                                      type: string
+                                      example: e77850ad5127a2d7dab870ff
+                              access_type:
+                                type: string
+                              support_gov_cloud:
+                                type: boolean
+                              endpoint:
+                                type: string
+                        - allOf:
+                          - type: object
+                            properties:
+                              storage_type:
+                                type: string
+                                enum:
+                                - dbfs
+                                - remote
+                                - cloud
+                          - type: object
+                            properties:
+                              cloud_type:
+                                type: string
+                                enum:
+                                - s3
+                                - wasb
+                                - gs
+                          - type: object
+                            properties:
+                              access_type:
+                                type: string
+                                example: service_account
+                                enum:
+                                - service_account
+                              project_id:
+                                type: string
+                                example: csv_store
+                              upload_option:
+                                type: string
+                                enum:
+                                - fileUpload
+                                - serverLocation
+                                example: fileUpload
+                              server_path:
+                                type: string
+                                description: required if upload_option is set to serverLocation
+                                example: /opt/infoworks/uploads/ccd2d7144f74b382357e5f5f/key.json
+                        - allOf:
+                          - type: object
+                            properties:
+                              storage_type:
+                                type: string
+                                enum:
+                                - dbfs
+                                - remote
+                                - cloud
+                          - type: object
+                            properties:
+                              cloud_type:
+                                type: string
+                                enum:
+                                - s3
+                                - wasb
+                                - gs
+                          - type: object
+                            properties:
+                              account_name:
+                                type: string
+                              account_key:
+                                oneOf:
+                                - type: string
+                                  minLength: 1
+                                  example:
+                                  - passw@rd_plain
+                                  - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                                - type: object
+                                  properties:
+                                    password_type:
+                                      type: string
+                                      enum:
+                                      - infoworks_managed
+                                    password:
+                                      type: string
+                                      minLength: 1
+                                      example:
+                                      - passw@rd_plain
+                                      - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                                - type: object
+                                  properties:
+                                    password_type:
+                                      type: string
+                                      enum:
+                                      - secret_store
+                                    secret_id:
+                                      type: string
+                                      example: e77850ad5127a2d7dab870ff
+                              account_endpoint:
+                                type: string
+                              container_name:
+                                type: string
+                              support_gov_cloud:
+                                type: boolean
+                              access_type:
+                                type: string
+                                enum:
+                                - none
+                                - account_key
+                    enable_ingestion_via_tpt:
+                      type: boolean
+                      example: true
+                    is_td_wallet_enabled:
+                      type: boolean
+                      example: true
+                    enable_tpt_for_source:
+                      type: boolean
+                      example: true
+              - allOf:
+                - type: object
+                  required:
+                  - source_schema
+                  - username
+                  - password
+                  - database
+                  properties:
+                    connection_mode:
+                      type: string
+                      example: jdbc
+                      enum:
+                      - jdbc
+                    connection_url:
+                      type: string
+                      example: jdbc:teradata://ip/TMODE=ANSIdatabase=automation_db
+                    source_schema:
+                      type: string
+                      example: test_schema
+                    username:
+                      type: string
+                      example: Lucifer
+                    password:
+                      oneOf:
+                      - type: string
+                        minLength: 1
+                        example:
+                        - passw@rd_plain
+                        - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                      - type: object
+                        properties:
+                          password_type:
+                            type: string
+                            enum:
+                            - infoworks_managed
+                          password:
+                            type: string
+                            minLength: 1
+                            example:
+                            - passw@rd_plain
+                            - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                      - type: object
+                        properties:
+                          password_type:
+                            type: string
+                            enum:
+                            - secret_store
+                          secret_id:
+                            type: string
+                            example: e77850ad5127a2d7dab870ff
+                    database:
+                      type: string
+                      example: automation_db
+                    snowflake_profile:
+                      type: string
+                      example: profile1
+                    warehouse:
+                      type: string
+                      example: DEMO_WH
+              - allOf:
+                - type: object
+                  required:
+                  - source_schema
+                  - username
+                  - password
+                  - database
+                  properties:
+                    connection_mode:
+                      type: string
+                      example: jdbc
+                      enum:
+                      - jdbc
+                    connection_url:
+                      type: string
+                      example: jdbc:teradata://ip/TMODE=ANSIdatabase=automation_db
+                    source_schema:
+                      type: string
+                      example: test_schema
+                    username:
+                      type: string
+                      example: Lucifer
+                    password:
+                      oneOf:
+                      - type: string
+                        minLength: 1
+                        example:
+                        - passw@rd_plain
+                        - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                      - type: object
+                        properties:
+                          password_type:
+                            type: string
+                            enum:
+                            - infoworks_managed
+                          password:
+                            type: string
+                            minLength: 1
+                            example:
+                            - passw@rd_plain
+                            - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                      - type: object
+                        properties:
+                          password_type:
+                            type: string
+                            enum:
+                            - secret_store
+                          secret_id:
+                            type: string
+                            example: e77850ad5127a2d7dab870ff
+                    database:
+                      type: string
+                      example: automation_db
+                    snowflake_profile:
+                      type: string
+                      example: profile1
+                    warehouse:
+                      type: string
+                      example: DEMO_WH
+              - type: object
+                required:
+                - source_type
+                - storage
+                properties:
+                  source_type:
+                    type: string
+                    example: structured_files
+                    enum:
+                    - structured_files
+                  storage:
+                    oneOf:
+                    - allOf:
+                      - type: object
+                        properties:
+                          storage_type:
+                            type: string
+                            enum:
+                            - dbfs
+                            - remote
+                            - cloud
+                    - allOf:
+                      - type: object
+                        properties:
+                          storage_type:
+                            type: string
+                            enum:
+                            - dbfs
+                            - remote
+                            - cloud
+                      - type: object
+                        required:
+                        - sftp_host
+                        - sftp_port
+                        - username
+                        - password
+                        - auth_type
+                        properties:
+                          sftp_host:
+                            type: string
+                            example: 192.168.1.1
+                          sftp_port:
+                            type: integer
+                            example: 22
+                          username:
+                            type: string
+                            example: Lucifer
+                          password:
+                            oneOf:
+                            - type: string
+                              minLength: 1
+                              example:
+                              - passw@rd_plain
+                              - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                            - type: object
+                              properties:
+                                password_type:
+                                  type: string
+                                  enum:
+                                  - infoworks_managed
+                                password:
+                                  type: string
+                                  minLength: 1
+                                  example:
+                                  - passw@rd_plain
+                                  - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                            - type: object
+                              properties:
+                                password_type:
+                                  type: string
+                                  enum:
+                                  - secret_store
+                                secret_id:
+                                  type: string
+                                  example: e77850ad5127a2d7dab870ff
+                          auth_type:
+                            type: string
+                            example: password
+                          credential:
+                            oneOf:
+                            - type: object
+                              required:
+                              - type
+                              - username
+                              - password
+                              properties:
+                                type:
+                                  type: string
+                                  example: basic
+                                username:
+                                  type: string
+                                  example: sftp-user
+                                password:
+                                  oneOf:
+                                  - type: string
+                                    minLength: 1
+                                    example:
+                                    - passw@rd_plain
+                                    - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                                  - type: object
+                                    properties:
+                                      password_type:
+                                        type: string
+                                        enum:
+                                        - infoworks_managed
+                                      password:
+                                        type: string
+                                        minLength: 1
+                                        example:
+                                        - passw@rd_plain
+                                        - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                                  - type: object
+                                    properties:
+                                      password_type:
+                                        type: string
+                                        enum:
+                                        - secret_store
+                                      secret_id:
+                                        type: string
+                                        example: e77850ad5127a2d7dab870ff
+                            - type: object
+                              required:
+                              - type
+                              - username
+                              - private_key_path
+                              - passphrase
+                              properties:
+                                type:
+                                  type: string
+                                  example: key
+                                username:
+                                  type: string
+                                  example: sftp-user
+                                private_key_path:
+                                  type: string
+                                  example: /opt/infoworks/key
+                                passphrase:
+                                  type: string
+                                  example: J9moLFp0XjMhsLu
+                    - oneOf:
+                      - allOf:
+                        - type: object
+                          properties:
+                            storage_type:
+                              type: string
+                              enum:
+                              - dbfs
+                              - remote
+                              - cloud
+                        - type: object
+                          properties:
+                            cloud_type:
+                              type: string
+                              enum:
+                              - s3
+                              - wasb
+                              - gs
+                        - type: object
+                          required:
+                          - type
+                          - base_path
+                          - credential
+                          properties:
+                            account_type:
+                              type: string
+                            access_id:
+                              type: string
+                            secret_key:
+                              oneOf:
+                              - type: string
+                                minLength: 1
+                                example:
+                                - passw@rd_plain
+                                - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                              - type: object
+                                properties:
+                                  password_type:
+                                    type: string
+                                    enum:
+                                    - infoworks_managed
+                                  password:
+                                    type: string
+                                    minLength: 1
+                                    example:
+                                    - passw@rd_plain
+                                    - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                              - type: object
+                                properties:
+                                  password_type:
+                                    type: string
+                                    enum:
+                                    - secret_store
+                                  secret_id:
+                                    type: string
+                                    example: e77850ad5127a2d7dab870ff
+                            access_type:
+                              type: string
+                            support_gov_cloud:
+                              type: boolean
+                            endpoint:
+                              type: string
+                      - allOf:
+                        - type: object
+                          properties:
+                            storage_type:
+                              type: string
+                              enum:
+                              - dbfs
+                              - remote
+                              - cloud
+                        - type: object
+                          properties:
+                            cloud_type:
+                              type: string
+                              enum:
+                              - s3
+                              - wasb
+                              - gs
+                        - type: object
+                          properties:
+                            access_type:
+                              type: string
+                              example: service_account
+                              enum:
+                              - service_account
+                            project_id:
+                              type: string
+                              example: csv_store
+                            upload_option:
+                              type: string
+                              enum:
+                              - fileUpload
+                              - serverLocation
+                              example: fileUpload
+                            server_path:
+                              type: string
+                              description: required if upload_option is set to serverLocation
+                              example: /opt/infoworks/uploads/ccd2d7144f74b382357e5f5f/key.json
+                      - allOf:
+                        - type: object
+                          properties:
+                            storage_type:
+                              type: string
+                              enum:
+                              - dbfs
+                              - remote
+                              - cloud
+                        - type: object
+                          properties:
+                            cloud_type:
+                              type: string
+                              enum:
+                              - s3
+                              - wasb
+                              - gs
+                        - type: object
+                          properties:
+                            account_name:
+                              type: string
+                            account_key:
+                              oneOf:
+                              - type: string
+                                minLength: 1
+                                example:
+                                - passw@rd_plain
+                                - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                              - type: object
+                                properties:
+                                  password_type:
+                                    type: string
+                                    enum:
+                                    - infoworks_managed
+                                  password:
+                                    type: string
+                                    minLength: 1
+                                    example:
+                                    - passw@rd_plain
+                                    - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                              - type: object
+                                properties:
+                                  password_type:
+                                    type: string
+                                    enum:
+                                    - secret_store
+                                  secret_id:
+                                    type: string
+                                    example: e77850ad5127a2d7dab870ff
+                            account_endpoint:
+                              type: string
+                            container_name:
+                              type: string
+                            support_gov_cloud:
+                              type: boolean
+                            access_type:
+                              type: string
+                              enum:
+                              - none
+                              - account_key
+              - type: object
+                required:
+                - source_base_path
+                - storage
+                properties:
+                  source_base_path:
+                    type: string
+                    example: /sources/csv_source
+                  storage:
+                    oneOf:
+                    - allOf:
+                      - type: object
+                        properties:
+                          storage_type:
+                            type: string
+                            enum:
+                            - dbfs
+                            - remote
+                            - cloud
+                    - allOf:
+                      - type: object
+                        properties:
+                          storage_type:
+                            type: string
+                            enum:
+                            - dbfs
+                            - remote
+                            - cloud
+                      - type: object
+                        required:
+                        - sftp_host
+                        - sftp_port
+                        - username
+                        - password
+                        - auth_type
+                        properties:
+                          sftp_host:
+                            type: string
+                            example: 192.168.1.1
+                          sftp_port:
+                            type: integer
+                            example: 22
+                          username:
+                            type: string
+                            example: Lucifer
+                          password:
+                            oneOf:
+                            - type: string
+                              minLength: 1
+                              example:
+                              - passw@rd_plain
+                              - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                            - type: object
+                              properties:
+                                password_type:
+                                  type: string
+                                  enum:
+                                  - infoworks_managed
+                                password:
+                                  type: string
+                                  minLength: 1
+                                  example:
+                                  - passw@rd_plain
+                                  - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                            - type: object
+                              properties:
+                                password_type:
+                                  type: string
+                                  enum:
+                                  - secret_store
+                                secret_id:
+                                  type: string
+                                  example: e77850ad5127a2d7dab870ff
+                          auth_type:
+                            type: string
+                            example: password
+                          credential:
+                            oneOf:
+                            - type: object
+                              required:
+                              - type
+                              - username
+                              - password
+                              properties:
+                                type:
+                                  type: string
+                                  example: basic
+                                username:
+                                  type: string
+                                  example: sftp-user
+                                password:
+                                  oneOf:
+                                  - type: string
+                                    minLength: 1
+                                    example:
+                                    - passw@rd_plain
+                                    - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                                  - type: object
+                                    properties:
+                                      password_type:
+                                        type: string
+                                        enum:
+                                        - infoworks_managed
+                                      password:
+                                        type: string
+                                        minLength: 1
+                                        example:
+                                        - passw@rd_plain
+                                        - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                                  - type: object
+                                    properties:
+                                      password_type:
+                                        type: string
+                                        enum:
+                                        - secret_store
+                                      secret_id:
+                                        type: string
+                                        example: e77850ad5127a2d7dab870ff
+                            - type: object
+                              required:
+                              - type
+                              - username
+                              - private_key_path
+                              - passphrase
+                              properties:
+                                type:
+                                  type: string
+                                  example: key
+                                username:
+                                  type: string
+                                  example: sftp-user
+                                private_key_path:
+                                  type: string
+                                  example: /opt/infoworks/key
+                                passphrase:
+                                  type: string
+                                  example: J9moLFp0XjMhsLu
+                    - oneOf:
+                      - allOf:
+                        - type: object
+                          properties:
+                            storage_type:
+                              type: string
+                              enum:
+                              - dbfs
+                              - remote
+                              - cloud
+                        - type: object
+                          properties:
+                            cloud_type:
+                              type: string
+                              enum:
+                              - s3
+                              - wasb
+                              - gs
+                        - type: object
+                          required:
+                          - type
+                          - base_path
+                          - credential
+                          properties:
+                            account_type:
+                              type: string
+                            access_id:
+                              type: string
+                            secret_key:
+                              oneOf:
+                              - type: string
+                                minLength: 1
+                                example:
+                                - passw@rd_plain
+                                - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                              - type: object
+                                properties:
+                                  password_type:
+                                    type: string
+                                    enum:
+                                    - infoworks_managed
+                                  password:
+                                    type: string
+                                    minLength: 1
+                                    example:
+                                    - passw@rd_plain
+                                    - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                              - type: object
+                                properties:
+                                  password_type:
+                                    type: string
+                                    enum:
+                                    - secret_store
+                                  secret_id:
+                                    type: string
+                                    example: e77850ad5127a2d7dab870ff
+                            access_type:
+                              type: string
+                            support_gov_cloud:
+                              type: boolean
+                            endpoint:
+                              type: string
+                      - allOf:
+                        - type: object
+                          properties:
+                            storage_type:
+                              type: string
+                              enum:
+                              - dbfs
+                              - remote
+                              - cloud
+                        - type: object
+                          properties:
+                            cloud_type:
+                              type: string
+                              enum:
+                              - s3
+                              - wasb
+                              - gs
+                        - type: object
+                          properties:
+                            access_type:
+                              type: string
+                              example: service_account
+                              enum:
+                              - service_account
+                            project_id:
+                              type: string
+                              example: csv_store
+                            upload_option:
+                              type: string
+                              enum:
+                              - fileUpload
+                              - serverLocation
+                              example: fileUpload
+                            server_path:
+                              type: string
+                              description: required if upload_option is set to serverLocation
+                              example: /opt/infoworks/uploads/ccd2d7144f74b382357e5f5f/key.json
+                      - allOf:
+                        - type: object
+                          properties:
+                            storage_type:
+                              type: string
+                              enum:
+                              - dbfs
+                              - remote
+                              - cloud
+                        - type: object
+                          properties:
+                            cloud_type:
+                              type: string
+                              enum:
+                              - s3
+                              - wasb
+                              - gs
+                        - type: object
+                          properties:
+                            account_name:
+                              type: string
+                            account_key:
+                              oneOf:
+                              - type: string
+                                minLength: 1
+                                example:
+                                - passw@rd_plain
+                                - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                              - type: object
+                                properties:
+                                  password_type:
+                                    type: string
+                                    enum:
+                                    - infoworks_managed
+                                  password:
+                                    type: string
+                                    minLength: 1
+                                    example:
+                                    - passw@rd_plain
+                                    - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                              - type: object
+                                properties:
+                                  password_type:
+                                    type: string
+                                    enum:
+                                    - secret_store
+                                  secret_id:
+                                    type: string
+                                    example: e77850ad5127a2d7dab870ff
+                            account_endpoint:
+                              type: string
+                            container_name:
+                              type: string
+                            support_gov_cloud:
+                              type: boolean
+                            access_type:
+                              type: string
+                              enum:
+                              - none
+                              - account_key
+                  key:
+                    description: required only if gcs cloud storage type is selected with fileUpload Option use content-type as multipart/form-data
+                    format: binary
+                    example: key.json
+                  snowflake_profile:
+                    type: string
+                    example: profile1
+                  warehouse:
+                    type: string
+                    example: DEMO_WH
+              - allOf:
+                - type: object
+                  required:
+                  - source_base_path
+                  - storage
+                  properties:
+                    source_base_path:
+                      type: string
+                      example: /sources/csv_source
+                    storage:
+                      oneOf:
+                      - allOf:
+                        - type: object
+                          properties:
+                            storage_type:
+                              type: string
+                              enum:
+                              - dbfs
+                              - remote
+                              - cloud
+                      - allOf:
+                        - type: object
+                          properties:
+                            storage_type:
+                              type: string
+                              enum:
+                              - dbfs
+                              - remote
+                              - cloud
+                        - type: object
+                          required:
+                          - sftp_host
+                          - sftp_port
+                          - username
+                          - password
+                          - auth_type
+                          properties:
+                            sftp_host:
+                              type: string
+                              example: 192.168.1.1
+                            sftp_port:
+                              type: integer
+                              example: 22
+                            username:
+                              type: string
+                              example: Lucifer
+                            password:
+                              oneOf:
+                              - type: string
+                                minLength: 1
+                                example:
+                                - passw@rd_plain
+                                - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                              - type: object
+                                properties:
+                                  password_type:
+                                    type: string
+                                    enum:
+                                    - infoworks_managed
+                                  password:
+                                    type: string
+                                    minLength: 1
+                                    example:
+                                    - passw@rd_plain
+                                    - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                              - type: object
+                                properties:
+                                  password_type:
+                                    type: string
+                                    enum:
+                                    - secret_store
+                                  secret_id:
+                                    type: string
+                                    example: e77850ad5127a2d7dab870ff
+                            auth_type:
+                              type: string
+                              example: password
+                            credential:
+                              oneOf:
+                              - type: object
+                                required:
+                                - type
+                                - username
+                                - password
+                                properties:
+                                  type:
+                                    type: string
+                                    example: basic
+                                  username:
+                                    type: string
+                                    example: sftp-user
+                                  password:
+                                    oneOf:
+                                    - type: string
+                                      minLength: 1
+                                      example:
+                                      - passw@rd_plain
+                                      - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                                    - type: object
+                                      properties:
+                                        password_type:
+                                          type: string
+                                          enum:
+                                          - infoworks_managed
+                                        password:
+                                          type: string
+                                          minLength: 1
+                                          example:
+                                          - passw@rd_plain
+                                          - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                                    - type: object
+                                      properties:
+                                        password_type:
+                                          type: string
+                                          enum:
+                                          - secret_store
+                                        secret_id:
+                                          type: string
+                                          example: e77850ad5127a2d7dab870ff
+                              - type: object
+                                required:
+                                - type
+                                - username
+                                - private_key_path
+                                - passphrase
+                                properties:
+                                  type:
+                                    type: string
+                                    example: key
+                                  username:
+                                    type: string
+                                    example: sftp-user
+                                  private_key_path:
+                                    type: string
+                                    example: /opt/infoworks/key
+                                  passphrase:
+                                    type: string
+                                    example: J9moLFp0XjMhsLu
+                      - oneOf:
+                        - allOf:
+                          - type: object
+                            properties:
+                              storage_type:
+                                type: string
+                                enum:
+                                - dbfs
+                                - remote
+                                - cloud
+                          - type: object
+                            properties:
+                              cloud_type:
+                                type: string
+                                enum:
+                                - s3
+                                - wasb
+                                - gs
+                          - type: object
+                            required:
+                            - type
+                            - base_path
+                            - credential
+                            properties:
+                              account_type:
+                                type: string
+                              access_id:
+                                type: string
+                              secret_key:
+                                oneOf:
+                                - type: string
+                                  minLength: 1
+                                  example:
+                                  - passw@rd_plain
+                                  - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                                - type: object
+                                  properties:
+                                    password_type:
+                                      type: string
+                                      enum:
+                                      - infoworks_managed
+                                    password:
+                                      type: string
+                                      minLength: 1
+                                      example:
+                                      - passw@rd_plain
+                                      - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                                - type: object
+                                  properties:
+                                    password_type:
+                                      type: string
+                                      enum:
+                                      - secret_store
+                                    secret_id:
+                                      type: string
+                                      example: e77850ad5127a2d7dab870ff
+                              access_type:
+                                type: string
+                              support_gov_cloud:
+                                type: boolean
+                              endpoint:
+                                type: string
+                        - allOf:
+                          - type: object
+                            properties:
+                              storage_type:
+                                type: string
+                                enum:
+                                - dbfs
+                                - remote
+                                - cloud
+                          - type: object
+                            properties:
+                              cloud_type:
+                                type: string
+                                enum:
+                                - s3
+                                - wasb
+                                - gs
+                          - type: object
+                            properties:
+                              access_type:
+                                type: string
+                                example: service_account
+                                enum:
+                                - service_account
+                              project_id:
+                                type: string
+                                example: csv_store
+                              upload_option:
+                                type: string
+                                enum:
+                                - fileUpload
+                                - serverLocation
+                                example: fileUpload
+                              server_path:
+                                type: string
+                                description: required if upload_option is set to serverLocation
+                                example: /opt/infoworks/uploads/ccd2d7144f74b382357e5f5f/key.json
+                        - allOf:
+                          - type: object
+                            properties:
+                              storage_type:
+                                type: string
+                                enum:
+                                - dbfs
+                                - remote
+                                - cloud
+                          - type: object
+                            properties:
+                              cloud_type:
+                                type: string
+                                enum:
+                                - s3
+                                - wasb
+                                - gs
+                          - type: object
+                            properties:
+                              account_name:
+                                type: string
+                              account_key:
+                                oneOf:
+                                - type: string
+                                  minLength: 1
+                                  example:
+                                  - passw@rd_plain
+                                  - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                                - type: object
+                                  properties:
+                                    password_type:
+                                      type: string
+                                      enum:
+                                      - infoworks_managed
+                                    password:
+                                      type: string
+                                      minLength: 1
+                                      example:
+                                      - passw@rd_plain
+                                      - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                                - type: object
+                                  properties:
+                                    password_type:
+                                      type: string
+                                      enum:
+                                      - secret_store
+                                    secret_id:
+                                      type: string
+                                      example: e77850ad5127a2d7dab870ff
+                              account_endpoint:
+                                type: string
+                              container_name:
+                                type: string
+                              support_gov_cloud:
+                                type: boolean
+                              access_type:
+                                type: string
+                                enum:
+                                - none
+                                - account_key
+                    key:
+                      description: required only if gcs cloud storage type is selected with fileUpload Option use content-type as multipart/form-data
+                      format: binary
+                      example: key.json
+                    snowflake_profile:
+                      type: string
+                      example: profile1
+                    warehouse:
+                      type: string
+                      example: DEMO_WH
+                - type: object
+                  properties:
+                    source_base_path_relative:
+                      type: string
+              - type: object
+                properties:
+                  environment:
+                    type: string
+                  connection_url:
+                    type: string
+                  username:
+                    type: string
+                  password:
+                    oneOf:
+                    - type: string
+                      minLength: 1
+                      example:
+                      - passw@rd_plain
+                      - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                    - type: object
+                      properties:
+                        password_type:
+                          type: string
+                          enum:
+                          - infoworks_managed
+                        password:
+                          type: string
+                          minLength: 1
+                          example:
+                          - passw@rd_plain
+                          - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                    - type: object
+                      properties:
+                        password_type:
+                          type: string
+                          enum:
+                          - secret_store
+                        secret_id:
+                          type: string
+                          example: e77850ad5127a2d7dab870ff
+                  application_secret_key:
+                    oneOf:
+                    - type: string
+                      minLength: 1
+                      example:
+                      - passw@rd_plain
+                      - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                    - type: object
+                      properties:
+                        password_type:
+                          type: string
+                          enum:
+                          - infoworks_managed
+                        password:
+                          type: string
+                          minLength: 1
+                          example:
+                          - passw@rd_plain
+                          - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                    - type: object
+                      properties:
+                        password_type:
+                          type: string
+                          enum:
+                          - secret_store
+                        secret_id:
+                          type: string
+                          example: e77850ad5127a2d7dab870ff
+                  fetch_mechanism:
+                    type: string
+                    enum:
+                    - bulk
+                    - rest
+                    - both
+                  api_version:
+                    type: string
+                  snowflake_profile:
+                    type: string
+                    example: profile1
+                  warehouse:
+                    type: string
+                    example: DEMO_WH
+              - type: object
+                properties:
+                  broker_id:
+                    type: string
+                  message_format:
+                    type: string
+                    enum:
+                    - json
+                    - avro
+                  snowflake_profile:
+                    type: string
+                    example: profile1
+                  warehouse:
+                    type: string
+                    example: DEMO_WH
+              - type: object
+                properties:
+                  broker_id:
+                    type: string
+                  message_format:
+                    type: string
+                    enum:
+                    - json
+                    - avro
+                  enable_cluster_authentication:
+                    type: boolean
+                  enable_schema_registry:
+                    type: boolean
+                  cluster_authentication_details:
+                    type: object
+                    properties:
+                      security_protocol:
+                        type: string
+                        enum:
+                        - sasl_ssl
+                      sasl_mechanism:
+                        type: string
+                        enum:
+                        - plain
+                      username:
+                        type: string
+                      password:
+                        oneOf:
+                        - type: string
+                          minLength: 1
+                          example:
+                          - passw@rd_plain
+                          - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                        - type: object
+                          properties:
+                            password_type:
+                              type: string
+                              enum:
+                              - infoworks_managed
+                            password:
+                              type: string
+                              minLength: 1
+                              example:
+                              - passw@rd_plain
+                              - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                        - type: object
+                          properties:
+                            password_type:
+                              type: string
+                              enum:
+                              - secret_store
+                            secret_id:
+                              type: string
+                              example: e77850ad5127a2d7dab870ff
+                  schema_registry_authentication_details:
+                    type: object
+                    properties:
+                      authentication_mechanism:
+                        type: string
+                        enum:
+                        - http_basic
+                        - none
+                      username:
+                        type: string
+                      password:
+                        oneOf:
+                        - type: string
+                          minLength: 1
+                          example:
+                          - passw@rd_plain
+                          - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                        - type: object
+                          properties:
+                            password_type:
+                              type: string
+                              enum:
+                              - infoworks_managed
+                            password:
+                              type: string
+                              minLength: 1
+                              example:
+                              - passw@rd_plain
+                              - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                        - type: object
+                          properties:
+                            password_type:
+                              type: string
+                              enum:
+                              - secret_store
+                            secret_id:
+                              type: string
+                              example: e77850ad5127a2d7dab870ff
+                  schema_registry_url:
+                    type: string
+                  snowflake_profile:
+                    type: string
+                    example: profile1
+                  warehouse:
+                    type: string
+                    example: DEMO_WH
+              - type: object
+                properties:
+                  connection_url:
+                    type: string
+                  source_schema:
+                    type: string
+                  username:
+                    type: string
+                  password:
+                    oneOf:
+                    - type: string
+                      minLength: 1
+                      example:
+                      - passw@rd_plain
+                      - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                    - type: object
+                      properties:
+                        password_type:
+                          type: string
+                          enum:
+                          - infoworks_managed
+                        password:
+                          type: string
+                          minLength: 1
+                          example:
+                          - passw@rd_plain
+                          - gIcfY/8lztYzmtrVX0dI/n+DD7RhkOqOtDJnIXXLydMYG1CgCX5fPn0gQkRhC3o=
+                    - type: object
+                      properties:
+                        password_type:
+                          type: string
+                          enum:
+                          - secret_store
+                        secret_id:
+                          type: string
+                          example: e77850ad5127a2d7dab870ff
+                  database:
+                    type: string
+                  parameters:
+                    type: object
+                    properties:
+                      is_active:
+                        type: boolean
+                      is_encrypted:
+                        type: boolean
+                      key:
+                        type: string
+                      value:
+                        type: string
+                  snowflake_profile:
+                    type: string
+                    example: profile1
+                  warehouse:
+                    type: string
+                    example: DEMO_WH
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: Successfully updated source connection
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

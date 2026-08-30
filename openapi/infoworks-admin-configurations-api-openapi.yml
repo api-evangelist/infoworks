@@ -1,0 +1,3103 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Admin Configurations API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Admin Configurations
+paths:
+  /admin/configuration/general:
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getConfigs
+      tags:
+      - Admin Configurations
+      summary: Get all General Configurations for Infoworks.
+      description: Get all General Configurations for Infoworks.
+      responses:
+        '200':
+          description: ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: object
+                      additionalProperties:
+                        properties:
+                          value:
+                            type: string
+                            example: '1000'
+                          description:
+                            type: string
+                            example: dummy description
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    put:
+      security:
+      - BearerAuth: []
+      operationId: putConfigs
+      tags:
+      - Admin Configurations
+      summary: Replace General Configurations for Infoworks.
+      description: Replace General Configurations for Infoworks.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                properties:
+                  value:
+                    type: string
+                    example: '1000'
+                  description:
+                    type: string
+                    example: dummy description
+      responses:
+        '200':
+          description: ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/mongo-backup:
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getMongoBackups
+      tags:
+      - Admin Configurations
+      summary: Gets `Mongo Backups` list.
+      description: Gets `Mongo Backups` list.
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: e77850ad5127a2d7dab870ff
+                      target_path:
+                        type: string
+                        example: /home/ec2-user/mongo-backups
+                      file_name:
+                        type: string
+                        example: mongo-backup-12-03-2019.zip
+                      error:
+                        type: string
+                        example: Not Enough Space
+                      status:
+                        type: string
+                        enum:
+                        - success
+                        - failed
+                        - running
+                      created_at:
+                        type: object
+                        properties:
+                          created_at:
+                            type: string
+                            example: '2019-11-21T12:54:05.875Z'
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/mongo-backup/{mongo_backup_id}:
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getMongoBackup
+      tags:
+      - Admin Configurations
+      summary: Gets Mongo Backup With Specified Id.
+      description: Gets Mongo Backup With Specified Id.
+      parameters:
+      - name: mongo_backup_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: e77850ad5127a2d7dab870ff
+                      target_path:
+                        type: string
+                        example: /home/ec2-user/mongo-backups
+                      file_name:
+                        type: string
+                        example: mongo-backup-12-03-2019.zip
+                      error:
+                        type: string
+                        example: Not Enough Space
+                      status:
+                        type: string
+                        enum:
+                        - success
+                        - failed
+                        - running
+                      created_at:
+                        type: object
+                        properties:
+                          created_at:
+                            type: string
+                            example: '2019-11-21T12:54:05.875Z'
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/mongo-backup/run:
+    post:
+      security:
+      - BearerAuth: []
+      operationId: startMongoBackup
+      tags:
+      - Admin Configurations
+      summary: Start Mongo Backup
+      description: Start Mongo Backup.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/mongo-backup/schedule:
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getBackupSchedule
+      summary: Get the Schedule of the Mongo Backup.
+      description: Get the Schedule of the Mongo Backup.
+      tags:
+      - Admin Configurations
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      schedule_type:
+                        type: string
+                        example: mongo-backup
+                      schedule_details:
+                        oneOf:
+                        - type: object
+                          title: Generic Schedule
+                          description: Generic schedule object
+                          required:
+                          - schedule_status
+                          properties:
+                            schedule_status:
+                              type: string
+                              enum:
+                              - enabled
+                              - disabled
+                              example: enabled
+                            start_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: Start time should be after current time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            start_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 14
+                            start_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 35
+                            repeat_interval_unit:
+                              type: string
+                              enum:
+                              - NEVER
+                              - MINUTE
+                              - HOUR
+                              - DAY
+                              - WEEK
+                              - MONTH
+                              default: NEVER
+                              example: MONTH
+                            repeat_interval_measure:
+                              type: integer
+                              minimum: 1
+                            repeat_on_last_day:
+                              type: boolean
+                              description: '`specified_days` must be provided if `repeat_on_last_day` is false. Applicable for `repeat_interval_unit=MONTH`
+
+                                '
+                              default: false
+                            specified_days:
+                              type: array
+                              description: 'Applicable when `repeat_interval_unit` is `WEEK` or `MONTH`.
+
+                                '
+                              minLength: 1
+                              items:
+                                type: integer
+                                minimum: 0
+                                maximum: 31
+                              example:
+                              - 1
+                              - 17
+                              - 31
+                            ends:
+                              type: boolean
+                              description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                                '
+                              default: false
+                              example: true
+                            end_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: End time should be after start time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            end_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 15
+                            end_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 38
+                            is_custom_job:
+                              type: boolean
+                              description: '`custom_job_details` must be provided when `is_custom_job=true`. Applicable when `repeat_interval_unit` is `DAY`, `WEEK` or `MONTH`.
+
+                                '
+                              default: false
+                            custom_job_details:
+                              type: object
+                              required:
+                              - starts_daily_at
+                              - ends_daily_at
+                              - repeat_interval_measure
+                              - repeat_interval_unit
+                              properties:
+                                starts_daily_at:
+                                  pattern: ^{0-23}:[0-59]$
+                                  type: string
+                                  example: '12:40'
+                                ends_daily_at:
+                                  pattern: ^{0-23}:[0-59]$
+                                  type: string
+                                  example: '17:45'
+                                repeat_interval_measure:
+                                  type: integer
+                                  minimum: 1
+                                  example: 10
+                                repeat_interval_unit:
+                                  type: string
+                                  enum:
+                                  - MINUTE
+                                  - HOUR
+                        - type: object
+                          title: By Minute Schedule
+                          description: Schedule job by minutes
+                          required:
+                          - schedule_status
+                          - start_date
+                          - start_hour
+                          - start_min
+                          - repeat_interval_unit
+                          - repeat_interval_measure
+                          properties:
+                            schedule_status:
+                              type: string
+                              enum:
+                              - enabled
+                              example: enabled
+                            start_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: Start time should be after current time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            start_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 14
+                            start_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 35
+                            repeat_interval_unit:
+                              type: string
+                              enum:
+                              - MINUTE
+                            repeat_interval_measure:
+                              type: integer
+                              minimum: 1
+                            ends:
+                              type: boolean
+                              description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                                '
+                              default: false
+                              example: true
+                            end_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: End time should be after start time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            end_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 15
+                            end_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 55
+                        - type: object
+                          title: Hourly Schedule
+                          description: Schedule job hourly
+                          required:
+                          - schedule_status
+                          - start_date
+                          - start_hour
+                          - start_min
+                          - repeat_interval_unit
+                          - repeat_interval_measure
+                          properties:
+                            schedule_status:
+                              type: string
+                              enum:
+                              - enabled
+                              example: enabled
+                            start_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: Start time should be after current time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            start_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 14
+                            start_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 35
+                            repeat_interval_unit:
+                              type: string
+                              enum:
+                              - HOUR
+                            repeat_interval_measure:
+                              type: integer
+                              minimum: 1
+                            ends:
+                              type: boolean
+                              description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                                '
+                              default: false
+                              example: true
+                            end_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: End time should be after start time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            end_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 15
+                            end_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 55
+                        - type: object
+                          title: Daily Schedule
+                          description: Schedule job daily
+                          required:
+                          - schedule_status
+                          - start_date
+                          - start_hour
+                          - start_min
+                          - repeat_interval_unit
+                          - repeat_interval_measure
+                          properties:
+                            schedule_status:
+                              type: string
+                              enum:
+                              - enabled
+                              example: enabled
+                            start_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: Start time should be after current time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            start_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 14
+                            start_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 35
+                            repeat_interval_unit:
+                              type: string
+                              enum:
+                              - DAY
+                            repeat_interval_measure:
+                              type: integer
+                              minimum: 1
+                            ends:
+                              type: boolean
+                              description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                                '
+                              default: false
+                              example: true
+                            end_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: End time should be after start time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            end_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 15
+                            end_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 55
+                            is_custom_job:
+                              type: boolean
+                              description: '`custom_job_details` must be provided when `is_custom_job=true`
+
+                                '
+                              default: false
+                              example: true
+                            custom_job_details:
+                              type: object
+                              required:
+                              - starts_daily_at
+                              - ends_daily_at
+                              - repeat_interval_measure
+                              - repeat_interval_unit
+                              properties:
+                                starts_daily_at:
+                                  pattern: ^{0-23}:[0-59]$
+                                  type: string
+                                  example: '12:40'
+                                ends_daily_at:
+                                  pattern: ^{0-23}:[0-59]$
+                                  type: string
+                                  example: '17:45'
+                                repeat_interval_measure:
+                                  type: integer
+                                  minimum: 1
+                                  example: 10
+                                repeat_interval_unit:
+                                  type: string
+                                  enum:
+                                  - MINUTE
+                                  - HOUR
+                        - type: object
+                          title: Weekly Schedule
+                          description: Schedule job weekly
+                          required:
+                          - schedule_status
+                          - start_date
+                          - start_hour
+                          - start_min
+                          - repeat_interval_unit
+                          - repeat_interval_measure
+                          - specified_days
+                          properties:
+                            schedule_status:
+                              type: string
+                              enum:
+                              - enabled
+                              example: enabled
+                            start_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: Start time should be after current time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            start_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 14
+                            start_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 35
+                            repeat_interval_unit:
+                              type: string
+                              enum:
+                              - WEEK
+                            repeat_interval_measure:
+                              type: integer
+                              minimum: 1
+                            specified_days:
+                              type: array
+                              minLength: 1
+                              items:
+                                type: integer
+                                minimum: 0
+                                maximum: 6
+                              example:
+                              - 0
+                              - 2
+                              - 5
+                            ends:
+                              type: boolean
+                              description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                                '
+                              default: false
+                              example: true
+                            end_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: End time should be after start time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            end_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 15
+                            end_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 55
+                            is_custom_job:
+                              type: boolean
+                              description: '`custom_job_details` must be provided when `is_custom_job=true`
+
+                                '
+                              default: false
+                              example: true
+                            custom_job_details:
+                              type: object
+                              required:
+                              - starts_daily_at
+                              - ends_daily_at
+                              - repeat_interval_measure
+                              - repeat_interval_unit
+                              properties:
+                                starts_daily_at:
+                                  pattern: ^{0-23}:[0-59]$
+                                  type: string
+                                  example: '12:40'
+                                ends_daily_at:
+                                  pattern: ^{0-23}:[0-59]$
+                                  type: string
+                                  example: '17:45'
+                                repeat_interval_measure:
+                                  type: integer
+                                  minimum: 1
+                                  example: 10
+                                repeat_interval_unit:
+                                  type: string
+                                  enum:
+                                  - MINUTE
+                                  - HOUR
+                        - type: object
+                          title: Monthly Schedule
+                          description: Schedule job monthly
+                          required:
+                          - schedule_status
+                          - start_date
+                          - start_hour
+                          - start_min
+                          - repeat_interval_unit
+                          - repeat_interval_measure
+                          properties:
+                            schedule_status:
+                              type: string
+                              enum:
+                              - enabled
+                              example: enabled
+                            start_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: Start time should be after current time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            start_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 14
+                            start_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 35
+                            repeat_interval_unit:
+                              type: string
+                              enum:
+                              - MONTH
+                            repeat_interval_measure:
+                              type: integer
+                              minimum: 1
+                            repeat_on_last_day:
+                              type: boolean
+                              description: '`specified_days` must be provided if `repeat_on_last_day` is false.
+
+                                '
+                              default: false
+                            specified_days:
+                              type: array
+                              minLength: 1
+                              items:
+                                type: integer
+                                minimum: 1
+                                maximum: 31
+                              example:
+                              - 1
+                              - 17
+                              - 31
+                            ends:
+                              type: boolean
+                              description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                                '
+                              default: false
+                              example: true
+                            end_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: End time should be after start time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            end_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 15
+                            end_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 45
+                            is_custom_job:
+                              type: boolean
+                              description: '`custom_job_details` must be provided when `is_custom_job=true`
+
+                                '
+                              default: false
+                              example: true
+                            custom_job_details:
+                              type: object
+                              required:
+                              - starts_daily_at
+                              - ends_daily_at
+                              - repeat_interval_measure
+                              - repeat_interval_unit
+                              properties:
+                                starts_daily_at:
+                                  pattern: ^{0-23}:[0-59]$
+                                  type: string
+                                  example: '12:40'
+                                ends_daily_at:
+                                  pattern: ^{0-23}:[0-59]$
+                                  type: string
+                                  example: '17:45'
+                                repeat_interval_measure:
+                                  type: integer
+                                  minimum: 1
+                                  example: 10
+                                repeat_interval_unit:
+                                  type: string
+                                  enum:
+                                  - MINUTE
+                                  - HOUR
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/mongo-backup/schedule/enable:
+    put:
+      security:
+      - BearerAuth: []
+      operationId: enableBackupSchedule
+      summary: Schedule Mongo Backup.
+      description: Schedule Mongo Backup.
+      tags:
+      - Admin Configurations
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - type: object
+                title: Generic Schedule
+                description: Generic schedule object
+                required:
+                - schedule_status
+                properties:
+                  schedule_status:
+                    type: string
+                    enum:
+                    - enabled
+                    - disabled
+                    example: enabled
+                  start_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: Start time should be after current time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  start_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 14
+                  start_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 35
+                  repeat_interval_unit:
+                    type: string
+                    enum:
+                    - NEVER
+                    - MINUTE
+                    - HOUR
+                    - DAY
+                    - WEEK
+                    - MONTH
+                    default: NEVER
+                    example: MONTH
+                  repeat_interval_measure:
+                    type: integer
+                    minimum: 1
+                  repeat_on_last_day:
+                    type: boolean
+                    description: '`specified_days` must be provided if `repeat_on_last_day` is false. Applicable for `repeat_interval_unit=MONTH`
+
+                      '
+                    default: false
+                  specified_days:
+                    type: array
+                    description: 'Applicable when `repeat_interval_unit` is `WEEK` or `MONTH`.
+
+                      '
+                    minLength: 1
+                    items:
+                      type: integer
+                      minimum: 0
+                      maximum: 31
+                    example:
+                    - 1
+                    - 17
+                    - 31
+                  ends:
+                    type: boolean
+                    description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                      '
+                    default: false
+                    example: true
+                  end_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: End time should be after start time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  end_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 15
+                  end_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 38
+                  is_custom_job:
+                    type: boolean
+                    description: '`custom_job_details` must be provided when `is_custom_job=true`. Applicable when `repeat_interval_unit` is `DAY`, `WEEK` or `MONTH`.
+
+                      '
+                    default: false
+                  custom_job_details:
+                    type: object
+                    required:
+                    - starts_daily_at
+                    - ends_daily_at
+                    - repeat_interval_measure
+                    - repeat_interval_unit
+                    properties:
+                      starts_daily_at:
+                        pattern: ^{0-23}:[0-59]$
+                        type: string
+                        example: '12:40'
+                      ends_daily_at:
+                        pattern: ^{0-23}:[0-59]$
+                        type: string
+                        example: '17:45'
+                      repeat_interval_measure:
+                        type: integer
+                        minimum: 1
+                        example: 10
+                      repeat_interval_unit:
+                        type: string
+                        enum:
+                        - MINUTE
+                        - HOUR
+              - type: object
+                title: By Minute Schedule
+                description: Schedule job by minutes
+                required:
+                - schedule_status
+                - start_date
+                - start_hour
+                - start_min
+                - repeat_interval_unit
+                - repeat_interval_measure
+                properties:
+                  schedule_status:
+                    type: string
+                    enum:
+                    - enabled
+                    example: enabled
+                  start_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: Start time should be after current time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  start_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 14
+                  start_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 35
+                  repeat_interval_unit:
+                    type: string
+                    enum:
+                    - MINUTE
+                  repeat_interval_measure:
+                    type: integer
+                    minimum: 1
+                  ends:
+                    type: boolean
+                    description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                      '
+                    default: false
+                    example: true
+                  end_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: End time should be after start time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  end_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 15
+                  end_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 55
+              - type: object
+                title: Hourly Schedule
+                description: Schedule job hourly
+                required:
+                - schedule_status
+                - start_date
+                - start_hour
+                - start_min
+                - repeat_interval_unit
+                - repeat_interval_measure
+                properties:
+                  schedule_status:
+                    type: string
+                    enum:
+                    - enabled
+                    example: enabled
+                  start_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: Start time should be after current time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  start_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 14
+                  start_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 35
+                  repeat_interval_unit:
+                    type: string
+                    enum:
+                    - HOUR
+                  repeat_interval_measure:
+                    type: integer
+                    minimum: 1
+                  ends:
+                    type: boolean
+                    description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                      '
+                    default: false
+                    example: true
+                  end_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: End time should be after start time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  end_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 15
+                  end_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 55
+              - type: object
+                title: Daily Schedule
+                description: Schedule job daily
+                required:
+                - schedule_status
+                - start_date
+                - start_hour
+                - start_min
+                - repeat_interval_unit
+                - repeat_interval_measure
+                properties:
+                  schedule_status:
+                    type: string
+                    enum:
+                    - enabled
+                    example: enabled
+                  start_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: Start time should be after current time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  start_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 14
+                  start_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 35
+                  repeat_interval_unit:
+                    type: string
+                    enum:
+                    - DAY
+                  repeat_interval_measure:
+                    type: integer
+                    minimum: 1
+                  ends:
+                    type: boolean
+                    description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                      '
+                    default: false
+                    example: true
+                  end_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: End time should be after start time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  end_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 15
+                  end_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 55
+                  is_custom_job:
+                    type: boolean
+                    description: '`custom_job_details` must be provided when `is_custom_job=true`
+
+                      '
+                    default: false
+                    example: true
+                  custom_job_details:
+                    type: object
+                    required:
+                    - starts_daily_at
+                    - ends_daily_at
+                    - repeat_interval_measure
+                    - repeat_interval_unit
+                    properties:
+                      starts_daily_at:
+                        pattern: ^{0-23}:[0-59]$
+                        type: string
+                        example: '12:40'
+                      ends_daily_at:
+                        pattern: ^{0-23}:[0-59]$
+                        type: string
+                        example: '17:45'
+                      repeat_interval_measure:
+                        type: integer
+                        minimum: 1
+                        example: 10
+                      repeat_interval_unit:
+                        type: string
+                        enum:
+                        - MINUTE
+                        - HOUR
+              - type: object
+                title: Weekly Schedule
+                description: Schedule job weekly
+                required:
+                - schedule_status
+                - start_date
+                - start_hour
+                - start_min
+                - repeat_interval_unit
+                - repeat_interval_measure
+                - specified_days
+                properties:
+                  schedule_status:
+                    type: string
+                    enum:
+                    - enabled
+                    example: enabled
+                  start_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: Start time should be after current time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  start_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 14
+                  start_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 35
+                  repeat_interval_unit:
+                    type: string
+                    enum:
+                    - WEEK
+                  repeat_interval_measure:
+                    type: integer
+                    minimum: 1
+                  specified_days:
+                    type: array
+                    minLength: 1
+                    items:
+                      type: integer
+                      minimum: 0
+                      maximum: 6
+                    example:
+                    - 0
+                    - 2
+                    - 5
+                  ends:
+                    type: boolean
+                    description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                      '
+                    default: false
+                    example: true
+                  end_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: End time should be after start time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  end_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 15
+                  end_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 55
+                  is_custom_job:
+                    type: boolean
+                    description: '`custom_job_details` must be provided when `is_custom_job=true`
+
+                      '
+                    default: false
+                    example: true
+                  custom_job_details:
+                    type: object
+                    required:
+                    - starts_daily_at
+                    - ends_daily_at
+                    - repeat_interval_measure
+                    - repeat_interval_unit
+                    properties:
+                      starts_daily_at:
+                        pattern: ^{0-23}:[0-59]$
+                        type: string
+                        example: '12:40'
+                      ends_daily_at:
+                        pattern: ^{0-23}:[0-59]$
+                        type: string
+                        example: '17:45'
+                      repeat_interval_measure:
+                        type: integer
+                        minimum: 1
+                        example: 10
+                      repeat_interval_unit:
+                        type: string
+                        enum:
+                        - MINUTE
+                        - HOUR
+              - type: object
+                title: Monthly Schedule
+                description: Schedule job monthly
+                required:
+                - schedule_status
+                - start_date
+                - start_hour
+                - start_min
+                - repeat_interval_unit
+                - repeat_interval_measure
+                properties:
+                  schedule_status:
+                    type: string
+                    enum:
+                    - enabled
+                    example: enabled
+                  start_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: Start time should be after current time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  start_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 14
+                  start_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 35
+                  repeat_interval_unit:
+                    type: string
+                    enum:
+                    - MONTH
+                  repeat_interval_measure:
+                    type: integer
+                    minimum: 1
+                  repeat_on_last_day:
+                    type: boolean
+                    description: '`specified_days` must be provided if `repeat_on_last_day` is false.
+
+                      '
+                    default: false
+                  specified_days:
+                    type: array
+                    minLength: 1
+                    items:
+                      type: integer
+                      minimum: 1
+                      maximum: 31
+                    example:
+                    - 1
+                    - 17
+                    - 31
+                  ends:
+                    type: boolean
+                    description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                      '
+                    default: false
+                    example: true
+                  end_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: End time should be after start time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  end_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 15
+                  end_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 45
+                  is_custom_job:
+                    type: boolean
+                    description: '`custom_job_details` must be provided when `is_custom_job=true`
+
+                      '
+                    default: false
+                    example: true
+                  custom_job_details:
+                    type: object
+                    required:
+                    - starts_daily_at
+                    - ends_daily_at
+                    - repeat_interval_measure
+                    - repeat_interval_unit
+                    properties:
+                      starts_daily_at:
+                        pattern: ^{0-23}:[0-59]$
+                        type: string
+                        example: '12:40'
+                      ends_daily_at:
+                        pattern: ^{0-23}:[0-59]$
+                        type: string
+                        example: '17:45'
+                      repeat_interval_measure:
+                        type: integer
+                        minimum: 1
+                        example: 10
+                      repeat_interval_unit:
+                        type: string
+                        enum:
+                        - MINUTE
+                        - HOUR
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Example Success Message
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/mongo-backup/schedule/disable:
+    put:
+      security:
+      - BearerAuth: []
+      operationId: disableBackupSchedule
+      summary: Schedule Mongo Backup.
+      description: Schedule Mongo Backup.
+      tags:
+      - Admin Configurations
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Example Success Message
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/configuration/authentication:
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getAllConfigs
+      summary: Get the type of the Authentication and associated properties.
+      description: Get the type of the Authentication and associated properties.
+      tags:
+      - Admin Configurations
+      responses:
+        '200':
+          description: ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: array
+                      items:
+                        allOf:
+                        - type: object
+                          allOf:
+                          - type: object
+                            properties:
+                              is_active:
+                                type: boolean
+                                example: true
+                          - type: object
+                            properties:
+                              authentication_type:
+                                type: string
+                                enum:
+                                - mongo
+                        - type: object
+                          allOf:
+                          - type: object
+                            properties:
+                              created_at:
+                                type: string
+                                example: '2019-11-21T12:54:05.875Z'
+                          - type: object
+                            properties:
+                              created_by:
+                                type: string
+                                example: 6RkfybTRQQByEey3v
+                          - type: object
+                            properties:
+                              modified_at:
+                                type: string
+                                example: '2019-11-21T12:54:05.875Z'
+                          - type: object
+                            properties:
+                              modified_by:
+                                type: string
+                                example: 6RkfybTRQQByEey3v
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    put:
+      security:
+      - BearerAuth: []
+      operationId: enableAuthConfig
+      tags:
+      - Admin Configurations
+      summary: Change the Authentication Mechanism
+      description: Change the Authentication Mechanism
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              oneOf:
+              - type: object
+                allOf:
+                - type: object
+                  properties:
+                    is_active:
+                      type: boolean
+                      example: true
+                - type: object
+                  properties:
+                    authentication_type:
+                      type: string
+                      enum:
+                      - mongo
+              - type: object
+                allOf:
+                - type: object
+                  properties:
+                    is_active:
+                      type: boolean
+                      example: true
+                - type: object
+                  properties:
+                    authentication_type:
+                      type: string
+                      enum:
+                      - ldap
+                    ldap_host:
+                      type: string
+                      example: localhost
+                    ldap_port:
+                      type: string
+                      example: '849'
+                    ldap_ssl:
+                      type: boolean
+                      example: true
+                    bind_user_dn:
+                      type: string
+                      example: admin
+                    bind_user_password:
+                      type: string
+                      example: example password (Note - this key will not be available in GET)
+                    base_dn:
+                      type: string
+                      example: OU=ldaptest,DC=infoworks,DC=local
+                    login_attribute:
+                      type: string
+                      example: mail
+                    full_name_attribute:
+                      type: string
+                      example: displayName
+                    email_attribute:
+                      type: string
+                      example: mail
+                    role_attribute:
+                      type: string
+                      example: memberOf
+                    role_separator:
+                      type: string
+                      example: ','
+                    login_hint:
+                      type: string
+                      example: LDAP email
+                    system_admin_roles:
+                      type: string
+                      example: CN=admingroup,OU=ldaptest,DC=infoworks,DC=local
+                    database_admin_roles:
+                      type: string
+                      example: CN=dbadmingroup,OU=ldaptest,DC=infoworks,DC=local
+                    data_analyst_roles:
+                      type: string
+                      example: CN=analystgroup,OU=ldaptest,DC=infoworks,DC=local
+                    data_modeller_roles:
+                      type: string
+                      example: CN=modellergroup,OU=ldaptest,DC=infoworks,DC=local
+                    operations_analyst_roles:
+                      type: string
+                      example: CN=modellergroup,OU=ldaptest,DC=infoworks,DC=local
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - authentication_type
+              - full_name_attribute
+              - email_attribute
+              - role_attribute
+              - role_separator
+              - system_admin_roles
+              - upload_option
+              - acs_url
+              - sp_entity_id
+              - saml_type
+              - is_active
+              - is_controlled_domain_mapping
+              allOf:
+              - type: object
+                properties:
+                  is_active:
+                    type: boolean
+                    example: true
+              - type: object
+                properties:
+                  authentication_type:
+                    type: string
+                    enum:
+                    - saml
+                  full_name_attribute:
+                    type: string
+                    example: displayName
+                  email_attribute:
+                    type: string
+                    example: mail
+                  role_attribute:
+                    type: string
+                    example: memberOf
+                  role_separator:
+                    type: string
+                    example: ','
+                  system_admin_roles:
+                    type: string
+                    example: CN=admingroup,OU=ldaptest,DC=infoworks,DC=local
+                  database_admin_roles:
+                    type: string
+                    example: CN=dbadmingroup,OU=ldaptest,DC=infoworks,DC=local
+                  data_analyst_roles:
+                    type: string
+                    example: CN=analystgroup,OU=ldaptest,DC=infoworks,DC=local
+                  data_modeller_roles:
+                    type: string
+                    example: CN=modellergroup,OU=ldaptest,DC=infoworks,DC=local
+                  operational_analyst_roles:
+                    type: string
+                    example: CN=modellergroup,OU=ldaptest,DC=infoworks,DC=local
+                  upload_option:
+                    type: string
+                    enum:
+                    - fileUpload
+                    - serverPath
+                  acs_url:
+                    type: string
+                  sp_entity_id:
+                    type: string
+                  saml_type:
+                    type: string
+                    enum:
+                    - OKTA
+                    - AZURE
+                  is_controlled_domain_mapping:
+                    type: boolean
+                    default: false
+                  server_path:
+                    type: string
+                  file:
+                    type: string
+                    format: binary
+                  domain_group_attribute:
+                    type: string
+                  domain_group_separator:
+                    type: string
+                  domain_group_mappings:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        domain_group_name_pattern:
+                          type: string
+                        associated_domain:
+                          type: array
+                          items:
+                            type: string
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Example Success Message
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    patch:
+      security:
+      - BearerAuth: []
+      operationId: patchEnableAuthConfig
+      tags:
+      - Admin Configurations
+      summary: Change the Authentication Mechanism
+      description: Change the Authentication Mechanism
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              oneOf:
+              - type: object
+                allOf:
+                - type: object
+                  properties:
+                    is_active:
+                      type: boolean
+                      example: true
+                - type: object
+                  properties:
+                    authentication_type:
+                      type: string
+                      enum:
+                      - mongo
+              - type: object
+                allOf:
+                - type: object
+                  properties:
+                    is_active:
+                      type: boolean
+                      example: true
+                - type: object
+                  properties:
+                    authentication_type:
+                      type: string
+                      enum:
+                      - ldap
+                    ldap_host:
+                      type: string
+                      example: localhost
+                    ldap_port:
+                      type: string
+                      example: '849'
+                    ldap_ssl:
+                      type: boolean
+                      example: true
+                    bind_user_dn:
+                      type: string
+                      example: admin
+                    bind_user_password:
+                      type: string
+                      example: example password (Note - this key will not be available in GET)
+                    base_dn:
+                      type: string
+                      example: OU=ldaptest,DC=infoworks,DC=local
+                    login_attribute:
+                      type: string
+                      example: mail
+                    full_name_attribute:
+                      type: string
+                      example: displayName
+                    email_attribute:
+                      type: string
+                      example: mail
+                    role_attribute:
+                      type: string
+                      example: memberOf
+                    role_separator:
+                      type: string
+                      example: ','
+                    login_hint:
+                      type: string
+                      example: LDAP email
+                    system_admin_roles:
+                      type: string
+                      example: CN=admingroup,OU=ldaptest,DC=infoworks,DC=local
+                    database_admin_roles:
+                      type: string
+                      example: CN=dbadmingroup,OU=ldaptest,DC=infoworks,DC=local
+                    data_analyst_roles:
+                      type: string
+                      example: CN=analystgroup,OU=ldaptest,DC=infoworks,DC=local
+                    data_modeller_roles:
+                      type: string
+                      example: CN=modellergroup,OU=ldaptest,DC=infoworks,DC=local
+                    operations_analyst_roles:
+                      type: string
+                      example: CN=modellergroup,OU=ldaptest,DC=infoworks,DC=local
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Example Success Message
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/configuration/authentication/test-connection:
+    post:
+      security:
+      - BearerAuth: []
+      operationId: testConnection
+      tags:
+      - Admin Configurations
+      summary: Test the Authentication Mechanism's Connection.
+      description: Test the Authentication Mechanism's Connection.
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Example Success Message
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/configuration/authentication/test-ldap-connection:
+    post:
+      security:
+      - BearerAuth: []
+      operationId: testLdapConnection
+      tags:
+      - Admin Configurations
+      summary: Test the Authentication Connection for LDAP user.
+      description: Test the Authentication Connection for LDAP user.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - test_bind_dn
+              allOf:
+              - type: object
+                properties:
+                  host:
+                    type: string
+                    example: ldap.forumsys.com
+                  port:
+                    type: string
+                    example: 389
+                  is_ssl:
+                    type: boolean
+                    example: false
+                  test_bind_dn:
+                    type: string
+                    example: uid=einstein,dc=example,dc=com
+                  test_bind_password:
+                    type: string
+                    example: password
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: object
+                      properties:
+                        status:
+                          type: string
+                          example: Success
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

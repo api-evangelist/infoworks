@@ -1,0 +1,587 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Configurations API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Configurations
+  description: ''
+paths:
+  /sources/{source_id}/config-migration:
+    parameters:
+    - name: Content-Type
+      in: header
+      description: Http content type
+      required: true
+      schema:
+        type: string
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Configurations
+      summary: Exports the source configuration
+      description: Exports the source configuration to JSON format.
+      operationId: exportSourceConfiguration
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    allOf:
+                    - type: object
+                      properties:
+                        configuration:
+                          type: object
+                          properties:
+                            iw_mappings:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  entity_id:
+                                    type: string
+                                    example: 8e7b3069f1368c53ed4f08ac
+                                  entity_type:
+                                    type: string
+                                    description: An Infoworks Entity
+                                    enum:
+                                    - source
+                                    - table_group
+                                    - table
+                                    - workflow
+                                    - environment_compute_template
+                                  recommendation:
+                                    type: object
+                                    properties:
+                                      source_name:
+                                        type: string
+                                        example: test_oracle
+                            source_configs:
+                              type: object
+                            entity_configs:
+                              type: array
+                              items:
+                                type: object
+                            table_configs:
+                              type: array
+                              items:
+                                type: object
+                            table_group_configs:
+                              type: array
+                              items:
+                                type: object
+                            entity:
+                              type: array
+                              items:
+                                type: object
+                            file_mappings:
+                              type: array
+                              items:
+                                type: object
+                            topic_mappings:
+                              type: array
+                              items:
+                                type: object
+                            export:
+                              type: object
+                              properties:
+                                exported_by:
+                                  type: string
+                                  example: 6RkfybTRQQByEey3v
+                                exported_at:
+                                  type: string
+                                  example: test_oracle
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+    post:
+      security:
+      - BearerAuth: []
+      tags:
+      - Configurations
+      summary: Imports the source configuration
+      description: Imports the source configuration from JSON format.
+      operationId: importSourceConfiguration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              allOf:
+              - type: object
+                properties:
+                  dry_run:
+                    type: boolean
+                    example: true
+                  import_configs:
+                    properties:
+                      run_pipeline_metadata_build:
+                        type: boolean
+                        example: false
+                      is_pipeline_version_active:
+                        type: boolean
+                        example: false
+                      include_optional_properties:
+                        type: boolean
+                        example: false
+                      import_data_connection:
+                        type: boolean
+                        example: false
+              - type: object
+                properties:
+                  configuration:
+                    type: object
+                    properties:
+                      iw_mappings:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            entity_id:
+                              type: string
+                              example: 8e7b3069f1368c53ed4f08ac
+                            entity_type:
+                              type: string
+                              description: An Infoworks Entity
+                              enum:
+                              - source
+                              - table_group
+                              - table
+                              - workflow
+                              - environment_compute_template
+                            recommendation:
+                              type: object
+                              properties:
+                                source_name:
+                                  type: string
+                                  example: test_oracle
+                      source_configs:
+                        type: object
+                      entity_configs:
+                        type: array
+                        items:
+                          type: object
+                      table_configs:
+                        type: array
+                        items:
+                          type: object
+                      table_group_configs:
+                        type: array
+                        items:
+                          type: object
+                      entity:
+                        type: array
+                        items:
+                          type: object
+                      file_mappings:
+                        type: array
+                        items:
+                          type: object
+                      topic_mappings:
+                        type: array
+                        items:
+                          type: object
+                      export:
+                        type: object
+                        properties:
+                          exported_by:
+                            type: string
+                            example: 6RkfybTRQQByEey3v
+                          exported_at:
+                            type: string
+                            example: test_oracle
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: array
+                    items:
+                      allOf:
+                      - type: object
+                        properties:
+                          entity_id:
+                            type: string
+                            example: 8e7b3069f1368c53ed4f08ac
+                          entity_type:
+                            type: string
+                            description: An Infoworks Entity
+                            enum:
+                            - table
+                            - table_group
+                            - source
+                            - workflow
+                            - environment_compute_template
+                          recommendation:
+                            type: object
+                            properties:
+                              table_name:
+                                type: string
+                                example: BATCH_BASED
+                          to_entity_id:
+                            type: string
+                            example: 8e7b3069f1368c53ed4f08ac
+                          table_upsert_status:
+                            type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+  /config-migration-file-upload:
+    put:
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: entity_type
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - source
+          - workflow
+          - pipeline
+          example: source
+      - name: entity_id
+        in: query
+        required: true
+        schema:
+          type: string
+          example: 596d9322132d468367c7f074
+      operationId: configMigrationFileUpload
+      tags:
+      - Configurations
+      summary: Upload config migration json file
+      description: Upload config migration json file
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+              example: config_migration_63eb5b2840dd4c5a46a05ab6.json
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

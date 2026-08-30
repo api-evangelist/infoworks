@@ -1,0 +1,561 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Data Catalog API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Data Catalog
+  description: Read Operation for Data Catalog
+paths:
+  /data-catalog/data-models:
+    get:
+      security:
+      - BearerAuth: []
+      summary: Data Model Details
+      description: Get Data Model details
+      tags:
+      - Data Catalog
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of Data Models.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      allOf:
+                      - type: object
+                        properties:
+                          table_name:
+                            type: string
+                            example: oracle_source
+                          table_id:
+                            type: string
+                            example: 63c79645373d557660c43823
+                          domain_name:
+                            type: string
+                            example: rdbms_domain
+                          domain_id:
+                            type: string
+                            example: 63c79645373d557660c43823
+                          data_environment:
+                            type: object
+                            properties:
+                              environment_details:
+                                type: object
+                                properties:
+                                  environment:
+                                    type: object
+                                    properties:
+                                      id:
+                                        type: string
+                                        example: 63cd71df9f1c1e258c6e991b
+                                      name:
+                                        type: string
+                                        example: env_azure
+                                      compute_engine:
+                                        type: string
+                                        example: spark
+                                      platform:
+                                        type: string
+                                        example: databricks
+                                      description:
+                                        type: string
+                                        example: Test Description
+                                  ephemeral_compute:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        name:
+                                          type: string
+                                          example: ephemeral_compute
+                                        environment_id:
+                                          type: string
+                                          example: 63cd71df9f1c1e258c6e991b
+                                        id:
+                                          type: string
+                                          example: 63cd71df9f1c1e258c6e991b
+                                  interactive_compute:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        name:
+                                          type: string
+                                          example: interactive_compute
+                                        environment_id:
+                                          type: string
+                                          example: 63cd71df9f1c1e258c6e991b
+                                        id:
+                                          type: string
+                                          example: 63cd71df9f1c1e258c6e991b
+                                  storage:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        id:
+                                          type: string
+                                          example: 63cd71df9f1c1e258c6e991b
+                                        name:
+                                          type: string
+                                          example: storage
+                                        environment_id:
+                                          type: string
+                                          example: 63cd71df9f1c1e258c6e991b
+                          data_environment_id:
+                            type: string
+                            example: 63c79645373d557660c43823
+                          status:
+                            type: string
+                            example: ready
+                          created_at:
+                            type: string
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /data-catalog/favorites:
+    get:
+      security:
+      - BearerAuth: []
+      summary: Favorite Entity Details
+      description: Get Favorite Entity details
+      tags:
+      - Data Catalog
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of Favorite Entities.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      allOf:
+                      - type: object
+                        properties:
+                          name:
+                            type: string
+                            example: fav_source
+                          id:
+                            type: string
+                            example: 45c79645373d557660c43823
+                          source_type:
+                            type: string
+                            example: kafka
+                          source_schema:
+                            type: string
+                            example: APEX_040000
+                          is_ingested:
+                            type: boolean
+                            example: true
+                          data_environment:
+                            type: object
+                            properties:
+                              environment_details:
+                                type: object
+                                properties:
+                                  environment:
+                                    type: object
+                                    properties:
+                                      id:
+                                        type: string
+                                        example: 63cd71df9f1c1e258c6e991b
+                                      name:
+                                        type: string
+                                        example: env_azure
+                                      compute_engine:
+                                        type: string
+                                        example: spark
+                                      platform:
+                                        type: string
+                                        example: databricks
+                                      description:
+                                        type: string
+                                        example: Test Description
+                                  ephemeral_compute:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        name:
+                                          type: string
+                                          example: ephemeral_compute
+                                        environment_id:
+                                          type: string
+                                          example: 63cd71df9f1c1e258c6e991b
+                                        id:
+                                          type: string
+                                          example: 63cd71df9f1c1e258c6e991b
+                                  interactive_compute:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        name:
+                                          type: string
+                                          example: interactive_compute
+                                        environment_id:
+                                          type: string
+                                          example: 63cd71df9f1c1e258c6e991b
+                                        id:
+                                          type: string
+                                          example: 63cd71df9f1c1e258c6e991b
+                                  storage:
+                                    type: array
+                                    items:
+                                      type: object
+                                      properties:
+                                        id:
+                                          type: string
+                                          example: 63cd71df9f1c1e258c6e991b
+                                        name:
+                                          type: string
+                                          example: storage
+                                        environment_id:
+                                          type: string
+                                          example: 63cd71df9f1c1e258c6e991b
+                          data_environment_id:
+                            type: string
+                          status:
+                            type: string
+                            example: ready
+                          created_at:
+                            type: string
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

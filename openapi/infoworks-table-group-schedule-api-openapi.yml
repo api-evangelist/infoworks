@@ -1,0 +1,1701 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Table Group Schedule API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Table Group Schedule
+  description: Enable/Disable schedule for table groups
+paths:
+  /sources/{source_id}/table-groups/{table_group_id}/schedules:
+    parameters:
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    - name: table_group_id
+      in: path
+      description: Table Group Id
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Table Group Schedule
+      operationId: getTableGroupSchedule
+      summary: Get Table Group Schedule
+      description: Retrieves the table group schedule.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    entity_id:
+                      type: string
+                      example: e77850ad5127a2d7dab870ff
+                    schedule_type:
+                      type: string
+                      enum:
+                      - workflow-build
+                      - metadata_cleanup
+                      - mongo-backup
+                      - table-group-cdc
+                      - table
+                    schedule_username:
+                      type: string
+                      example: admin@infoworks.io
+                    schedule_details:
+                      allOf:
+                      - oneOf:
+                        - type: object
+                          title: Generic Schedule
+                          description: Generic schedule object
+                          required:
+                          - schedule_status
+                          properties:
+                            schedule_status:
+                              type: string
+                              enum:
+                              - enabled
+                              - disabled
+                              example: enabled
+                            start_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: Start time should be after current time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            start_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 14
+                            start_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 35
+                            repeat_interval_unit:
+                              type: string
+                              enum:
+                              - NEVER
+                              - MINUTE
+                              - HOUR
+                              - DAY
+                              - WEEK
+                              - MONTH
+                              default: NEVER
+                              example: MONTH
+                            repeat_interval_measure:
+                              type: integer
+                              minimum: 1
+                            repeat_on_last_day:
+                              type: boolean
+                              description: '`specified_days` must be provided if `repeat_on_last_day` is false. Applicable for `repeat_interval_unit=MONTH`
+
+                                '
+                              default: false
+                            specified_days:
+                              type: array
+                              description: 'Applicable when `repeat_interval_unit` is `WEEK` or `MONTH`.
+
+                                '
+                              minLength: 1
+                              items:
+                                type: integer
+                                minimum: 0
+                                maximum: 31
+                              example:
+                              - 1
+                              - 17
+                              - 31
+                            ends:
+                              type: boolean
+                              description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                                '
+                              default: false
+                              example: true
+                            end_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: End time should be after start time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            end_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 15
+                            end_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 38
+                            is_custom_job:
+                              type: boolean
+                              description: '`custom_job_details` must be provided when `is_custom_job=true`. Applicable when `repeat_interval_unit` is `DAY`, `WEEK` or `MONTH`.
+
+                                '
+                              default: false
+                            custom_job_details:
+                              type: object
+                              required:
+                              - starts_daily_at
+                              - ends_daily_at
+                              - repeat_interval_measure
+                              - repeat_interval_unit
+                              properties:
+                                starts_daily_at:
+                                  pattern: ^{0-23}:[0-59]$
+                                  type: string
+                                  example: '12:40'
+                                ends_daily_at:
+                                  pattern: ^{0-23}:[0-59]$
+                                  type: string
+                                  example: '17:45'
+                                repeat_interval_measure:
+                                  type: integer
+                                  minimum: 1
+                                  example: 10
+                                repeat_interval_unit:
+                                  type: string
+                                  enum:
+                                  - MINUTE
+                                  - HOUR
+                        - type: object
+                          title: By Minute Schedule
+                          description: Schedule job by minutes
+                          required:
+                          - schedule_status
+                          - start_date
+                          - start_hour
+                          - start_min
+                          - repeat_interval_unit
+                          - repeat_interval_measure
+                          properties:
+                            schedule_status:
+                              type: string
+                              enum:
+                              - enabled
+                              example: enabled
+                            start_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: Start time should be after current time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            start_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 14
+                            start_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 35
+                            repeat_interval_unit:
+                              type: string
+                              enum:
+                              - MINUTE
+                            repeat_interval_measure:
+                              type: integer
+                              minimum: 1
+                            ends:
+                              type: boolean
+                              description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                                '
+                              default: false
+                              example: true
+                            end_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: End time should be after start time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            end_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 15
+                            end_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 55
+                        - type: object
+                          title: Hourly Schedule
+                          description: Schedule job hourly
+                          required:
+                          - schedule_status
+                          - start_date
+                          - start_hour
+                          - start_min
+                          - repeat_interval_unit
+                          - repeat_interval_measure
+                          properties:
+                            schedule_status:
+                              type: string
+                              enum:
+                              - enabled
+                              example: enabled
+                            start_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: Start time should be after current time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            start_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 14
+                            start_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 35
+                            repeat_interval_unit:
+                              type: string
+                              enum:
+                              - HOUR
+                            repeat_interval_measure:
+                              type: integer
+                              minimum: 1
+                            ends:
+                              type: boolean
+                              description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                                '
+                              default: false
+                              example: true
+                            end_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: End time should be after start time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            end_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 15
+                            end_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 55
+                        - type: object
+                          title: Daily Schedule
+                          description: Schedule job daily
+                          required:
+                          - schedule_status
+                          - start_date
+                          - start_hour
+                          - start_min
+                          - repeat_interval_unit
+                          - repeat_interval_measure
+                          properties:
+                            schedule_status:
+                              type: string
+                              enum:
+                              - enabled
+                              example: enabled
+                            start_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: Start time should be after current time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            start_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 14
+                            start_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 35
+                            repeat_interval_unit:
+                              type: string
+                              enum:
+                              - DAY
+                            repeat_interval_measure:
+                              type: integer
+                              minimum: 1
+                            ends:
+                              type: boolean
+                              description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                                '
+                              default: false
+                              example: true
+                            end_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: End time should be after start time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            end_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 15
+                            end_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 55
+                            is_custom_job:
+                              type: boolean
+                              description: '`custom_job_details` must be provided when `is_custom_job=true`
+
+                                '
+                              default: false
+                              example: true
+                            custom_job_details:
+                              type: object
+                              required:
+                              - starts_daily_at
+                              - ends_daily_at
+                              - repeat_interval_measure
+                              - repeat_interval_unit
+                              properties:
+                                starts_daily_at:
+                                  pattern: ^{0-23}:[0-59]$
+                                  type: string
+                                  example: '12:40'
+                                ends_daily_at:
+                                  pattern: ^{0-23}:[0-59]$
+                                  type: string
+                                  example: '17:45'
+                                repeat_interval_measure:
+                                  type: integer
+                                  minimum: 1
+                                  example: 10
+                                repeat_interval_unit:
+                                  type: string
+                                  enum:
+                                  - MINUTE
+                                  - HOUR
+                        - type: object
+                          title: Weekly Schedule
+                          description: Schedule job weekly
+                          required:
+                          - schedule_status
+                          - start_date
+                          - start_hour
+                          - start_min
+                          - repeat_interval_unit
+                          - repeat_interval_measure
+                          - specified_days
+                          properties:
+                            schedule_status:
+                              type: string
+                              enum:
+                              - enabled
+                              example: enabled
+                            start_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: Start time should be after current time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            start_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 14
+                            start_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 35
+                            repeat_interval_unit:
+                              type: string
+                              enum:
+                              - WEEK
+                            repeat_interval_measure:
+                              type: integer
+                              minimum: 1
+                            specified_days:
+                              type: array
+                              minLength: 1
+                              items:
+                                type: integer
+                                minimum: 0
+                                maximum: 6
+                              example:
+                              - 0
+                              - 2
+                              - 5
+                            ends:
+                              type: boolean
+                              description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                                '
+                              default: false
+                              example: true
+                            end_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: End time should be after start time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            end_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 15
+                            end_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 55
+                            is_custom_job:
+                              type: boolean
+                              description: '`custom_job_details` must be provided when `is_custom_job=true`
+
+                                '
+                              default: false
+                              example: true
+                            custom_job_details:
+                              type: object
+                              required:
+                              - starts_daily_at
+                              - ends_daily_at
+                              - repeat_interval_measure
+                              - repeat_interval_unit
+                              properties:
+                                starts_daily_at:
+                                  pattern: ^{0-23}:[0-59]$
+                                  type: string
+                                  example: '12:40'
+                                ends_daily_at:
+                                  pattern: ^{0-23}:[0-59]$
+                                  type: string
+                                  example: '17:45'
+                                repeat_interval_measure:
+                                  type: integer
+                                  minimum: 1
+                                  example: 10
+                                repeat_interval_unit:
+                                  type: string
+                                  enum:
+                                  - MINUTE
+                                  - HOUR
+                        - type: object
+                          title: Monthly Schedule
+                          description: Schedule job monthly
+                          required:
+                          - schedule_status
+                          - start_date
+                          - start_hour
+                          - start_min
+                          - repeat_interval_unit
+                          - repeat_interval_measure
+                          properties:
+                            schedule_status:
+                              type: string
+                              enum:
+                              - enabled
+                              example: enabled
+                            start_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: Start time should be after current time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            start_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 14
+                            start_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 35
+                            repeat_interval_unit:
+                              type: string
+                              enum:
+                              - MONTH
+                            repeat_interval_measure:
+                              type: integer
+                              minimum: 1
+                            repeat_on_last_day:
+                              type: boolean
+                              description: '`specified_days` must be provided if `repeat_on_last_day` is false.
+
+                                '
+                              default: false
+                            specified_days:
+                              type: array
+                              minLength: 1
+                              items:
+                                type: integer
+                                minimum: 1
+                                maximum: 31
+                              example:
+                              - 1
+                              - 17
+                              - 31
+                            ends:
+                              type: boolean
+                              description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                                '
+                              default: false
+                              example: true
+                            end_date:
+                              pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                              type: string
+                              description: End time should be after start time.
+                              format: date-month'/'date-mday'/'date-fullyear
+                              example: 08/28/2023
+                            end_hour:
+                              type: integer
+                              minimum: 0
+                              maximum: 23
+                              example: 15
+                            end_min:
+                              type: integer
+                              minimum: 0
+                              maximum: 59
+                              example: 45
+                            is_custom_job:
+                              type: boolean
+                              description: '`custom_job_details` must be provided when `is_custom_job=true`
+
+                                '
+                              default: false
+                              example: true
+                            custom_job_details:
+                              type: object
+                              required:
+                              - starts_daily_at
+                              - ends_daily_at
+                              - repeat_interval_measure
+                              - repeat_interval_unit
+                              properties:
+                                starts_daily_at:
+                                  pattern: ^{0-23}:[0-59]$
+                                  type: string
+                                  example: '12:40'
+                                ends_daily_at:
+                                  pattern: ^{0-23}:[0-59]$
+                                  type: string
+                                  example: '17:45'
+                                repeat_interval_measure:
+                                  type: integer
+                                  minimum: 1
+                                  example: 10
+                                repeat_interval_unit:
+                                  type: string
+                                  enum:
+                                  - MINUTE
+                                  - HOUR
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+  /sources/{source_id}/table-groups/{table_group_id}/schedules/enable:
+    parameters:
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    - name: table_group_id
+      in: path
+      description: Table Group Id
+      required: true
+      schema:
+        type: string
+    put:
+      security:
+      - BearerAuth: []
+      tags:
+      - Table Group Schedule
+      operationId: enableTableGroupSchedule
+      summary: Enable Table Group Schedule
+      description: Enables the table group schedule.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - type: object
+                title: Generic Schedule
+                description: Generic schedule object
+                required:
+                - schedule_status
+                properties:
+                  schedule_status:
+                    type: string
+                    enum:
+                    - enabled
+                    - disabled
+                    example: enabled
+                  start_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: Start time should be after current time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  start_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 14
+                  start_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 35
+                  repeat_interval_unit:
+                    type: string
+                    enum:
+                    - NEVER
+                    - MINUTE
+                    - HOUR
+                    - DAY
+                    - WEEK
+                    - MONTH
+                    default: NEVER
+                    example: MONTH
+                  repeat_interval_measure:
+                    type: integer
+                    minimum: 1
+                  repeat_on_last_day:
+                    type: boolean
+                    description: '`specified_days` must be provided if `repeat_on_last_day` is false. Applicable for `repeat_interval_unit=MONTH`
+
+                      '
+                    default: false
+                  specified_days:
+                    type: array
+                    description: 'Applicable when `repeat_interval_unit` is `WEEK` or `MONTH`.
+
+                      '
+                    minLength: 1
+                    items:
+                      type: integer
+                      minimum: 0
+                      maximum: 31
+                    example:
+                    - 1
+                    - 17
+                    - 31
+                  ends:
+                    type: boolean
+                    description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                      '
+                    default: false
+                    example: true
+                  end_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: End time should be after start time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  end_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 15
+                  end_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 38
+                  is_custom_job:
+                    type: boolean
+                    description: '`custom_job_details` must be provided when `is_custom_job=true`. Applicable when `repeat_interval_unit` is `DAY`, `WEEK` or `MONTH`.
+
+                      '
+                    default: false
+                  custom_job_details:
+                    type: object
+                    required:
+                    - starts_daily_at
+                    - ends_daily_at
+                    - repeat_interval_measure
+                    - repeat_interval_unit
+                    properties:
+                      starts_daily_at:
+                        pattern: ^{0-23}:[0-59]$
+                        type: string
+                        example: '12:40'
+                      ends_daily_at:
+                        pattern: ^{0-23}:[0-59]$
+                        type: string
+                        example: '17:45'
+                      repeat_interval_measure:
+                        type: integer
+                        minimum: 1
+                        example: 10
+                      repeat_interval_unit:
+                        type: string
+                        enum:
+                        - MINUTE
+                        - HOUR
+              - type: object
+                title: By Minute Schedule
+                description: Schedule job by minutes
+                required:
+                - schedule_status
+                - start_date
+                - start_hour
+                - start_min
+                - repeat_interval_unit
+                - repeat_interval_measure
+                properties:
+                  schedule_status:
+                    type: string
+                    enum:
+                    - enabled
+                    example: enabled
+                  start_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: Start time should be after current time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  start_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 14
+                  start_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 35
+                  repeat_interval_unit:
+                    type: string
+                    enum:
+                    - MINUTE
+                  repeat_interval_measure:
+                    type: integer
+                    minimum: 1
+                  ends:
+                    type: boolean
+                    description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                      '
+                    default: false
+                    example: true
+                  end_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: End time should be after start time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  end_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 15
+                  end_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 55
+              - type: object
+                title: Hourly Schedule
+                description: Schedule job hourly
+                required:
+                - schedule_status
+                - start_date
+                - start_hour
+                - start_min
+                - repeat_interval_unit
+                - repeat_interval_measure
+                properties:
+                  schedule_status:
+                    type: string
+                    enum:
+                    - enabled
+                    example: enabled
+                  start_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: Start time should be after current time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  start_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 14
+                  start_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 35
+                  repeat_interval_unit:
+                    type: string
+                    enum:
+                    - HOUR
+                  repeat_interval_measure:
+                    type: integer
+                    minimum: 1
+                  ends:
+                    type: boolean
+                    description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                      '
+                    default: false
+                    example: true
+                  end_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: End time should be after start time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  end_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 15
+                  end_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 55
+              - type: object
+                title: Daily Schedule
+                description: Schedule job daily
+                required:
+                - schedule_status
+                - start_date
+                - start_hour
+                - start_min
+                - repeat_interval_unit
+                - repeat_interval_measure
+                properties:
+                  schedule_status:
+                    type: string
+                    enum:
+                    - enabled
+                    example: enabled
+                  start_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: Start time should be after current time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  start_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 14
+                  start_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 35
+                  repeat_interval_unit:
+                    type: string
+                    enum:
+                    - DAY
+                  repeat_interval_measure:
+                    type: integer
+                    minimum: 1
+                  ends:
+                    type: boolean
+                    description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                      '
+                    default: false
+                    example: true
+                  end_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: End time should be after start time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  end_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 15
+                  end_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 55
+                  is_custom_job:
+                    type: boolean
+                    description: '`custom_job_details` must be provided when `is_custom_job=true`
+
+                      '
+                    default: false
+                    example: true
+                  custom_job_details:
+                    type: object
+                    required:
+                    - starts_daily_at
+                    - ends_daily_at
+                    - repeat_interval_measure
+                    - repeat_interval_unit
+                    properties:
+                      starts_daily_at:
+                        pattern: ^{0-23}:[0-59]$
+                        type: string
+                        example: '12:40'
+                      ends_daily_at:
+                        pattern: ^{0-23}:[0-59]$
+                        type: string
+                        example: '17:45'
+                      repeat_interval_measure:
+                        type: integer
+                        minimum: 1
+                        example: 10
+                      repeat_interval_unit:
+                        type: string
+                        enum:
+                        - MINUTE
+                        - HOUR
+              - type: object
+                title: Weekly Schedule
+                description: Schedule job weekly
+                required:
+                - schedule_status
+                - start_date
+                - start_hour
+                - start_min
+                - repeat_interval_unit
+                - repeat_interval_measure
+                - specified_days
+                properties:
+                  schedule_status:
+                    type: string
+                    enum:
+                    - enabled
+                    example: enabled
+                  start_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: Start time should be after current time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  start_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 14
+                  start_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 35
+                  repeat_interval_unit:
+                    type: string
+                    enum:
+                    - WEEK
+                  repeat_interval_measure:
+                    type: integer
+                    minimum: 1
+                  specified_days:
+                    type: array
+                    minLength: 1
+                    items:
+                      type: integer
+                      minimum: 0
+                      maximum: 6
+                    example:
+                    - 0
+                    - 2
+                    - 5
+                  ends:
+                    type: boolean
+                    description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                      '
+                    default: false
+                    example: true
+                  end_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: End time should be after start time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  end_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 15
+                  end_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 55
+                  is_custom_job:
+                    type: boolean
+                    description: '`custom_job_details` must be provided when `is_custom_job=true`
+
+                      '
+                    default: false
+                    example: true
+                  custom_job_details:
+                    type: object
+                    required:
+                    - starts_daily_at
+                    - ends_daily_at
+                    - repeat_interval_measure
+                    - repeat_interval_unit
+                    properties:
+                      starts_daily_at:
+                        pattern: ^{0-23}:[0-59]$
+                        type: string
+                        example: '12:40'
+                      ends_daily_at:
+                        pattern: ^{0-23}:[0-59]$
+                        type: string
+                        example: '17:45'
+                      repeat_interval_measure:
+                        type: integer
+                        minimum: 1
+                        example: 10
+                      repeat_interval_unit:
+                        type: string
+                        enum:
+                        - MINUTE
+                        - HOUR
+              - type: object
+                title: Monthly Schedule
+                description: Schedule job monthly
+                required:
+                - schedule_status
+                - start_date
+                - start_hour
+                - start_min
+                - repeat_interval_unit
+                - repeat_interval_measure
+                properties:
+                  schedule_status:
+                    type: string
+                    enum:
+                    - enabled
+                    example: enabled
+                  start_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: Start time should be after current time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  start_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 14
+                  start_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 35
+                  repeat_interval_unit:
+                    type: string
+                    enum:
+                    - MONTH
+                  repeat_interval_measure:
+                    type: integer
+                    minimum: 1
+                  repeat_on_last_day:
+                    type: boolean
+                    description: '`specified_days` must be provided if `repeat_on_last_day` is false.
+
+                      '
+                    default: false
+                  specified_days:
+                    type: array
+                    minLength: 1
+                    items:
+                      type: integer
+                      minimum: 1
+                      maximum: 31
+                    example:
+                    - 1
+                    - 17
+                    - 31
+                  ends:
+                    type: boolean
+                    description: '`end_date`, `end_hour`, `end_min` must be provided if `ends` is `true`.
+
+                      '
+                    default: false
+                    example: true
+                  end_date:
+                    pattern: ^[1-12]{1}/[0-31]{1}/\d{4}$
+                    type: string
+                    description: End time should be after start time.
+                    format: date-month'/'date-mday'/'date-fullyear
+                    example: 08/28/2023
+                  end_hour:
+                    type: integer
+                    minimum: 0
+                    maximum: 23
+                    example: 15
+                  end_min:
+                    type: integer
+                    minimum: 0
+                    maximum: 59
+                    example: 45
+                  is_custom_job:
+                    type: boolean
+                    description: '`custom_job_details` must be provided when `is_custom_job=true`
+
+                      '
+                    default: false
+                    example: true
+                  custom_job_details:
+                    type: object
+                    required:
+                    - starts_daily_at
+                    - ends_daily_at
+                    - repeat_interval_measure
+                    - repeat_interval_unit
+                    properties:
+                      starts_daily_at:
+                        pattern: ^{0-23}:[0-59]$
+                        type: string
+                        example: '12:40'
+                      ends_daily_at:
+                        pattern: ^{0-23}:[0-59]$
+                        type: string
+                        example: '17:45'
+                      repeat_interval_measure:
+                        type: integer
+                        minimum: 1
+                        example: 10
+                      repeat_interval_unit:
+                        type: string
+                        enum:
+                        - MINUTE
+                        - HOUR
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: e77850ad5127a2d7dab870ff
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+  /sources/{source_id}/table-groups/{table_group_id}/schedules/disable:
+    parameters:
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    - name: table_group_id
+      in: path
+      description: Table Group Id
+      required: true
+      schema:
+        type: string
+    put:
+      security:
+      - BearerAuth: []
+      tags:
+      - Table Group Schedule
+      operationId: disableTableGroupSchedule
+      summary: Disable Table Group Schedule
+      description: Disables the table group schedule.
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: e77850ad5127a2d7dab870ff
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+  /sources/{source_id}/table-groups/{table_group_id}/schedules/user:
+    parameters:
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    - name: table_group_id
+      in: path
+      description: Table Group Id
+      required: true
+      schema:
+        type: string
+    put:
+      security:
+      - BearerAuth: []
+      tags:
+      - Table Group Schedule
+      operationId: configureTableGroupScheduleUser
+      summary: Configure Table Group Schedule User
+      description: Configures the table group schedule user.
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: e77850ad5127a2d7dab870ff
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

@@ -1,0 +1,1013 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Service Authentication API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Service Authentication
+  description: CRUD Operations to manage Service Authentication mechanisms
+paths:
+  /admin/manage-secrets/service-auth:
+    get:
+      security:
+      - BearerAuth: []
+      summary: List service authentication mechanisms
+      description: Get a list of service authentication mechanisms
+      operationId: listServiceAuth
+      tags:
+      - Service Authentication
+      parameters:
+      - in: query
+        name: resolve_ref
+        schema:
+          type: boolean
+          default: null
+        description: Fetch username of user who created and last modified the resource
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of service authentication mechanisms.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                - type: object
+                  properties:
+                    result:
+                      type: array
+                      items:
+                        oneOf:
+                        - type: object
+                          allOf:
+                          - type: object
+                            properties:
+                              id:
+                                type: string
+                                example: e77850ad5127a2d7dab870ff
+                          - type: object
+                            properties:
+                              name:
+                                type: string
+                                example: azure service auth
+                              description:
+                                type: string
+                                example: azure service auth
+                              service_type:
+                                type: string
+                                enum:
+                                - azure
+                                example: azure
+                              authentication_type:
+                                type: string
+                                enum:
+                                - service_principal
+                                - managed_identity
+                                example: service_principal
+                              entity_type:
+                                type: string
+                                enum:
+                                - secret_store_authentication
+                                - authentication_service
+                                example: secret_store_authentication
+                              authentication_properties:
+                                type: object
+                                properties:
+                                  subscription_id:
+                                    type: string
+                                    example: 7cbb31b2-b2eb-4dad-8a3e-b100b4e2b841
+                                  client_id:
+                                    type: string
+                                    example: 6b2db80a-1f27-4305-b960-b5019cc57a67
+                                  object_id:
+                                    type: string
+                                    example: 22a2d391-977b-4844-aa0f-dea4d8875f7b
+                                  tenant_id:
+                                    type: string
+                                    example: ebfb8680-a5f0-429d-979e-189595b7560f
+                          - type: object
+                            allOf:
+                            - type: object
+                              properties:
+                                created_at:
+                                  type: string
+                                  example: '2019-11-21T12:54:05.875Z'
+                            - type: object
+                              properties:
+                                created_by:
+                                  type: string
+                                  example: 6RkfybTRQQByEey3v
+                            - type: object
+                              properties:
+                                modified_at:
+                                  type: string
+                                  example: '2019-11-21T12:54:05.875Z'
+                            - type: object
+                              properties:
+                                modified_by:
+                                  type: string
+                                  example: 6RkfybTRQQByEey3v
+                          - type: object
+                            properties:
+                              created_by_username:
+                                type: string
+                                description: This field is returned only when `resolve_ref` is set to `true`
+                                example: Infoworks Admin
+                              modified_by_username:
+                                type: string
+                                description: This field is returned only when `resolve_ref` is set to `true`
+                                example: Infoworks Admin
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    post:
+      security:
+      - BearerAuth: []
+      summary: Create a service authentication mechanism
+      description: Create a service authentication mechanism
+      operationId: createServiceAuth
+      tags:
+      - Service Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - allOf:
+                - type: object
+                  required:
+                  - name
+                  - service_type
+                  properties:
+                    name:
+                      type: string
+                      example: azure service auth
+                    description:
+                      type: string
+                      example: azure service auth
+                    service_type:
+                      type: string
+                      enum:
+                      - azure
+                      example: azure
+                - type: object
+                  required:
+                  - authentication_type
+                  - authentication_properties
+                  properties:
+                    authentication_type:
+                      type: string
+                      enum:
+                      - service_principal
+                      - managed_identity
+                      example: service_principal
+                    entity_type:
+                      type: string
+                      enum:
+                      - secret_store_authentication
+                      - authentication_service
+                      example: secret_store_authentication
+                    authentication_properties:
+                      type: object
+                      required:
+                      - subscription_id
+                      - object_id
+                      - client_id
+                      - tenant_id
+                      - client_secret
+                      properties:
+                        subscription_id:
+                          type: string
+                          example: 7cbb31b2-b2eb-4dad-8a3e-b100b4e2b841
+                        client_id:
+                          type: string
+                          example: 6b2db80a-1f27-4305-b960-b5019cc57a67
+                        object_id:
+                          type: string
+                          example: 22a2d391-977b-4844-aa0f-dea4d8875f7b
+                        tenant_id:
+                          type: string
+                          example: ebfb8680-a5f0-429d-979e-189595b7560f
+                        client_secret:
+                          type: object
+                          properties:
+                            password_type:
+                              type: string
+                              enum:
+                              - infoworks_managed
+                              - secret_store
+                              example: infoworks_managed
+                            password:
+                              type: string
+                              example: clientSecretEnteredByUserOrSecretId
+              - allOf:
+                - type: object
+                  required:
+                  - name
+                  - service_type
+                  properties:
+                    name:
+                      type: string
+                      example: azure service auth
+                    description:
+                      type: string
+                      example: azure service auth
+                    service_type:
+                      type: string
+                      enum:
+                      - azure
+                      example: azure
+                - type: object
+                  required:
+                  - authentication_type
+                  properties:
+                    authentication_type:
+                      type: string
+                      enum:
+                      - managed_identity
+                      example: managed_identity
+                    entity_type:
+                      type: string
+                      enum:
+                      - secret_store_authentication
+                      - authentication_service
+                      example: secret_store_authentication
+                    authentication_properties:
+                      type: object
+                      properties:
+                        client_id:
+                          type: string
+                          example: 6b2db80a-1f27-4305-b960-b5019cc57a67
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 5fa948e77758f33e0e83ec6b
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /admin/manage-secrets/service-auth/{service_auth_id}:
+    parameters:
+    - name: service_auth_id
+      in: path
+      description: Service Authentication Id
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      summary: Get service authentication mechanism
+      description: Get service authentication mechanism
+      operationId: getServiceAuth
+      tags:
+      - Service Authentication
+      parameters:
+      - in: query
+        name: resolve_ref
+        schema:
+          type: boolean
+          default: null
+        description: Fetch username of user who created and last modified the resource
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      oneOf:
+                      - type: object
+                        allOf:
+                        - type: object
+                          properties:
+                            id:
+                              type: string
+                              example: e77850ad5127a2d7dab870ff
+                        - type: object
+                          properties:
+                            name:
+                              type: string
+                              example: azure service auth
+                            description:
+                              type: string
+                              example: azure service auth
+                            service_type:
+                              type: string
+                              enum:
+                              - azure
+                              example: azure
+                            authentication_type:
+                              type: string
+                              enum:
+                              - service_principal
+                              - managed_identity
+                              example: service_principal
+                            entity_type:
+                              type: string
+                              enum:
+                              - secret_store_authentication
+                              - authentication_service
+                              example: secret_store_authentication
+                            authentication_properties:
+                              type: object
+                              properties:
+                                subscription_id:
+                                  type: string
+                                  example: 7cbb31b2-b2eb-4dad-8a3e-b100b4e2b841
+                                client_id:
+                                  type: string
+                                  example: 6b2db80a-1f27-4305-b960-b5019cc57a67
+                                object_id:
+                                  type: string
+                                  example: 22a2d391-977b-4844-aa0f-dea4d8875f7b
+                                tenant_id:
+                                  type: string
+                                  example: ebfb8680-a5f0-429d-979e-189595b7560f
+                        - type: object
+                          allOf:
+                          - type: object
+                            properties:
+                              created_at:
+                                type: string
+                                example: '2019-11-21T12:54:05.875Z'
+                          - type: object
+                            properties:
+                              created_by:
+                                type: string
+                                example: 6RkfybTRQQByEey3v
+                          - type: object
+                            properties:
+                              modified_at:
+                                type: string
+                                example: '2019-11-21T12:54:05.875Z'
+                          - type: object
+                            properties:
+                              modified_by:
+                                type: string
+                                example: 6RkfybTRQQByEey3v
+                        - type: object
+                          properties:
+                            created_by_username:
+                              type: string
+                              description: This field is returned only when `resolve_ref` is set to `true`
+                              example: Infoworks Admin
+                            modified_by_username:
+                              type: string
+                              description: This field is returned only when `resolve_ref` is set to `true`
+                              example: Infoworks Admin
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    patch:
+      security:
+      - BearerAuth: []
+      summary: Update service authentication mechanism
+      description: Update service authentication mechanism
+      operationId: updateServiceAuth
+      tags:
+      - Service Authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  example: azure service auth 1
+                description:
+                  type: string
+                  example: azure service auth 1
+                service_type:
+                  type: string
+                  enum:
+                  - azure
+                  example: azure
+                authentication_type:
+                  type: string
+                  enum:
+                  - managed_identity
+                  - service_principal
+                  example: service_principal
+                entity_type:
+                  type: string
+                  enum:
+                  - secret_store_authentication
+                  - authentication_service
+                  example: secret_store_authentication
+                authentication_properties:
+                  type: object
+                  properties:
+                    subscription_id:
+                      type: string
+                      example: 7cbb31b2-b2eb-4dad-8a3e-b100b4e2b841
+                    client_id:
+                      type: string
+                      example: 6b2db80a-1f27-4305-b960-b5019cc57a67
+                    object_id:
+                      type: string
+                      example: 22a2d391-977b-4844-aa0f-dea4d8875f7b
+                    tenant_id:
+                      type: string
+                      example: ebfb8680-a5f0-429d-979e-189595b7560f
+                    client_secret:
+                      type: string
+                      example: kjansdkjabndkabfjkasklkasndlk=
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 5fa948e77758f33e0e83ec6b
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    delete:
+      security:
+      - BearerAuth: []
+      summary: Delete service authentication mechanism
+      description: Delete service authentication mechanism
+      operationId: deleteServiceAuth
+      tags:
+      - Service Authentication
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

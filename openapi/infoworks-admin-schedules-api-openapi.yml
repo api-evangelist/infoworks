@@ -1,0 +1,205 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Admin Schedules API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Admin Schedules
+paths:
+  /admin/schedules:
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getSchedules
+      tags:
+      - Admin Schedules
+      summary: Get details of all running schedules.
+      description: Get details of all running schedules.
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      items:
+                        oneOf:
+                        - type: object
+                          properties:
+                            entity_id:
+                              type: string
+                              example: 6eb9ba185b428ceecff98ac4
+                            entity_name:
+                              type: string
+                              example: workflow1
+                            schedule_type:
+                              type: string
+                              example: workflow-build
+                            schedule_username:
+                              type: string
+                              example: admin@infoworks.io
+                            created_by_name:
+                              type: string
+                              example: Admin
+                            schedule_details:
+                              type: object
+                              properties:
+                                schedule_status:
+                                  type: string
+                                  example: enabled
+                                repeat_interval_unit:
+                                  type: string
+                                  example: DAY
+                                repeat_interval_measure:
+                                  type: number
+                                  example: 1
+                                start_date:
+                                  type: number
+                                  example: 03/13/2023
+                                ends:
+                                  type: boolean
+                                  example: true
+                                start_hour:
+                                  type: number
+                                  example: 7
+                                start_min:
+                                  type: number
+                                  example: 21
+                                end_hour:
+                                  type: number
+                                  example: 23
+                                end_min:
+                                  type: number
+                                  example: 59
+                                is_custom_job:
+                                  type: boolean
+                                  example: false
+                                specified_days:
+                                  type: array
+                                  items:
+                                    type: string
+                            is_refresh_token_expired:
+                              type: boolean
+                              example: true
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

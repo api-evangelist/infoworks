@@ -1,0 +1,586 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Engagement Metrics API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Engagement Metrics
+  description: Read Operation for engagement metrics
+paths:
+  /engagement/data/aggregate:
+    get:
+      security:
+      - BearerAuth: []
+      summary: Aggregate details
+      description: Get Aggregate datails
+      operationId: listServiceAuth
+      tags:
+      - Engagement Metrics
+      parameters:
+      - in: query
+        name: interval_type
+        schema:
+          type: string
+          default: null
+      - in: query
+        name: duration
+        schema:
+          type: string
+          default: null
+      - in: query
+        name: timestamp
+        schema:
+          type: string
+          default: null
+      - in: query
+        name: top_limit
+        schema:
+          type: string
+          default: null
+      - in: query
+        name: jobs_count_limit
+        schema:
+          type: string
+          default: null
+        description: Fetch username of user who created and last modified the resource
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of Data Aggregate.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                    result:
+                      type: object
+                      properties:
+                        duration:
+                          type: number
+                        last_updated_at:
+                          type: number
+                        interval_type:
+                          type: string
+                        interval_type_user:
+                          type: string
+                        top_limit:
+                          type: number
+                        jobs_count_limit:
+                          type: number
+                        top_level_artifacts:
+                          type: object
+                          properties:
+                            total_data_sources:
+                              type: number
+                            total_pipelines:
+                              type: number
+                            total_workflows:
+                              type: number
+                            total_cubes:
+                              type: number
+                            total_data_models:
+                              type: number
+                        trends:
+                          type: object
+                          properties:
+                            result:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  table_count:
+                                    type: number
+                                  data_model_count:
+                                    type: number
+                                  jobs_executed_count:
+                                    type: number
+                                  start_interval_value:
+                                    type: number
+                                  end_interval_value:
+                                    type: number
+                            total_data_model_count:
+                              type: number
+                            total_jobs_executed_count:
+                              type: number
+                            total_table_count:
+                              type: number
+                        records:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              records_processed:
+                                type: number
+                              records_ingested:
+                                type: number
+                              start_interval_value:
+                                type: number
+                              end_interval_value:
+                                type: number
+                        recent_jobs:
+                          type: array
+                          items:
+                            type: object
+                        top_data_sources:
+                          type: array
+                          items:
+                            type: object
+                        top_pipelines:
+                          type: array
+                          items:
+                            type: object
+                        top_workflows:
+                          type: array
+                          items:
+                            type: object
+                        top_active_domains:
+                          type: array
+                          items:
+                            type: object
+                        total_top_level_artifacts:
+                          type: object
+                          properties:
+                            total_data_sources:
+                              type: number
+                            total_pipelines:
+                              type: number
+                            total_workflows:
+                              type: number
+                            total_cubes:
+                              type: number
+                            total_data_models:
+                              type: number
+                        active_users:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              user_count:
+                                type: number
+                              start_interval_value:
+                                type: number
+                              end_interval_value:
+                                type: number
+                        active_users_by_role:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              values:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    user_role:
+                                      type: string
+                                    user_count:
+                                      type: number
+                              start_interval_value:
+                                type: number
+                              end_interval_value:
+                                type: number
+                        users_count_by_role:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              user_role:
+                                type: string
+                              total_user_count:
+                                type: number
+                              active_user_count:
+                                type: number
+                        data_sources:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              start_interval_value:
+                                type: number
+                              end_interval_value:
+                                type: number
+                        jobs:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              start_interval_value:
+                                type: number
+                              end_interval_value:
+                                type: number
+                              values:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    job_type:
+                                      type: string
+                                    count:
+                                      type: number
+                        pipeline_count:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              start_interval_value:
+                                type: number
+                              end_interval_value:
+                                type: number
+                              count:
+                                type: number
+                        workflow_count:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              start_interval_value:
+                                type: number
+                              end_interval_value:
+                                type: number
+                              count:
+                                type: number
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /engagement/jobs/job-status:
+    get:
+      security:
+      - BearerAuth: []
+      summary: List Job status
+      description: Get Job status
+      operationId: list job-status
+      tags:
+      - Engagement Metrics
+      parameters:
+      - in: query
+        name: interval_type
+        schema:
+          type: string
+          default: null
+      - in: query
+        name: duration
+        schema:
+          type: string
+          default: null
+      - in: query
+        name: timestamp
+        schema:
+          type: string
+          default: null
+      - in: query
+        name: limit
+        schema:
+          type: string
+          default: null
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of Job Status Response.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                    result:
+                      type: object
+                      properties:
+                        duration:
+                          type: number
+                        result:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              status:
+                                type: string
+                              entity_id:
+                                type: string
+                              entity_type:
+                                type: string
+                              entity_name:
+                                type: string
+                              job_id:
+                                type: string
+                              job_type:
+                                type: string
+                              start_time:
+                                type: number
+                              end_time:
+                                type: number
+                              executed_by:
+                                type: string
+                        last_updated_at:
+                          type: number
+                        interval_type:
+                          type: string
+                        interval_type_user:
+                          type: string
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

@@ -1,0 +1,1745 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 File Mappings API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: File Mappings
+  description: ''
+paths:
+  /sources/{source_id}/file-mappings:
+    parameters:
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getFileMappingsForJSONSource
+      tags:
+      - File Mappings
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      - name: resolve_ref
+        in: query
+        description: To get entity details and created by user name
+        schema:
+          type: boolean
+      summary: Get File Mappings for JSON source
+      description: Get File Mappings for JSON source
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                properties:
+                  total_count:
+                    type: integer
+                    minimum: 0
+                    description: Total count of file mappings
+                    example: 10
+                  result:
+                    type: array
+                    items:
+                      allOf:
+                      - type: object
+                        allOf:
+                        - type: object
+                          properties:
+                            created_at:
+                              type: string
+                              example: '2019-11-21T12:54:05.875Z'
+                        - type: object
+                          properties:
+                            created_by:
+                              type: string
+                              example: 6RkfybTRQQByEey3v
+                        - type: object
+                          properties:
+                            modified_at:
+                              type: string
+                              example: '2019-11-21T12:54:05.875Z'
+                        - type: object
+                          properties:
+                            modified_by:
+                              type: string
+                              example: 6RkfybTRQQByEey3v
+                      - properties:
+                          name:
+                            type: string
+                            example: file_mapping_1
+                          configuration:
+                            properties:
+                              source_relative_path:
+                                type: string
+                                example: /opt/infoworks/temp_file_sources/json_automation_saas/datatypes
+                              record_scope:
+                                type: string
+                                example: file
+                                enum:
+                                - file
+                                - line
+                              include_subdirectories:
+                                type: boolean
+                                example: true
+                              character_encoding:
+                                type: string
+                                example: UTF-8
+                              include_filename_regex:
+                                type: string
+                                example: .*
+                              exclude_filename_regex:
+                                type: string
+                                example: .*4.*
+                      properties:
+                        id:
+                          type: string
+                          example: e77850ad5127a2d7dab870ff
+                        json_schema:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              key:
+                                type: integer
+                                example: 1
+                              name:
+                                type: string
+                                example: del
+                              properties:
+                                type: object
+                                properties:
+                                  sql_type:
+                                    type: integer
+                                    example: 1
+                                  target_sql_type:
+                                    type: integer
+                                    example: 1
+                                  type:
+                                    type: string
+                                    example: struct
+                        table_details:
+                          type: array
+                          items:
+                            properties:
+                              id:
+                                type: string
+                                example: d04a89ca9d4e9af1b86fdc3e
+                              name:
+                                type: string
+                                example: tableName
+                              state:
+                                type: string
+                                example: ready
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+    post:
+      security:
+      - BearerAuth: []
+      operationId: createFileMappingForSource
+      tags:
+      - File Mappings
+      summary: Create File Mapping For JSON Source
+      description: Create File Mapping For JSON Source
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  example: file_mapping_1
+                configuration:
+                  properties:
+                    source_relative_path:
+                      type: string
+                      example: /opt/infoworks/temp_file_sources/json_automation_saas/datatypes
+                    record_scope:
+                      type: string
+                      example: file
+                      enum:
+                      - file
+                      - line
+                    include_subdirectories:
+                      type: boolean
+                      example: true
+                    character_encoding:
+                      type: string
+                      example: UTF-8
+                    include_filename_regex:
+                      type: string
+                      example: .*
+                    exclude_filename_regex:
+                      type: string
+                      example: .*4.*
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: string
+                      example: e77850ad5127a2d7dab870ff
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+  /sources/{source_id}/file-mappings/{file_mapping_id}:
+    parameters:
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    - name: file_mapping_id
+      in: path
+      description: File Mapping Id.
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getFileMappingsForJSONSourceById
+      tags:
+      - File Mappings
+      summary: Get File Mappings for JSON source by id
+      description: Get File Mappings for JSON source by id
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                properties:
+                  result:
+                    allOf:
+                    - type: object
+                      allOf:
+                      - type: object
+                        properties:
+                          created_at:
+                            type: string
+                            example: '2019-11-21T12:54:05.875Z'
+                      - type: object
+                        properties:
+                          created_by:
+                            type: string
+                            example: 6RkfybTRQQByEey3v
+                      - type: object
+                        properties:
+                          modified_at:
+                            type: string
+                            example: '2019-11-21T12:54:05.875Z'
+                      - type: object
+                        properties:
+                          modified_by:
+                            type: string
+                            example: 6RkfybTRQQByEey3v
+                    - properties:
+                        name:
+                          type: string
+                          example: file_mapping_1
+                        configuration:
+                          properties:
+                            source_relative_path:
+                              type: string
+                              example: /opt/infoworks/temp_file_sources/json_automation_saas/datatypes
+                            record_scope:
+                              type: string
+                              example: file
+                              enum:
+                              - file
+                              - line
+                            include_subdirectories:
+                              type: boolean
+                              example: true
+                            character_encoding:
+                              type: string
+                              example: UTF-8
+                            include_filename_regex:
+                              type: string
+                              example: .*
+                            exclude_filename_regex:
+                              type: string
+                              example: .*4.*
+                    properties:
+                      id:
+                        type: string
+                        example: e77850ad5127a2d7dab870ff
+                      json_schema:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            key:
+                              type: integer
+                              example: 1
+                            name:
+                              type: string
+                              example: del
+                            properties:
+                              type: object
+                              properties:
+                                sql_type:
+                                  type: integer
+                                  example: 1
+                                target_sql_type:
+                                  type: integer
+                                  example: 1
+                                type:
+                                  type: string
+                                  example: struct
+                      table_details:
+                        type: array
+                        items:
+                          properties:
+                            id:
+                              type: string
+                              example: d04a89ca9d4e9af1b86fdc3e
+                            name:
+                              type: string
+                              example: tableName
+                            state:
+                              type: string
+                              example: ready
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+    delete:
+      security:
+      - BearerAuth: []
+      operationId: deleteFileMapping
+      tags:
+      - File Mappings
+      summary: Delete File Mapping For JSON Source
+      description: Delete File Mapping For JSON Source
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: string
+                      example: e77850ad5127a2d7dab870ff
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+    patch:
+      security:
+      - BearerAuth: []
+      operationId: updateFileMappingForSource
+      tags:
+      - File Mappings
+      summary: Update File Mapping For JSON Source
+      description: Update File Mapping For JSON Source
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  type: string
+                  example: file_mapping_1
+                configuration:
+                  properties:
+                    source_relative_path:
+                      type: string
+                      example: /opt/infoworks/temp_file_sources/json_automation_saas/datatypes
+                    record_scope:
+                      type: string
+                      example: file
+                      enum:
+                      - file
+                      - line
+                    include_subdirectories:
+                      type: boolean
+                      example: true
+                    character_encoding:
+                      type: string
+                      example: UTF-8
+                    include_filename_regex:
+                      type: string
+                      example: .*
+                    exclude_filename_regex:
+                      type: string
+                      example: .*4.*
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: string
+                      example: e77850ad5127a2d7dab870ff
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+  /sources/{source_id}/file-mappings/{file_mapping_id}/preview:
+    parameters:
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    - name: file_mapping_id
+      in: path
+      description: File Mapping Id.
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getFileMappingPreview
+      tags:
+      - File Mappings
+      summary: Get File Mapping Data Preview
+      description: Get File Mapping Data Preview
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+  /sources/{source_id}/file-mappings/{file_mapping_id}/crawl-schema:
+    parameters:
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    - name: file_mapping_id
+      in: path
+      description: File Mapping Id.
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      operationId: crawlSchemaForFileMapping
+      tags:
+      - File Mappings
+      summary: Crawl Schema For File Mapping
+      description: Crawl Schema For File Mapping
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+  /sources/{source_id}/file-mappings/{file_mapping_id}/table-schema:
+    parameters:
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    - name: file_mapping_id
+      in: path
+      description: File Mapping Id.
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getTableSchemaForSelectedNodesForFileMappings
+      tags:
+      - File Mappings
+      parameters:
+      - name: selected_keys
+        in: query
+        schema:
+          type: string
+        example: '[1, 2]'
+      summary: Get Table Schema From Mapping
+      description: Get Table Schema From Mapping
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+  /sources/{source_id}/file-mappings/{file_mapping_id}/tables:
+    parameters:
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    - name: file_mapping_id
+      in: path
+      description: File Mapping Id.
+      required: true
+      schema:
+        type: string
+    post:
+      security:
+      - BearerAuth: []
+      operationId: createJsonSourceTable
+      tags:
+      - File Mappings
+      summary: Create JSON Source Table
+      description: Create JSON Source Table
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: string
+                      example: e77850ad5127a2d7dab870ff
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+  /sources/{source_id}/file-mappings/{file_mapping_id}/tables/{table_id}:
+    parameters:
+    - name: source_id
+      in: path
+      description: Source Id.
+      required: true
+      schema:
+        type: string
+    - name: table_id
+      in: path
+      description: Table Id.
+      required: true
+      schema:
+        type: string
+    - name: file_mapping_id
+      in: path
+      description: File Mapping Id.
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getTableInfoForJSONSource
+      tags:
+      - File Mappings
+      summary: Get JSON Source Table
+      description: Get JSON Source Table
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      source:
+                        type: string
+                        example: e77850ad5127a2d7dab870ff
+                      last_ingested_cdc_value:
+                        type: string
+                        example: null
+                      full_load_performed:
+                        type: boolean
+                        example: false
+                      description:
+                        type: string
+                        example: example description
+                      tags:
+                        type: array
+                        items:
+                          example: c54t456f6d5a2c4564aed
+                      schema_name_at_source:
+                        type: string
+                        example: dummy
+                      topic_mapping_id:
+                        type: string
+                        example: e77850ad5127a2d7dab870ff
+                      configuration:
+                        type: object
+                        allOf:
+                        - properties:
+                            json_schema:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  key:
+                                    type: integer
+                                    example: 1
+                                  name:
+                                    type: string
+                                    example: del
+                                  properties:
+                                    type: object
+                                    properties:
+                                      sql_type:
+                                        type: integer
+                                        example: 1
+                                      target_sql_type:
+                                        type: integer
+                                        example: 1
+                                      type:
+                                        type: string
+                                        example: struct
+                            json_schema_breadcrumb:
+                              type: array
+                              items:
+                                properties:
+                                  selected:
+                                    type: boolean
+                                    example: true
+                                  name:
+                                    type: string
+                                  json_schema_node_key:
+                                    type: integer
+                                    example: 0
+                            crawl_data_filter_enabled:
+                              type: boolean
+                              example: false
+                            crawl_filter_conditions:
+                              type: array
+                              items:
+                                example: ''
+                            max_num_of_records:
+                              type: integer
+                              example: 20000
+                            streaming_mode:
+                              type: string
+                              example: micro_batch
+                            streaming_frequency_type:
+                              type: string
+                              example: secs
+                            streaming_frequency_number:
+                              type: integer
+                              example: 10
+                            error_threshold:
+                              type: integer
+                              example: 5
+                            source_file_type:
+                              type: string
+                              example: kafka
+                            natural_keys:
+                              type: array
+                              items:
+                                type: string
+                            partition_keys:
+                              type: array
+                              items:
+                                type: string
+                            target_relative_path:
+                              type: string
+                              example: abch
+                            update_strategy:
+                              type: string
+                              example: append
+                            write_supported_engines:
+                              type: array
+                              items:
+                                type: string
+                                example: SPARK
+                            read_supported_engines:
+                              type: array
+                              items:
+                                type: string
+                                example: SPARK
+                            target_table_name:
+                              type: string
+                            storage_format:
+                              type: string
+                            target_schema_name:
+                              type: string
+                            sync_type:
+                              type: string
+                              example: incremental
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '401':
+          description: Unauthorized Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '403':
+          description: Forbidden Access
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        message:
+                          type: string
+                          example: Something went wrong
+                        detail:
+                          type: object
+                          properties: {}
+                        help:
+                          type: string
+                          example: https://docs.infoworks.io/api/errors/IW1004
+                        code:
+                          type: string
+                          example: IW1004
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

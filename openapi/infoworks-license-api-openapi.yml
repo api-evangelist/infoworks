@@ -1,0 +1,1806 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 License API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: License
+  description: ''
+paths:
+  /licenses/active/violations:
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getActiveLicenseViolations
+      tags:
+      - License
+      summary: Get Active License Violations
+      description: Get Active License Violations
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: object
+                      properties:
+                        installation_id:
+                          type: string
+                          example: 1181f08b-a5d5-4182-9ac3-a10b5c63bbc4
+                        license_type:
+                          type: string
+                          example: enterprise
+                        license_start_date:
+                          type: string
+                          example: '2022-06-07T18:30:00.000Z'
+                        license_end_date:
+                          type: string
+                          example: '2022-08-07T18:30:00.000Z'
+                        users:
+                          type: object
+                          properties:
+                            used:
+                              type: integer
+                              example: 5
+                            licensed:
+                              type: integer
+                              example: 10
+                        cores_licensed:
+                          type: integer
+                          example: 20
+                        source_connectors:
+                          type: object
+                          properties:
+                            used:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  type:
+                                    type: string
+                                    example: rdbms
+                                  sub_type:
+                                    type: string
+                                    example: mysql
+                            licensed:
+                              type: array
+                              items:
+                                type: string
+                                enum:
+                                - source_connector_analytics_datarobot
+                                - source_connector_api_digitalocean
+                                - source_connector_cms_salesforce
+                                - source_connector_file_structured
+                                - source_connector_file_mainframe
+                                - source_connector_file_json
+                                - source_connector_rdbms_teradata
+                                - source_connector_rdbms_oracle
+                                - source_connector_rdbms_sqlserver
+                                - source_connector_rdbms_netezza
+                                - source_connector_rdbms_postgresql
+                                - source_connector_rdbms_mysql
+                                - source_connector_file_parquet
+                                - source_connector_rdbms_db2_as400
+                                - source_connector_rdbms_db2_luw
+                                - source_connector_rdbms_db2_zos
+                                - source_connector_streaming_kafka
+                                - source_connector_streaming_confluent_cloud
+                                - source_connector_metadata_sync_deltatables
+                                - source_connector_metadata_sync_snowflake
+                                - source_connector_metadata_sync_bigquery
+                                - source_connector_metadata_sync_hive
+                                - source_connector_rdbms_access
+                                - source_connector_crm_actcrm
+                                - source_connector_marketing_acton
+                                - source_connector_collaboration_activedirectory
+                                - source_connector_erp_acumatica
+                                - source_connector_marketing_adobeanalytics
+                                - source_connector_collaboration_airtable
+                                - source_connector_collaboration_alfresco
+                                - source_connector_analytics_awsdatamanagement
+                                - source_connector_analytics_amazonathena
+                                - source_connector_nosql_amazondynamodb
+                                - source_connector_ecommerce_amazonmarketplace
+                                - source_connector_analytics_redshift
+                                - source_connector_analytics_apachehive
+                                - source_connector_nosql_apachecouchdb
+                                - source_connector_productivity_asana
+                                - source_connector_finance_authorizenet
+                                - source_connector_finance_avalara
+                                - source_connector_api_aas
+                                - source_connector__azuretables
+                                - source_connector_collaboration_azuredatamanagement
+                                - source_connector_collaboration_azuredevops
+                                - source_connector_rdbms_azuresynapse
+                                - source_connector_ecommerce_basecamp
+                                - source_connector_ecommerce_bigcommerce
+                                - source_connector_marketing_bingads
+                                - source_connector_marketing_bing
+                                - source_connector_finance_financialedgenxt
+                                - source_connector_file_box
+                                - source_connector_productivity_bugzilla
+                                - source_connector_crm_bullhorncrm
+                                - source_connector_nosql_cassandra
+                                - source_connector_collaboration_confluence
+                                - source_connector_nosql_cosmosdb
+                                - source_connector_nosql_couchbase
+                                - source_connector_collaboration_docusign
+                                - source_connector_file_dropbox
+                                - source_connector_crm_d365businesscentral
+                                - source_connector_crm_d365finop
+                                - source_connector_crm_d365sales
+                                - source_connector_crm_dynamicscrm
+                                - source_connector_crm_dynamicsgp
+                                - source_connector_crm_dynamicsnav
+                                - source_connector_marketing_ebay
+                                - source_connector_finance_edgaronline
+                                - source_connector_nosql_elasticsearch
+                                - source_connector_collaboration_email
+                                - source_connector_rdbms_enterprisedb
+                                - source_connector_erp_epicorerp
+                                - source_connector_collaboration_evernote
+                                - source_connector_finance_exactonline
+                                - source_connector_productivity_excel
+                                - source_connector_productivity_excelonline
+                                - source_connector_productivity_excelservices
+                                - source_connector_productivity_exchange
+                                - source_connector_marketing_facebook
+                                - source_connector_marketing_facebookads
+                                - source_connector_ecommerce_fedex
+                                - source_connector_finance_financialforce
+                                - source_connector_finance_freshbooks
+                                - source_connector_crm_freshdesk
+                                - source_connector_storage_ftp
+                                - source_connector_collaboration_github
+                                - source_connector_collaboration_gmail
+                                - source_connector_marketing_googleads
+                                - source_connector_marketing_googleadsmanager
+                                - source_connector_marketing_googleanalytics
+                                - source_connector_edw_googlebigquery
+                                - source_connector_collaboration_googlecalendar
+                                - source_connector_file_googlecloudstorage
+                                - source_connector_collaboration_googlecontacts
+                                - source_connector_file_googledirectory
+                                - source_connector_file_googledrive
+                                - source_connector_api_googlesearch
+                                - source_connector_marketing_googlecm
+                                - source_connector_file_googlesheets
+                                - source_connector_storage_hdfs
+                                - source_connector_api_highrise
+                                - source_connector_api_hpcc
+                                - source_connector_marketing_hubspot
+                                - source_connector_storage_ibmcloudobjectstorage
+                                - source_connector_edw_ibmcloudsqlquery
+                                - source_connector_marketing_instagram
+                                - source_connector_collaboration_jira
+                                - source_connector_productivity_kintone
+                                - source_connector_collaboration_ldap
+                                - source_connector_marketing_linkedin
+                                - source_connector_marketing_linkedinads
+                                - source_connector_ecommerce_magento
+                                - source_connector_marketing_mailchimp
+                                - source_connector_marketing_marketo
+                                - source_connector_nosql_marklogic
+                                - source_connector_collaboration_cds
+                                - source_connector_collaboration_onedrive
+                                - source_connector_collaboration_microsoftplanner
+                                - source_connector_collaboration_msteams
+                                - source_connector_nosql_mongodb
+                                - source_connector_collaboration_microsoftproject
+                                - source_connector_accounting_myob
+                                - source_connector_erp_netsuite
+                                - source_connector_api_odata
+                                - source_connector_api_odoo
+                                - source_connector_collaboration_office365
+                                - source_connector_collaboration_onenote
+                                - source_connector_api_openexchangerates
+                                - source_connector_marketing_oracleeloqua
+                                - source_connector_sales_oraclesalescloud
+                                - source_connector_api_paypal
+                                - source_connector_marketing_pinterest
+                                - source_connector_analytics_presto
+                                - source_connector_api_quandl
+                                - source_connector_accounting_quickbase
+                                - source_connector_finance_quickbooks
+                                - source_connector_finance_quickbooksonline
+                                - source_connector_accounting_quickbookspos
+                                - source_connector_api_reckon
+                                - source_connector_nosql_redis
+                                - source_connector_api_rest
+                                - source_connector_api_rss
+                                - source_connector_erp_sage200
+                                - source_connector_erp_sage300
+                                - source_connector_finance_sage50uk
+                                - source_connector_finance_sageintacct
+                                - source_connector_collaboration_salesforcechatter
+                                - source_connector_analytics_sfeinsteinanalytics
+                                - source_connector_marketing_sfmarketingcloud
+                                - source_connector_crm_salesforcepardot
+                                - source_connector_erp_saperp
+                                - source_connector_erp_sapbusinessone
+                                - source_connector_erp_sapbusinessonedi
+                                - source_connector_erp_sapbydesign
+                                - source_connector_erp_sapconcur
+                                - source_connector_erp_sapfieldglass
+                                - source_connector_analytics_saphana
+                                - source_connector_crm_saphybrisc4c
+                                - source_connector_erp_sapgateway
+                                - source_connector_hr_sapsuccessfactors
+                                - source_connector_marketing_sendgrid
+                                - source_connector_erp_servicenow
+                                - source_connector_productivity_sharepoint
+                                - source_connector_ecommerce_shopify
+                                - source_connector_rdbms_singlestore
+                                - source_connector_collaboration_slack
+                                - source_connector_productivity_smartsheet
+                                - source_connector_marketing_snapchatads
+                                - source_connector_rdbms_snowflake
+                                - source_connector_nosql_splunk
+                                - source_connector_analytics_ssas
+                                - source_connector_api_square
+                                - source_connector_api_streak
+                                - source_connector_api_stripe
+                                - source_connector_crm_sugarcrm
+                                - source_connector_crm_suitecrm
+                                - source_connector_api_surveymonkey
+                                - source_connector_analytics_sybaseiq
+                                - source_connector_accounting_tally
+                                - source_connector_api_taxjar
+                                - source_connector_api_trello
+                                - source_connector_api_tsheets
+                                - source_connector_api_twilio
+                                - source_connector_marketing_twitter
+                                - source_connector_api_twitterads
+                                - source_connector_api_ups
+                                - source_connector_api_usps
+                                - source_connector_crm_veevavault
+                                - source_connector_object_storage_wasabi
+                                - source_connector_ecommerce_wavefinancial
+                                - source_connector_ecommerce_woocommerce
+                                - source_connector_ecommerce_wordpress
+                                - source_connector_analytics_xbase
+                                - source_connector_accounting_xero
+                                - source_connector_productivity_xeroworkflowmax
+                                - source_connector_file_xml
+                                - source_connector_marketing_youtubeanalytics
+                                - source_connector_crm_zendesk
+                                - source_connector_finance_zohobooks
+                                - source_connector_crm_zohocrm
+                                - source_connector_accounting_zuora
+                        generic_jdbc_connectors:
+                          type: object
+                          properties:
+                            used:
+                              type: integer
+                              example: 0
+                            licensed:
+                              type: integer
+                              example: 10
+                        transformation_component:
+                          type: object
+                          properties:
+                            is_licensed:
+                              type: boolean
+                              example: true
+                            used:
+                              type: integer
+                              example: 10
+                        environment_types:
+                          type: object
+                          properties:
+                            used:
+                              type: array
+                              items:
+                                type: string
+                                example: gcp_dataproc
+                                enum:
+                                - azure_databricks
+                                - aws_databricks
+                                - gcp_databricks
+                                - gcp_dataproc
+                                - aws_emr
+                                - snowflake
+                                - bigQuery
+                            licensed:
+                              type: array
+                              items:
+                                type: string
+                                enum:
+                                - azure_databricks
+                                - aws_databricks
+                                - gcp_databricks
+                                - gcp_dataproc
+                                - aws_emr
+                                - snowflake
+                                - bigQuery
+                        orchestrator_component:
+                          type: object
+                          properties:
+                            used:
+                              type: integer
+                              example: 0
+                            licensed:
+                              type: integer
+                              example: 10
+                        lock_environment_templates:
+                          type: boolean
+                          example: false
+                        sql_migration:
+                          type: boolean
+                          example: true
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /licenses/active:
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getActiveLicense
+      tags:
+      - License
+      summary: Get Active License
+      description: Get Active License
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: object
+                      properties:
+                        installation_id:
+                          type: string
+                          example: 1181f08b-a5d5-4182-9ac3-a10b5c63bbc4
+                        license_type:
+                          type: string
+                          example: enterprise
+                        license_start_date:
+                          type: string
+                          example: '2022-06-07T18:30:00.000Z'
+                        license_end_date:
+                          type: string
+                          example: '2022-08-07T18:30:00.000Z'
+                        features:
+                          type: object
+                          properties:
+                            cores:
+                              type: object
+                              properties:
+                                value:
+                                  type: integer
+                                  example: 20
+                            users:
+                              type: object
+                              properties:
+                                value:
+                                  type: integer
+                                  example: 10
+                            generic_jdbc_connectors:
+                              type: object
+                              properties:
+                                value:
+                                  type: integer
+                                  example: 10
+                            source_connector_cms_salesforce:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_file_structured:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_file_mainframe:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_file_json:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_rdbms_teradata:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_rdbms_oracle:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_rdbms_sqlserver:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_rdbms_netezza:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_rdbms_postgresql:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_rdbms_mysql:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_file_parquet:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_rdbms_db2_as400:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_rdbms_db2_luw:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_rdbms_db2_zos:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_streaming_kafka:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_streaming_confluent_cloud:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_metadata_sync_deltatables:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_metadata_sync_snowflake:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_metadata_sync_bigquery:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_metadata_sync_hive:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_rdbms_access:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_crm_actcrm:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_marketing_acton:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_collaboration_activedirectory:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_erp_acumatica:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_marketing_adobeanalytics:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_collaboration_airtable:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_collaboration_alfresco:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_analytics_awsdatamanagement:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_analytics_amazonathena:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_nosql_amazondynamodb:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_ecommerce_amazonmarketplace:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_analytics_redshift:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_analytics_apachehive:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_nosql_apachecouchdb:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_finance_authorizenet:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_finance_avalara:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_api_aas:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector__azuretables:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_collaboration_azuredatamanagement:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_collaboration_azuredevops:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_rdbms_azuresynapse:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_ecommerce_basecamp:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_ecommerce_bigcommerce:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_marketing_bingads:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_marketing_bing:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_finance_financialedgenxt:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_file_box:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_productivity_bugzilla:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_crm_bullhorncrm:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_nosql_cassandra:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_collaboration_confluence:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_nosql_cosmosdb:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_nosql_couchbase:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_analytics_datarobot:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_api_digitalocean:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_collaboration_docusign:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_file_dropbox:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_crm_d365businesscentral:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_crm_d365finop:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_crm_dynamicscrm:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_crm_dynamicsgp:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_crm_dynamicsnav:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_marketing_ebay:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_finance_edgaronline:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_nosql_elasticsearch:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_collaboration_email:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_rdbms_enterprisedb:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_erp_epicorerp:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_collaboration_evernote:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_finance_exactonline:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_productivity_excel:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_productivity_excelonline:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_productivity_excelservices:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_productivity_exchange:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_marketing_facebook:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_marketing_facebookads:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_ecommerce_fedex:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_finance_financialforce:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_finance_freshbooks:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_crm_freshdesk:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_storage_ftp:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            source_connector_collaboration_github:
+                              type: object
+                              properties:
+                                value:
+                                  type: boolean
+                                  example: true
+                            supported_environments:
+                              type: object
+                              properties:
+                                value:
+                                  type: array
+                                  items:
+                                    type: string
+                                    enum:
+                                    - azure_databricks
+                                    - aws_databricks
+                                    - gcp_databricks
+                                    - gcp_dataproc
+                                    - aws_emr
+                                    - snowflake
+                                    - bigQuery
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /licenses:
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getAllLicenses
+      tags:
+      - License
+      summary: Get All Licenses
+      description: Get All Licenses
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                - type: object
+                  properties:
+                    result:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          installation_id:
+                            type: string
+                            example: 1181f08b-a5d5-4182-9ac3-a10b5c63bbc4
+                          license_type:
+                            type: string
+                            example: enterprise
+                          license_start_date:
+                            type: string
+                            example: '2022-06-07T18:30:00.000Z'
+                          license_end_date:
+                            type: string
+                            example: '2022-08-07T18:30:00.000Z'
+                          features:
+                            type: object
+                            properties:
+                              cores:
+                                type: object
+                                properties:
+                                  value:
+                                    type: integer
+                                    example: 20
+                              users:
+                                type: object
+                                properties:
+                                  value:
+                                    type: integer
+                                    example: 10
+                              generic_jdbc_connectors:
+                                type: object
+                                properties:
+                                  value:
+                                    type: integer
+                                    example: 10
+                              source_connector_cms_salesforce:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_file_structured:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_file_mainframe:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_file_json:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_rdbms_teradata:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_rdbms_oracle:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_rdbms_sqlserver:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_rdbms_netezza:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_rdbms_postgresql:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_rdbms_mysql:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_file_parquet:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_rdbms_db2_as400:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_rdbms_db2_luw:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_rdbms_db2_zos:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_streaming_kafka:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_streaming_confluent_cloud:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_metadata_sync_deltatables:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_metadata_sync_snowflake:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_metadata_sync_bigquery:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_metadata_sync_hive:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_rdbms_access:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_crm_actcrm:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_marketing_acton:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_collaboration_activedirectory:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_erp_acumatica:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_marketing_adobeanalytics:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_collaboration_airtable:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_collaboration_alfresco:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_analytics_awsdatamanagement:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_analytics_amazonathena:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_nosql_amazondynamodb:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_ecommerce_amazonmarketplace:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_analytics_redshift:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_analytics_apachehive:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_nosql_apachecouchdb:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_finance_authorizenet:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_finance_avalara:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_api_aas:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector__azuretables:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_collaboration_azuredatamanagement:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_collaboration_azuredevops:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_rdbms_azuresynapse:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_ecommerce_basecamp:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_ecommerce_bigcommerce:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_marketing_bingads:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_marketing_bing:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_finance_financialedgenxt:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_file_box:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_productivity_bugzilla:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_crm_bullhorncrm:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_nosql_cassandra:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_collaboration_confluence:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_nosql_cosmosdb:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_nosql_couchbase:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_analytics_datarobot:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_api_digitalocean:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_collaboration_docusign:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_file_dropbox:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_crm_d365businesscentral:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_crm_d365finop:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_crm_dynamicscrm:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_crm_dynamicsgp:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_crm_dynamicsnav:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_marketing_ebay:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_finance_edgaronline:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_nosql_elasticsearch:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_collaboration_email:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_rdbms_enterprisedb:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_erp_epicorerp:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_collaboration_evernote:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_finance_exactonline:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_productivity_excel:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_productivity_excelonline:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_productivity_excelservices:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_productivity_exchange:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_marketing_facebook:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_marketing_facebookads:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_ecommerce_fedex:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_finance_financialforce:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_finance_freshbooks:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_crm_freshdesk:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_storage_ftp:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              source_connector_collaboration_github:
+                                type: object
+                                properties:
+                                  value:
+                                    type: boolean
+                                    example: true
+                              supported_environments:
+                                type: object
+                                properties:
+                                  value:
+                                    type: array
+                                    items:
+                                      type: string
+                                      enum:
+                                      - azure_databricks
+                                      - aws_databricks
+                                      - gcp_databricks
+                                      - gcp_dataproc
+                                      - aws_emr
+                                      - snowflake
+                                      - bigQuery
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic

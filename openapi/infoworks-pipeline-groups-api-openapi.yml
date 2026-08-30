@@ -1,0 +1,2222 @@
+openapi: 3.2.0
+info:
+  contact: {}
+  title: Infoworks Rest API V3 Pipeline Groups API
+  version: '1.0'
+  description: Infoworks Rest API V3
+servers:
+- url: '{protocol}://{host}:{port}/v3'
+  variables:
+    protocol:
+      default: http
+      enum:
+      - http
+      - https
+    host:
+      default: localhost
+    port:
+      default: '3001'
+tags:
+- name: Pipeline Groups
+  description: ''
+paths:
+  /admin/pipeline-groups:
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getPipelineGroupsOfAllDomains
+      tags:
+      - Pipeline Groups
+      summary: Get all pipeline groups
+      description: Get all pipeline groups
+      parameters:
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: array
+                      items:
+                        allOf:
+                        - type: object
+                          properties:
+                            id:
+                              type: string
+                              example: e77850ad5127a2d7dab870ff
+                        - type: object
+                          properties:
+                            id:
+                              type: string
+                              example: ffb38b0cc595cfcd05c54e49
+                            name:
+                              type: string
+                              example: test_pipeline_group
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /domains/{domain_id}/pipeline-groups:
+    post:
+      security:
+      - BearerAuth: []
+      summary: Create Pipeline Groups
+      description: Create Pipeline Groups
+      parameters:
+      - name: domain_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Content-Type
+        in: header
+        description: Http content type
+        required: true
+        schema:
+          type: string
+          enum:
+          - application/json
+          - multipart/form-data
+          - text/plain
+          default: application/json
+      tags:
+      - Pipeline Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - type: object
+                required:
+                - data_environment
+                - name
+                - snowflake_warehouse
+                - snowflake_profile
+                - compute_cluster
+                - execution_engine
+                properties:
+                  name:
+                    type: string
+                    example: pipeline_group
+                  description:
+                    type: string
+                    example: pipeline_group
+                  snowflake_profile:
+                    type: string
+                    example: profile1
+                  snowflake_warehouse:
+                    type: string
+                    example: warehouse_snowflake
+                  data_environment:
+                    type: string
+                    example: environment_abc
+                  compute_cluster:
+                    type: string
+                    example: environment_persistent
+                  batch_engine:
+                    type: string
+                    example: azure
+                  pipelines:
+                    type: array
+                    items:
+                      oneOf:
+                      - type: object
+                        required:
+                        - pipeline_id
+                        properties:
+                          pipeline_id:
+                            type: string
+                            example: pipeline_id_1
+                          run_active_version:
+                            type: boolean
+                            example: true
+                          execution_order:
+                            type: number
+                            example: 1
+                          version:
+                            type: number
+                            example: 1
+                  custom_tags:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                    - custom1
+                    - custom2
+                    - custom3
+                  query_tags:
+                    type: array
+                    items:
+                      oneOf:
+                      - type: object
+                        properties:
+                          query_tag_id:
+                            type: string
+                            example: query_tag_1
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 5fa948e77758f33e0e83ec6b
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getDomainPipelineGroups
+      tags:
+      - Pipeline Groups
+      summary: Get all pipeline groups for domain with `domain_id`
+      description: Get all pipeline groups for domain with `domain_id`
+      parameters:
+      - name: domain_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      - name: include_accessible_pipeline_groups
+        in: query
+        description: include pipeline groups from accessible domains to current domain as well
+        schema:
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          pipeline_group_details:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                                example: 63cd71df9f1c1e258c6e991b
+                              environment_id:
+                                type: string
+                                example: 63cd71df9f1c1e258c6e991b
+                              domain_id:
+                                type: string
+                                example: 63cd71df9f1c1e258c6e991b
+                              name:
+                                type: string
+                                example: pipeline_group_dummy
+                              batch_engine:
+                                type: string
+                                example: azure
+                              createdAt:
+                                type: string
+                                example: 2023-01-22T17:26:55:895Z
+                              createdBy:
+                                type: string
+                                example: 6RkfybTRQQByEey3v
+                              modifiedAt:
+                                type: string
+                                example: 2023-01-22T17:26:55:895Z
+                              modifiedBy:
+                                type: string
+                                example: 6RkfybTRQQByEey3v
+                          additional_env_details:
+                            type: object
+                            properties:
+                              environment:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    example: 63cd71df9f1c1e258c6e991b
+                                  name:
+                                    type: string
+                                    example: env_azure
+                                  compute_engine:
+                                    type: string
+                                    example: spark
+                                  platform:
+                                    type: string
+                                    example: databricks
+                              ephemeral_compute:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                      example: ephemeral_compute
+                                    environment_id:
+                                      type: string
+                                      example: 63cd71df9f1c1e258c6e991b
+                                    id:
+                                      type: string
+                                      example: 63cd71df9f1c1e258c6e991b
+                              interactive_compute:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                      example: interactive_compute
+                                    environment_id:
+                                      type: string
+                                      example: 63cd71df9f1c1e258c6e991b
+                                    id:
+                                      type: string
+                                      example: 63cd71df9f1c1e258c6e991b
+                              storage:
+                                type: array
+                                items:
+                                  type: object
+                                  properties:
+                                    id:
+                                      type: string
+                                      example: 63cd71df9f1c1e258c6e991b
+                                    name:
+                                      type: string
+                                      example: storage
+                                    environment_id:
+                                      type: string
+                                      example: 63cd71df9f1c1e258c6e991b
+                                    description:
+                                      type: string
+                                      example: description for storage
+                                    storage_type:
+                                      type: string
+                                      example: gcs
+                                    storage_authentication:
+                                      type: object
+                                      properties:
+                                        authentication_mechanism:
+                                          type: string
+                                          example: environment_service_credential
+                                        scheme:
+                                          type: string
+                                          example: gs://
+                                        bucket_name:
+                                          type: string
+                                          example: temp-bucket-xxx
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /domains/{domain_id}/pipeline-groups/{pipeline_group_id}:
+    parameters:
+    - name: pipeline_group_id
+      in: path
+      description: pipeline_group_id
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      summary: Get pipeline group
+      description: Get pipeline group
+      parameters:
+      - name: domain_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Content-Type
+        in: header
+        description: Http content type
+        required: true
+        schema:
+          type: string
+          enum:
+          - application/json
+          - multipart/form-data
+          - text/plain
+          default: application/json
+      tags:
+      - Pipeline Groups
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      oneOf:
+                      - allOf:
+                        - allOf:
+                          - type: object
+                            properties:
+                              id:
+                                type: string
+                                example: e77850ad5127a2d7dab870ff
+                          - type: object
+                            required:
+                            - data_environment
+                            - name
+                            - snowflake_warehouse
+                            - snowflake_profile
+                            - compute_cluster
+                            - execution_engine
+                            properties:
+                              name:
+                                type: string
+                                example: pipeline_group
+                              description:
+                                type: string
+                                example: pipeline_group
+                              snowflake_profile:
+                                type: string
+                                example: profile1
+                              snowflake_warehouse:
+                                type: string
+                                example: warehouse_snowflake
+                              data_environment:
+                                type: string
+                                example: environment_abc
+                              compute_cluster:
+                                type: string
+                                example: environment_persistent
+                              batch_engine:
+                                type: string
+                                example: azure
+                              pipelines:
+                                type: array
+                                items:
+                                  oneOf:
+                                  - type: object
+                                    required:
+                                    - pipeline_id
+                                    properties:
+                                      pipeline_id:
+                                        type: string
+                                        example: pipeline_id_1
+                                      run_active_version:
+                                        type: boolean
+                                        example: true
+                                      execution_order:
+                                        type: number
+                                        example: 1
+                                      version:
+                                        type: number
+                                        example: 1
+                              custom_tags:
+                                type: array
+                                items:
+                                  type: string
+                                example:
+                                - custom1
+                                - custom2
+                                - custom3
+                              query_tags:
+                                type: array
+                                items:
+                                  oneOf:
+                                  - type: object
+                                    properties:
+                                      query_tag_id:
+                                        type: string
+                                        example: query_tag_1
+                        - type: object
+                          allOf:
+                          - type: object
+                            properties:
+                              created_at:
+                                type: string
+                                example: '2019-11-21T12:54:05.875Z'
+                          - type: object
+                            properties:
+                              created_by:
+                                type: string
+                                example: 6RkfybTRQQByEey3v
+                          - type: object
+                            properties:
+                              modified_at:
+                                type: string
+                                example: '2019-11-21T12:54:05.875Z'
+                          - type: object
+                            properties:
+                              modified_by:
+                                type: string
+                                example: 6RkfybTRQQByEey3v
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    delete:
+      security:
+      - BearerAuth: []
+      summary: Delete Pipeline Group
+      description: Delete Pipeline Group
+      parameters:
+      - name: domain_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Content-Type
+        in: header
+        description: Http content type
+        required: true
+        schema:
+          type: string
+          enum:
+          - application/json
+          - multipart/form-data
+          - text/plain
+          default: application/json
+      tags:
+      - Pipeline Groups
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    patch:
+      security:
+      - BearerAuth: []
+      summary: Update Pipeline Group
+      description: Update Pipeline Group
+      operationId: updatePipelineGroup
+      parameters:
+      - name: domain_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Content-Type
+        in: header
+        description: Http content type
+        required: true
+        schema:
+          type: string
+          enum:
+          - application/json
+          - multipart/form-data
+          - text/plain
+          default: application/json
+      tags:
+      - Pipeline Groups
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - type: object
+                required:
+                - data_environment
+                - name
+                - snowflake_warehouse
+                - snowflake_profile
+                - compute_cluster
+                - execution_engine
+                properties:
+                  name:
+                    type: string
+                    example: pipeline_group
+                  description:
+                    type: string
+                    example: pipeline_group
+                  snowflake_profile:
+                    type: string
+                    example: profile1
+                  snowflake_warehouse:
+                    type: string
+                    example: warehouse_snowflake
+                  data_environment:
+                    type: string
+                    example: environment_abc
+                  compute_cluster:
+                    type: string
+                    example: environment_persistent
+                  batch_engine:
+                    type: string
+                    example: azure
+                  pipelines:
+                    type: array
+                    items:
+                      oneOf:
+                      - type: object
+                        required:
+                        - pipeline_id
+                        properties:
+                          pipeline_id:
+                            type: string
+                            example: pipeline_id_1
+                          run_active_version:
+                            type: boolean
+                            example: true
+                          execution_order:
+                            type: number
+                            example: 1
+                          version:
+                            type: number
+                            example: 1
+                  custom_tags:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                    - custom1
+                    - custom2
+                    - custom3
+                  query_tags:
+                    type: array
+                    items:
+                      oneOf:
+                      - type: object
+                        properties:
+                          query_tag_id:
+                            type: string
+                            example: query_tag_1
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 5fa958e77758f33e0e83ec6b
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /domains/{domain_id}/accessible-pipeline-groups:
+    get:
+      security:
+      - BearerAuth: []
+      summary: Get Accessible pipeline group
+      description: Get Accessible pipeline group
+      parameters:
+      - name: domain_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Content-Type
+        in: header
+        description: Http content type
+        required: true
+        schema:
+          type: string
+          enum:
+          - application/json
+          - multipart/form-data
+          - text/plain
+          default: application/json
+      tags:
+      - Pipeline Groups
+      responses:
+        '200':
+          description: Ok.
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      type: array
+                      items:
+                        allOf:
+                        - type: object
+                          properties:
+                            pipeline_group_id:
+                              type: string
+                              example: ffb38b0cc595cfcd05c54e49
+                            name:
+                              type: string
+                              example: test_pipeline
+                            domain_name:
+                              type: string
+                              example: test_domain
+                            domain_id:
+                              type: string
+                              example: 2568b22469ce46065c11ddb2
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /domains/{domain_id}/pipeline-groups/{pipeline_group_id}/configurations/advance/:
+    parameters:
+    - name: domain_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: pipeline_group_id
+      in: path
+      description: pipeline_group_id
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      operationId: getJobs_configuration
+      tags:
+      - Pipeline Groups
+      summary: Gets List of Advance Config pipeline group.
+      description: Gets List of Advance Config pipeline group.
+      parameters:
+      - name: filter
+        in: query
+        description: Filter results query
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: The numbers of items to return
+        schema:
+          type: integer
+          default: 10
+      - name: sort_by
+        in: query
+        description: Sort result on field
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: The number of items to skip before starting to collect the result set
+        schema:
+          type: integer
+          default: 0
+      - name: order_by
+        in: query
+        description: order  ascending | descending
+        schema:
+          type: string
+          default: asc
+          enum:
+          - asc
+          - desc
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    limit:
+                      type: integer
+                      example: 10
+                    offset:
+                      type: integer
+                      example: 0
+                    links:
+                      type: object
+                      properties:
+                        base:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}
+                        self:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=0
+                        next:
+                          type: string
+                          format: uri
+                          example: https://localhost:3001/v3/{admin/{workflows/{| |runs|tasks}|cluster-templates|jobs|admin-jobs|users}|sources|pipelines|cubes|domains}?limit=10&offset=10
+                    total_count:
+                      type: integer
+                      example: 10
+                  x-examples:
+                    example-1: {}
+                - type: object
+                  properties:
+                    results:
+                      type: array
+                      items:
+                        allOf:
+                        - type: object
+                          required:
+                          - key
+                          - value
+                          properties:
+                            key:
+                              type: string
+                              example: keyName
+                            value:
+                              type: string
+                              example: keyValue
+                            description:
+                              type: string
+                              example: description about this configuration
+                            is_active:
+                              type: boolean
+                              example: false
+                            entity_id:
+                              type: string
+                              example: e77850ad5127a2d7dab870ff
+                            entity_type:
+                              type: string
+                              example: source
+                        - properties:
+                            parent_entity_id:
+                              type: string
+                              example: e77850ad5127a2d7dab870ff
+                            parent_entity_type:
+                              type: string
+                              example: pipeline-group
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    post:
+      security:
+      - BearerAuth: []
+      operationId: advancedConfiguration_post
+      tags:
+      - Pipeline Groups
+      summary: Advance Configuration Pipeline Group.
+      description: Advance Configuration Pipeline Group.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - type: object
+                required:
+                - key
+                - value
+                properties:
+                  key:
+                    type: string
+                    example: keyName
+                  value:
+                    type: string
+                    example: keyValue
+                  description:
+                    type: string
+                    example: description about this configuration
+                  is_active:
+                    type: boolean
+                    example: false
+                  entity_id:
+                    type: string
+                    example: e77850ad5127a2d7dab870ff
+                  entity_type:
+                    type: string
+                    example: source
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Successfully added Advance configuration
+                  result:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 5fd5c5f7e27e6d34cf0660b8
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+  /domains/{domain_id}/pipeline-groups/{pipeline_group_id}/configurations/advance/{key}:
+    parameters:
+    - name: domain_id
+      in: path
+      required: true
+      schema:
+        type: string
+    - name: key
+      in: path
+      required: true
+      schema:
+        type: string
+        example: SPARK_ML_LIB
+    - name: pipeline_group_id
+      in: path
+      description: pipeline_group_id
+      required: true
+      schema:
+        type: string
+    get:
+      security:
+      - BearerAuth: []
+      tags:
+      - Pipeline Groups
+      summary: Get Pipelinegroup advance configuration
+      description: Get Pipelinegroup advance configuration
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Example Success Message
+                - type: object
+                  properties:
+                    result:
+                      allOf:
+                      - properties:
+                          key:
+                            type: string
+                            example: keyName
+                          value:
+                            type: string
+                            example: keyValue
+                          description:
+                            type: string
+                            example: description about this configuration
+                          isActive:
+                            type: boolean
+                            example: true
+                          entityId:
+                            type: string
+                            example: e77850ad5127a2d7dab870ff
+                          entityType:
+                            type: string
+                            example: pipeline-group
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    put:
+      security:
+      - BearerAuth: []
+      tags:
+      - Pipeline Groups
+      summary: update advance configuration for a pipeline group
+      description: update advance configuration for a pipeline group
+      requestBody:
+        description: Table ingestion Configuration
+        content:
+          application/json:
+            schema:
+              type: array
+              required:
+              - key
+              - value
+              - entityId
+              - entityType
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                    example: a
+                  value:
+                    type: string
+                    example: aa
+                  entityId:
+                    type: string
+                    example: 5a6ea49ce4b00234296e37d5
+                  entityType:
+                    type: string
+                    example: pipeline
+                    enum:
+                    - table
+                    - pipeline
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: Successfully updated advance configuration
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+    delete:
+      security:
+      - BearerAuth: []
+      tags:
+      - Pipeline Groups
+      summary: Delete advance configuration for a pipeline group
+      description: Delete advance configuration for a pipeline group
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      message:
+                        type: string
+                        example: Successfully deleted advance configuration
+        '400':
+          description: Request has invalid body or parameters.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10006
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10006
+        '401':
+          description: Authentication Failed. Please check your Credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10005
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10005
+        '403':
+          description: Forbidden. User lacks access to specified resource.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10004
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10004
+        '500':
+          description: Internal Server Error.
+          content:
+            application/json:
+              schema:
+                type: object
+                allOf:
+                - type: object
+                  properties:
+                    message:
+                      type: string
+                      example: Something went wrong
+                    details:
+                      type: object
+                      properties: {}
+                - type: object
+                  properties:
+                    iw_code:
+                      type: string
+                      example: IW10002
+                    help:
+                      type: string
+                      example: http://api.infoworks.io/help/IW10002
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    BasicAuth:
+      type: http
+      scheme: basic
