@@ -1,0 +1,14 @@
+{
+  "repo": "infoworks",
+  "feeds": [
+    {
+      "source": "https://support.infoworks.io/support/home",
+      "feed_url": "https://support.infoworks.io/support/home",
+      "title": "",
+      "saved": 0,
+      "method": "none"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-08-30T22:33:40Z"
+}

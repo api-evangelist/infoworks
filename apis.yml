@@ -35,6 +35,19 @@ tags:
 - Data Engineering
 - Data Integration
 - Data Ingestion
+- Data Pipeline
+- Workflow Orchestration
+- Data Warehouse Modernization
+- Databricks
+- Snowflake
+- Big Data
+- ETL
+- Enterprise Data Operations
+- Self-Hosted
+tags_raw:
+- Data Engineering
+- Data Integration
+- Data Ingestion
 - Data Pipelines
 - Workflow Orchestration
 - Data Warehouse Modernization
@@ -321,6 +334,8 @@ apis:
   humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
   baseURL: https://{host}:{port}/v3
   tags:
+  - CUSTOM_TAGS
+  tags_raw:
   - Custom Tags
   properties:
   - type: OpenAPI
@@ -652,6 +667,8 @@ apis:
   humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
   baseURL: https://{host}:{port}/v3
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
@@ -739,7 +756,8 @@ apis:
   description: The Misc API from Infoworks — 2 operation(s) for misc.
   humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
   baseURL: https://{host}:{port}/v3
-  tags:
+  tags: []
+  tags_raw:
   - Misc
   properties:
   - type: OpenAPI
@@ -1337,6 +1355,8 @@ apis:
   humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
   baseURL: https://{host}:{port}/v3
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
@@ -1405,6 +1425,8 @@ apis:
   humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
   baseURL: https://{host}:{port}/v3
   tags:
+  - WorkflowVersions
+  tags_raw:
   - Workflow Versions
   properties:
   - type: OpenAPI
@@ -1466,6 +1488,11 @@ apis:
   - type: APIReference
     url: https://docs.infoworks.io/infoworks-rest-api-v3/ref
 common:
+- type: ParentCompany
+  url: https://apis.io/providers/uniphore/
+  name: Uniphore
+  x-relationship: acquired
+  x-evidence: "Infoworks was acquired by Uniphore in 2024 and is sold as InfoWorks inside the Uniphore Business AI platform; the corporate site now redirects to uniphore."
 - type: CapabilityMap
   url: capabilities/infoworks-capability-edges.yml
   name: Infoworks Business Capability Map
