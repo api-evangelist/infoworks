@@ -334,7 +334,7 @@ apis:
   humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
   baseURL: https://{host}:{port}/v3
   tags:
-  - CUSTOM_TAGS
+  - Custom Tags
   tags_raw:
   - Custom Tags
   properties:
