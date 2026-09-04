@@ -24,6 +24,21 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+accessModel:
+  pricing: unknown
+  onboarding: approval
+  trial: false
+  try_now: false
+  public: false
+  label: Requires approval
+  confidence: medium
+  source:
+  - plans
+  - authentication
+  - rate-limits
+  - security
+  generated: '2026-09-03'
+  method: derived
 image: https://uploads.developerhub.io/prod/Bqr9/thfuawsbhl64giqmsect3d7t9soygddj2m5jd6spkfpphxzhyiyr28crjxt3yycf.png
 url: https://raw.githubusercontent.com/api-evangelist/infoworks/refs/heads/main/apis.yml
 x-type: company
