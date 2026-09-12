@@ -1574,3 +1574,5 @@ x-enrichment:
     retrieved verbatim and saved to openapi/. Verified 200 on
     https://docs.infoworks.io/infoworks-rest-api-v3/ref, 2026-08-23. No x-coverage block is written
     because the pass is covered, not thin.
+x-parent: uniphore
+x-relationship: product
