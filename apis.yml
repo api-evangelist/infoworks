@@ -217,6 +217,8 @@ apis:
   humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
   baseURL: https://{host}:{port}/v3
   tags:
+  - Audit
+  tags_raw:
   - Audits
   properties:
   - type: OpenAPI
@@ -1325,6 +1327,8 @@ apis:
   humanURL: https://docs.infoworks.io/infoworks-rest-api-v3/ref
   baseURL: https://{host}:{port}/v3
   tags:
+  - Topic
+  tags_raw:
   - Topics
   properties:
   - type: OpenAPI
