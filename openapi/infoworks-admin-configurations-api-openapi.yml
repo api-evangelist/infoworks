@@ -26,7 +26,7 @@ paths:
       operationId: getConfigs
       tags:
       - Admin Configurations
-      summary: Get all General Configurations for Infoworks.
+      summary: Get all General Configurations for Infoworks
       description: Get all General Configurations for Infoworks.
       responses:
         '200':
@@ -150,7 +150,7 @@ paths:
       operationId: putConfigs
       tags:
       - Admin Configurations
-      summary: Replace General Configurations for Infoworks.
+      summary: Replace General Configurations for Infoworks
       description: Replace General Configurations for Infoworks.
       requestBody:
         content:
@@ -276,7 +276,7 @@ paths:
       operationId: getMongoBackups
       tags:
       - Admin Configurations
-      summary: Gets `Mongo Backups` list.
+      summary: Gets `Mongo Backups` list
       description: Gets `Mongo Backups` list.
       parameters:
       - name: offset
@@ -477,7 +477,7 @@ paths:
       operationId: getMongoBackup
       tags:
       - Admin Configurations
-      summary: Gets Mongo Backup With Specified Id.
+      summary: Gets Mongo Backup With Specified Id
       description: Gets Mongo Backup With Specified Id.
       parameters:
       - name: mongo_backup_id
@@ -758,7 +758,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: getBackupSchedule
-      summary: Get the Schedule of the Mongo Backup.
+      summary: Get the Schedule of the Mongo Backup
       description: Get the Schedule of the Mongo Backup.
       tags:
       - Admin Configurations
@@ -1425,7 +1425,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: enableBackupSchedule
-      summary: Schedule Mongo Backup.
+      summary: Schedule Mongo Backup
       description: Schedule Mongo Backup.
       tags:
       - Admin Configurations
@@ -2093,7 +2093,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: disableBackupSchedule
-      summary: Schedule Mongo Backup.
+      summary: Schedule Mongo Backup
       description: Schedule Mongo Backup.
       tags:
       - Admin Configurations
@@ -2205,7 +2205,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: getAllConfigs
-      summary: Get the type of the Authentication and associated properties.
+      summary: Get the type of the Authentication and associated properties
       description: Get the type of the Authentication and associated properties.
       tags:
       - Admin Configurations
@@ -2361,7 +2361,6 @@ paths:
       tags:
       - Admin Configurations
       summary: Change the Authentication Mechanism
-      description: Change the Authentication Mechanism
       requestBody:
         content:
           application/json:
@@ -2647,7 +2646,6 @@ paths:
       tags:
       - Admin Configurations
       summary: Change the Authentication Mechanism
-      description: Change the Authentication Mechanism
       requestBody:
         content:
           application/json:
@@ -2841,7 +2839,7 @@ paths:
       operationId: testConnection
       tags:
       - Admin Configurations
-      summary: Test the Authentication Mechanism's Connection.
+      summary: Test the Authentication Mechanism's Connection
       description: Test the Authentication Mechanism's Connection.
       responses:
         '200':
@@ -2953,7 +2951,7 @@ paths:
       operationId: testLdapConnection
       tags:
       - Admin Configurations
-      summary: Test the Authentication Connection for LDAP user.
+      summary: Test the Authentication Connection for LDAP user
       description: Test the Authentication Connection for LDAP user.
       requestBody:
         content:

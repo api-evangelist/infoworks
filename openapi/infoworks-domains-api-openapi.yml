@@ -34,7 +34,6 @@ paths:
       tags:
       - Domains
       summary: Get the Target Data Connection
-      description: Get the Target Data Connection
       responses:
         '200':
           description: Ok
@@ -201,7 +200,6 @@ paths:
       tags:
       - Domains
       summary: Edit the Target Data Connections Associated with a Domain
-      description: Edit the Target Data Connections Associated with a Domain
       requestBody:
         content:
           application/json:
@@ -347,7 +345,6 @@ paths:
       tags:
       - Domains
       summary: Patch the Target Data Connection
-      description: Patch the Target Data Connection
       requestBody:
         content:
           application/json:
@@ -493,7 +490,6 @@ paths:
       tags:
       - Domains
       summary: Delete the Target Data Connections Associated with a Domain
-      description: Delete the Target Data Connections Associated with a Domain
       responses:
         '200':
           description: Ok
@@ -611,7 +607,6 @@ paths:
       tags:
       - Domains
       summary: Get List of Domains
-      description: Get List of Domains
       parameters:
       - name: filter
         in: query
@@ -938,7 +933,6 @@ paths:
       tags:
       - Domains
       summary: Get List of Domains
-      description: Get List of Domains
       parameters:
       - name: filter
         in: query
@@ -1178,7 +1172,6 @@ paths:
       tags:
       - Domains
       summary: Get List of Domains Users
-      description: Get List of Domains Users
       parameters:
       - name: filter
         in: query
@@ -1367,7 +1360,6 @@ paths:
       tags:
       - Domains
       summary: Get List of Accessible Domains
-      description: Get List of Accessible Domains
       parameters:
       - name: filter
         in: query
@@ -1562,7 +1554,6 @@ paths:
       tags:
       - Domains
       summary: Get List of Domains Pipeline Extensions
-      description: Get List of Domains Pipeline Extensions
       parameters:
       - name: filter
         in: query
@@ -1745,7 +1736,6 @@ paths:
       tags:
       - Domains
       summary: Get List of Domains
-      description: Get List of Domains
       parameters:
       - name: filter
         in: query
@@ -2065,7 +2055,6 @@ paths:
       tags:
       - Domains
       summary: Add a domain. (Requires Admin Access)
-      description: Add a domain. (Requires Admin Access)
       requestBody:
         content:
           application/json:
@@ -2217,7 +2206,6 @@ paths:
       tags:
       - Domains
       summary: Get description of a domain_id. (Requires Admin Access)
-      description: Get description of a domain_id. (Requires Admin Access)
       parameters:
       - name: domain_id
         in: path
@@ -2549,7 +2537,6 @@ paths:
       tags:
       - Domains
       summary: Edit name and description of a domain. (Requires Admin Access)
-      description: Edit name and description of a domain. (Requires Admin Access)
       parameters:
       - name: domain_id
         in: path
@@ -2693,7 +2680,7 @@ paths:
       operationId: deleteDomain
       tags:
       - Domains
-      summary: Delete a Domain (Requires Admin Access).
+      summary: Delete a Domain (Requires Admin Access)
       description: Delete a Domain (Requires Admin Access).
       parameters:
       - name: domain_id
@@ -2812,7 +2799,6 @@ paths:
       tags:
       - Domains
       summary: Get all the Sources associated with this Domain
-      description: Get all the Sources associated with this Domain
       parameters:
       - name: filter
         in: query
@@ -3102,7 +3088,6 @@ paths:
       tags:
       - Domains
       summary: Add Sources to this Domain (Requires Admin Access)
-      description: Add Sources to this Domain (Requires Admin Access)
       requestBody:
         content:
           application/json:
@@ -3230,7 +3215,6 @@ paths:
       tags:
       - Domains
       summary: Update Sources to this Domain (Requires Admin Access)
-      description: Update Sources to this Domain (Requires Admin Access)
       requestBody:
         content:
           application/json:
@@ -3358,7 +3342,6 @@ paths:
       tags:
       - Domains
       summary: Remove Source from this Domain (Requires Admin Access)
-      description: Remove Source from this Domain (Requires Admin Access)
       responses:
         '200':
           description: Ok.
@@ -3470,7 +3453,6 @@ paths:
       tags:
       - Domains
       summary: Get all the Domains associated with this Domain
-      description: Get all the Domains associated with this Domain
       parameters:
       - name: filter
         in: query
@@ -3692,7 +3674,6 @@ paths:
       tags:
       - Domains
       summary: Add Domains to this Domain (Requires Admin Access)
-      description: Add Domains to this Domain (Requires Admin Access)
       requestBody:
         content:
           application/json:
@@ -3820,7 +3801,6 @@ paths:
       tags:
       - Domains
       summary: Update accessible-domain in this Domain (Requires Admin Access)
-      description: Update accessible-domain in this Domain (Requires Admin Access)
       requestBody:
         content:
           application/json:
@@ -3948,7 +3928,6 @@ paths:
       tags:
       - Domains
       summary: Remove Domain from this Domain (Requires Admin Access)
-      description: Remove Domain from this Domain (Requires Admin Access)
       responses:
         '200':
           description: Ok.
@@ -4060,7 +4039,6 @@ paths:
       tags:
       - Domains
       summary: Get all the workflows associated with this Domain
-      description: Get all the workflows associated with this Domain
       parameters:
       - name: domain_id
         in: path
@@ -4195,7 +4173,6 @@ paths:
       tags:
       - Domains
       summary: Get all the tablegroups associated with this Domain
-      description: Get all the tablegroups associated with this Domain
       parameters:
       - name: domain_id
         in: path
@@ -4330,7 +4307,6 @@ paths:
       tags:
       - Domains
       summary: Get all the interactive computes associated with this Domain
-      description: Get all the interactive computes associated with this Domain
       parameters:
       - name: domain_id
         in: path
@@ -4465,7 +4441,6 @@ paths:
       tags:
       - Domains
       summary: Get all the pipelines associated with this Domain
-      description: Get all the pipelines associated with this Domain
       parameters:
       - name: domain_id
         in: path
@@ -4600,7 +4575,6 @@ paths:
       tags:
       - Domains
       summary: Get all the Pipeline Extensions associated with this Domain
-      description: Get all the Pipeline Extensions associated with this Domain
       parameters:
       - name: filter
         in: query
@@ -4811,7 +4785,6 @@ paths:
       tags:
       - Domains
       summary: Update accessible-pipeline-extensions in this Domain (Requires Admin Access)
-      description: Update accessible-pipeline-extensions in this Domain (Requires Admin Access)
       requestBody:
         content:
           application/json:
@@ -4939,7 +4912,6 @@ paths:
       tags:
       - Domains
       summary: Add Pipeline Extensions to this Domain (Requires Admin Access)
-      description: Add Pipeline Extensions to this Domain (Requires Admin Access)
       requestBody:
         content:
           application/json:
@@ -5058,7 +5030,6 @@ paths:
       security:
       - BearerAuth: []
       operationId: removeAccessiblePipelineExtensions
-      description: Remove Pipeline Extension from this Domain (Requires Admin Access)
       parameters:
       - name: domain_id
         in: path
@@ -5311,6 +5282,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      summary: Advanced configuration info
+      x-summary-source: derived
     patch:
       security:
       - BearerAuth: []
@@ -5450,6 +5423,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      summary: Update advanced configuration
+      x-summary-source: derived
     delete:
       security:
       - BearerAuth: []
@@ -5572,6 +5547,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      summary: Removed advanced configs
+      x-summary-source: derived
   /domains/{domain_id}/recently-used-entities:
     parameters:
     - name: domain_id
@@ -5586,7 +5563,6 @@ paths:
       tags:
       - Domains
       summary: Get recently used entities associated with this Domain
-      description: Get recently used entities associated with this Domain
       responses:
         '200':
           description: Ok.
@@ -5756,7 +5732,6 @@ paths:
       tags:
       - Domains
       summary: Add Recently Used Entity to this Domain
-      description: Add Recently Used Entity to this Domain
       requestBody:
         content:
           application/json:
@@ -5885,7 +5860,6 @@ paths:
       tags:
       - Domains
       summary: Get comments associated with this Domain
-      description: Get comments associated with this Domain
       responses:
         '200':
           description: Ok.
@@ -6040,7 +6014,6 @@ paths:
       tags:
       - Domains
       summary: Add comment to this Domain
-      description: Add comment to this Domain
       requestBody:
         content:
           application/json:
@@ -6166,7 +6139,6 @@ paths:
       tags:
       - Domains
       summary: Get notifications associated with this Domain
-      description: Get notifications associated with this Domain
       responses:
         '200':
           description: Ok.
@@ -6351,7 +6323,6 @@ paths:
       tags:
       - Domains
       summary: Get Table Orders With Hierachy
-      description: Get Table Orders With Hierachy
       responses:
         '200':
           description: Ok.
@@ -6646,7 +6617,6 @@ paths:
       tags:
       - Domains
       summary: Get Domains Pipeline and Accessibele Sources
-      description: Get Domains Pipeline and Accessibele Sources
       responses:
         '200':
           description: Ok.

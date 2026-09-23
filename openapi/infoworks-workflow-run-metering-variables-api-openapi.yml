@@ -34,7 +34,6 @@ paths:
       tags:
       - Workflow Run Metering variables
       summary: Get workflow run metering variables
-      description: Get workflow run metering variables
       responses:
         '200':
           description: Success

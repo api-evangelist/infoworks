@@ -72,7 +72,6 @@ paths:
         schema:
           type: boolean
       summary: Get File Mappings for JSON source
-      description: Get File Mappings for JSON source
       responses:
         '200':
           description: Success
@@ -287,7 +286,6 @@ paths:
       tags:
       - File Mappings
       summary: Create File Mapping For JSON Source
-      description: Create File Mapping For JSON Source
       requestBody:
         content:
           application/json:
@@ -453,7 +451,6 @@ paths:
       tags:
       - File Mappings
       summary: Get File Mappings for JSON source by id
-      description: Get File Mappings for JSON source by id
       responses:
         '200':
           description: Success
@@ -661,7 +658,6 @@ paths:
       tags:
       - File Mappings
       summary: Delete File Mapping For JSON Source
-      description: Delete File Mapping For JSON Source
       responses:
         '200':
           description: Success
@@ -782,7 +778,6 @@ paths:
       tags:
       - File Mappings
       summary: Update File Mapping For JSON Source
-      description: Update File Mapping For JSON Source
       requestBody:
         content:
           application/json:
@@ -948,7 +943,6 @@ paths:
       tags:
       - File Mappings
       summary: Get File Mapping Data Preview
-      description: Get File Mapping Data Preview
       responses:
         '200':
           description: Success
@@ -1082,7 +1076,6 @@ paths:
       tags:
       - File Mappings
       summary: Crawl Schema For File Mapping
-      description: Crawl Schema For File Mapping
       responses:
         '200':
           description: Success
@@ -1222,7 +1215,6 @@ paths:
           type: string
         example: '[1, 2]'
       summary: Get Table Schema From Mapping
-      description: Get Table Schema From Mapping
       responses:
         '200':
           description: Success
@@ -1356,7 +1348,6 @@ paths:
       tags:
       - File Mappings
       summary: Create JSON Source Table
-      description: Create JSON Source Table
       requestBody:
         content:
           application/json:
@@ -1502,7 +1493,6 @@ paths:
       tags:
       - File Mappings
       summary: Get JSON Source Table
-      description: Get JSON Source Table
       responses:
         '200':
           description: Success

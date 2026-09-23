@@ -38,7 +38,6 @@ paths:
         schema:
           type: string
       summary: Use to validate entity names
-      description: Use to validate entity names
       responses:
         '200':
           description: Ok.
@@ -51,6 +50,8 @@ paths:
                     message:
                       type: string
                       example: Example Success Message
+      operationId: getValidateEntityNames
+      x-operation-id-source: derived
   /verify-refresh-token:
     put:
       security:
@@ -59,7 +60,6 @@ paths:
       tags:
       - Validation
       summary: Used to verify users refresh token
-      description: Used to verify users refresh token
       requestBody:
         content:
           application/json:

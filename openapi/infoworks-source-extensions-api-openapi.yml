@@ -71,7 +71,6 @@ paths:
         schema:
           type: string
       summary: Get Source Extensions List
-      description: Get Source Extensions List
       responses:
         '200':
           description: Ok.
@@ -286,6 +285,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminSourceExtensions
+      x-operation-id-source: derived
   /admin/source-extensions/{source_extension_id}:
     parameters:
     - name: Content-Type
@@ -496,6 +497,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminSourceExtensionsBySourceExtensionId
+      x-operation-id-source: derived
     put:
       security:
       - BearerAuth: []
@@ -665,6 +668,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: putAdminSourceExtensionsBySourceExtensionId
+      x-operation-id-source: derived
     delete:
       security:
       - BearerAuth: []
@@ -776,6 +781,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: deleteAdminSourceExtensionsBySourceExtensionId
+      x-operation-id-source: derived
   /admin/source-extensions/{source_extension_id}/files:
     parameters:
     - name: Content-Type
@@ -928,6 +935,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminSourceExtensionsBySourceExtensionIdFiles
+      x-operation-id-source: derived
     post:
       security:
       - BearerAuth: []
@@ -1046,6 +1055,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: postAdminSourceExtensionsBySourceExtensionIdFiles
+      x-operation-id-source: derived
   /admin/source-extensions/{source_extension_id}/files/{file_name}:
     parameters:
     - name: source_extension_id
@@ -1171,6 +1182,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: deleteAdminSourceExtensionsBySourceExtensionIdFilesByFileName
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

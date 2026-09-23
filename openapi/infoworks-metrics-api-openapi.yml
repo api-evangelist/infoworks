@@ -44,7 +44,6 @@ paths:
       tags:
       - Metrics
       summary: Get the Ingestion-metrics of the table with job_id
-      description: Get the Ingestion-metrics of the table with job_id
       responses:
         '200':
           description: OK
@@ -241,6 +240,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminJobsByJobIdReportsIngestionMetrics
+      x-operation-id-source: derived
   /admin/jobs/{job_id}/reports/export-metrics:
     parameters:
     - name: Content-Type
@@ -266,7 +267,6 @@ paths:
       tags:
       - Metrics
       summary: Get the Export-metrics of the table with job_id
-      description: Get the Export-metrics of the table with job_id
       responses:
         '200':
           description: OK
@@ -460,6 +460,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminJobsByJobIdReportsExportMetrics
+      x-operation-id-source: derived
   /admin/jobs/{job_id}/reports/pipeline-metrics:
     parameters:
     - name: Content-Type
@@ -485,7 +487,6 @@ paths:
       tags:
       - Metrics
       summary: Get the Pipeline-metrics of the table with job_id
-      description: Get the Pipeline-metrics of the table with job_id
       responses:
         '200':
           description: OK
@@ -667,6 +668,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminJobsByJobIdReportsPipelineMetrics
+      x-operation-id-source: derived
   /admin/job-status-metrics:
     get:
       parameters:
@@ -705,7 +708,6 @@ paths:
       tags:
       - Metrics
       summary: Get Job Status Metrics
-      description: Get Job Status Metrics
       responses:
         '200':
           description: Successful response with job status metrics.
@@ -851,7 +853,7 @@ paths:
       - BearerAuth: []
       tags:
       - Metrics
-      summary: Get Ingestion Metrics with job id.
+      summary: Get Ingestion Metrics with job id
       description: Get Ingestion Metrics with job id.
       responses:
         '200':
@@ -1056,6 +1058,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdJobsByJobIdReportsIngestionMetrics
+      x-operation-id-source: derived
   /sources/{source_id}/jobs/{job_id}/reports/job-metrics:
     parameters:
     - name: Content-Type
@@ -1081,7 +1085,7 @@ paths:
       - BearerAuth: []
       tags:
       - Metrics
-      summary: Get job metrics with job id.
+      summary: Get job metrics with job id
       description: Get job metrics with job id.
       responses:
         '200':
@@ -1163,6 +1167,8 @@ paths:
                           query_tag:
                             type: string
                             format: string
+      operationId: getSourcesBySourceIdJobsByJobIdReportsJobMetrics
+      x-operation-id-source: derived
   /sources/{source_id}/jobs/{job_id}/reports/export-metrics:
     parameters:
     - name: Content-Type
@@ -1188,7 +1194,7 @@ paths:
       - BearerAuth: []
       tags:
       - Metrics
-      summary: Get Export Metrics with job id.
+      summary: Get Export Metrics with job id
       description: Get Export Metrics with job id.
       responses:
         '200':
@@ -1390,6 +1396,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdJobsByJobIdReportsExportMetrics
+      x-operation-id-source: derived
   /sources/{source_id}/reports/table-metrics:
     parameters:
     - name: Content-Type
@@ -1415,7 +1423,7 @@ paths:
       - BearerAuth: []
       tags:
       - Metrics
-      summary: Get Metrics for all tables in the source.
+      summary: Get Metrics for all tables in the source
       description: Get Metrics for all tables in the source.
       responses:
         '200':
@@ -1585,6 +1593,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdReportsTableMetrics
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/jobs/{job_id}/reports/export-metrics:
     parameters:
     - name: Content-Type
@@ -1617,7 +1627,6 @@ paths:
       tags:
       - Metrics
       summary: Get the Export-metrics of the table with job id
-      description: Get the Export-metrics of the table with job id
       responses:
         '200':
           description: OK
@@ -1818,6 +1827,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdJobsByJobIdReportsExportMetrics
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/jobs/{job_id}/reports/ingestion-metrics:
     parameters:
     - name: Content-Type
@@ -1850,7 +1861,6 @@ paths:
       tags:
       - Metrics
       summary: Get the ingestion-metrics of the table with job id
-      description: Get the ingestion-metrics of the table with job id
       responses:
         '200':
           description: OK
@@ -2054,6 +2064,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdJobsByJobIdReportsIngestionMetrics
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/reports/ingestion-metrics:
     parameters:
     - name: Content-Type
@@ -2080,7 +2092,6 @@ paths:
       tags:
       - Metrics
       summary: Get the ingestion-metrics for the table
-      description: Get the ingestion-metrics for the table
       responses:
         '200':
           description: OK
@@ -2284,6 +2295,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdReportsIngestionMetrics
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/reports/ingestion-metrics/download:
     parameters:
     - name: Content-Type
@@ -2310,7 +2323,6 @@ paths:
       tags:
       - Metrics
       summary: Download ingestion metrics for the table
-      description: Download ingestion metrics for the table
       responses:
         '200':
           description: Ok.
@@ -2419,6 +2431,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdReportsIngestionMetricsDownload
+      x-operation-id-source: derived
   /sources/:source_id/reports/jobs/ingestion-metrics/download:
     parameters:
     - name: Content-Type
@@ -2438,7 +2452,7 @@ paths:
       - BearerAuth: []
       tags:
       - Metrics
-      summary: Download List of All jobs of this Source and it's artifacts.
+      summary: Download List of All jobs of this Source and it's artifacts
       description: Download List of All jobs of this Source and it's artifacts.
       responses:
         '200':
@@ -2548,6 +2562,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSources:sourceIdReportsJobsIngestionMetricsDownload
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/reports/export-metrics:
     parameters:
     - name: Content-Type
@@ -2574,7 +2590,6 @@ paths:
       tags:
       - Metrics
       summary: Get the export-metrics for the table
-      description: Get the export-metrics for the table
       responses:
         '200':
           description: OK
@@ -2775,6 +2790,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdReportsExportMetrics
+      x-operation-id-source: derived
   /prodops/metrics:
     post:
       security:
@@ -2783,7 +2800,6 @@ paths:
       - Metrics
       operationId: MetricsForProdOps
       summary: Fetch the metrics for a given time period
-      description: Fetch the metrics for a given time period
       requestBody:
         content:
           application/json:

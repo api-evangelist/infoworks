@@ -37,7 +37,6 @@ paths:
       security:
       - BearerAuth: []
       summary: Get Entity Subscriber
-      description: Get Entity Subscriber
       operationId: list Entity Subscriber
       tags:
       - User Notification Subscribe
@@ -228,7 +227,6 @@ paths:
       security:
       - BearerAuth: []
       summary: Update Entity Subscriber
-      description: Update Entity Subscriber
       operationId: Update Entity Subscriber
       tags:
       - User Notification Subscribe
@@ -430,7 +428,6 @@ paths:
       security:
       - BearerAuth: []
       summary: Subscribe Notification
-      description: Subscribe Notification
       operationId: Subscribe Notification
       tags:
       - User Notification Subscribe
@@ -623,7 +620,6 @@ paths:
       security:
       - BearerAuth: []
       summary: Unsubscribe Notification
-      description: Unsubscribe Notification
       operationId: Unsubscribe Notification
       tags:
       - User Notification Subscribe

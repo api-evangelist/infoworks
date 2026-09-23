@@ -28,7 +28,6 @@ paths:
       tags:
       - Pipeline Groups
       summary: Get all pipeline groups
-      description: Get all pipeline groups
       parameters:
       - name: offset
         in: query
@@ -217,7 +216,6 @@ paths:
       security:
       - BearerAuth: []
       summary: Create Pipeline Groups
-      description: Create Pipeline Groups
       parameters:
       - name: domain_id
         in: path
@@ -421,6 +419,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: postDomainsByDomainIdPipelineGroups
+      x-operation-id-source: derived
     get:
       security:
       - BearerAuth: []
@@ -428,7 +428,6 @@ paths:
       tags:
       - Pipeline Groups
       summary: Get all pipeline groups for domain with `domain_id`
-      description: Get all pipeline groups for domain with `domain_id`
       parameters:
       - name: domain_id
         in: path
@@ -731,7 +730,6 @@ paths:
       security:
       - BearerAuth: []
       summary: Get pipeline group
-      description: Get pipeline group
       parameters:
       - name: domain_id
         in: path
@@ -955,11 +953,12 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getDomainsByDomainIdPipelineGroupsByPipelineGroupId
+      x-operation-id-source: derived
     delete:
       security:
       - BearerAuth: []
       summary: Delete Pipeline Group
-      description: Delete Pipeline Group
       parameters:
       - name: domain_id
         in: path
@@ -1083,11 +1082,12 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: deleteDomainsByDomainIdPipelineGroupsByPipelineGroupId
+      x-operation-id-source: derived
     patch:
       security:
       - BearerAuth: []
       summary: Update Pipeline Group
-      description: Update Pipeline Group
       operationId: updatePipelineGroup
       parameters:
       - name: domain_id
@@ -1297,7 +1297,6 @@ paths:
       security:
       - BearerAuth: []
       summary: Get Accessible pipeline group
-      description: Get Accessible pipeline group
       parameters:
       - name: domain_id
         in: path
@@ -1441,6 +1440,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getDomainsByDomainIdAccessiblePipelineGroups
+      x-operation-id-source: derived
   /domains/{domain_id}/pipeline-groups/{pipeline_group_id}/configurations/advance/:
     parameters:
     - name: domain_id
@@ -1460,7 +1461,7 @@ paths:
       operationId: getJobs_configuration
       tags:
       - Pipeline Groups
-      summary: Gets List of Advance Config pipeline group.
+      summary: Gets List of Advance Config pipeline group
       description: Gets List of Advance Config pipeline group.
       parameters:
       - name: filter
@@ -1663,7 +1664,7 @@ paths:
       operationId: advancedConfiguration_post
       tags:
       - Pipeline Groups
-      summary: Advance Configuration Pipeline Group.
+      summary: Advance Configuration Pipeline Group
       description: Advance Configuration Pipeline Group.
       requestBody:
         content:
@@ -1827,7 +1828,6 @@ paths:
       tags:
       - Pipeline Groups
       summary: Get Pipelinegroup advance configuration
-      description: Get Pipelinegroup advance configuration
       responses:
         '200':
           description: Ok
@@ -1955,13 +1955,14 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getDomainsByDomainIdPipelineGroupsByPipelineGroupIdConfigurationsAdvanceByKey
+      x-operation-id-source: derived
     put:
       security:
       - BearerAuth: []
       tags:
       - Pipeline Groups
       summary: update advance configuration for a pipeline group
-      description: update advance configuration for a pipeline group
       requestBody:
         description: Table ingestion Configuration
         content:
@@ -2098,13 +2099,14 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: putDomainsByDomainIdPipelineGroupsByPipelineGroupIdConfigurationsAdvanceByKey
+      x-operation-id-source: derived
     delete:
       security:
       - BearerAuth: []
       tags:
       - Pipeline Groups
       summary: Delete advance configuration for a pipeline group
-      description: Delete advance configuration for a pipeline group
       responses:
         '200':
           description: OK
@@ -2211,6 +2213,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: deleteDomainsByDomainIdPipelineGroupsByPipelineGroupIdConfigurationsAdvanceByKey
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

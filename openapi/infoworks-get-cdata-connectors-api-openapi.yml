@@ -43,7 +43,6 @@ paths:
         schema:
           type: string
       summary: Get connection parameters for generic jdbc sources
-      description: Get connection parameters for generic jdbc sources
       responses:
         '200':
           description: Ok.
@@ -172,6 +171,8 @@ paths:
                       example: http://api.infoworks.io/help/IW10002
       tags:
       - Get Cdata Connectors
+      operationId: getGetCdataConnectors
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

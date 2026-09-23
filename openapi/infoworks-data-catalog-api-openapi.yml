@@ -284,6 +284,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getDataCatalogDataModels
+      x-operation-id-source: derived
   /data-catalog/favorites:
     get:
       security:
@@ -550,6 +552,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getDataCatalogFavorites
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

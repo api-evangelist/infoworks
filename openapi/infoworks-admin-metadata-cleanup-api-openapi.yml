@@ -26,7 +26,7 @@ paths:
       operationId: getCleanupPolicies
       tags:
       - Admin Metadata Cleanup
-      summary: Get metadata cleanup policies.
+      summary: Get metadata cleanup policies
       description: Get metadata cleanup policies.
       responses:
         '200':
@@ -202,7 +202,7 @@ paths:
       operationId: getJobsPolicy
       tags:
       - Admin Metadata Cleanup
-      summary: Get Jobs cleanup policy.
+      summary: Get Jobs cleanup policy
       description: Get Jobs cleanup policy.
       responses:
         '200':
@@ -336,7 +336,6 @@ paths:
       tags:
       - Admin Metadata Cleanup
       summary: Edit the Jobs Cleanup Policy
-      description: Edit the Jobs Cleanup Policy
       requestBody:
         content:
           application/json:
@@ -467,7 +466,7 @@ paths:
       operationId: getAuditsPolicy
       tags:
       - Admin Metadata Cleanup
-      summary: Get Audits cleanup policy.
+      summary: Get Audits cleanup policy
       description: Get Audits cleanup policy.
       responses:
         '200':
@@ -601,7 +600,6 @@ paths:
       tags:
       - Admin Metadata Cleanup
       summary: Edit the Audits Cleanup Policy
-      description: Edit the Audits Cleanup Policy
       requestBody:
         content:
           application/json:
@@ -732,7 +730,7 @@ paths:
       operationId: getMetricsPolicy
       tags:
       - Admin Metadata Cleanup
-      summary: Get Metrics cleanup policy.
+      summary: Get Metrics cleanup policy
       description: Get Metrics cleanup policy.
       responses:
         '200':
@@ -866,7 +864,6 @@ paths:
       tags:
       - Admin Metadata Cleanup
       summary: Edit the Metrics Cleanup Policy
-      description: Edit the Metrics Cleanup Policy
       requestBody:
         content:
           application/json:
@@ -997,7 +994,7 @@ paths:
       operationId: getMetadataCleanupSchedule
       tags:
       - Admin Metadata Cleanup
-      summary: Get Schedule of cleanup policy.
+      summary: Get Schedule of cleanup policy
       description: Get Schedule of cleanup policy.
       responses:
         '200':
@@ -1667,7 +1664,7 @@ paths:
       operationId: setMetadataCleanupSchedule
       tags:
       - Admin Metadata Cleanup
-      summary: Edit Schedule of cleanup policy.
+      summary: Edit Schedule of cleanup policy
       description: Edit Schedule of cleanup policy.
       requestBody:
         content:
@@ -2335,7 +2332,7 @@ paths:
       operationId: disableMetadataCleanupSchedule
       tags:
       - Admin Metadata Cleanup
-      summary: Edit Schedule of cleanup policy.
+      summary: Edit Schedule of cleanup policy
       description: Edit Schedule of cleanup policy.
       responses:
         '200':
@@ -2447,7 +2444,7 @@ paths:
       operationId: changeMetadataCleanupScheduleUser
       tags:
       - Admin Metadata Cleanup
-      summary: Edit Scheduling User of cleanup policy. Hit this API with the delegation token of the required User.
+      summary: Edit Scheduling User of cleanup policy.
       description: Edit Scheduling User of cleanup policy. Hit this API with the delegation token of the required User.
       responses:
         '200':

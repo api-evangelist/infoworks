@@ -39,7 +39,7 @@ paths:
       - BearerAuth: []
       tags:
       - Table Groups
-      summary: Add a `Table Group`.
+      summary: Add a `Table Group`
       description: Add a `Table Group`.
       requestBody:
         content:
@@ -204,12 +204,14 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: postSourcesBySourceIdTableGroups
+      x-operation-id-source: derived
     get:
       security:
       - BearerAuth: []
       tags:
       - Table Groups
-      summary: Gets `Table Group` list.
+      summary: Gets `Table Group` list
       description: Gets `Table Group` list.
       parameters:
       - name: offset
@@ -436,6 +438,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTableGroups
+      x-operation-id-source: derived
   /sources/{source_id}/table-groups/{table_group_id}:
     parameters:
     - name: Content-Type
@@ -461,7 +465,7 @@ paths:
       - BearerAuth: []
       tags:
       - Table Groups
-      summary: Gets `Table Group` object for given id.
+      summary: Gets `Table Group` object for given id
       description: Gets `Table Group` object for given id.
       parameters:
       - name: resolve_ref
@@ -623,12 +627,14 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTableGroupsByTableGroupId
+      x-operation-id-source: derived
     put:
       security:
       - BearerAuth: []
       tags:
       - Table Groups
-      summary: Update `Table Group` object for given id.
+      summary: Update `Table Group` object for given id
       description: Update `Table Group` object for given id.
       requestBody:
         content:
@@ -778,6 +784,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: putSourcesBySourceIdTableGroupsByTableGroupId
+      x-operation-id-source: derived
     delete:
       security:
       - BearerAuth: []
@@ -894,6 +902,10 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      summary: Delete sources by source id table groups by table group id
+      x-summary-source: derived
+      operationId: deleteSourcesBySourceIdTableGroupsByTableGroupId
+      x-operation-id-source: derived
   /sources/{source_id}/table-groups/{table_group_id}/configurations:
     parameters:
     - name: Content-Type
@@ -919,7 +931,7 @@ paths:
       - BearerAuth: []
       tags:
       - Table Groups
-      summary: This will Configure particular `Table Group` with `tableGroupId`.
+      summary: This will Configure particular `Table Group` with `tableGroupId`
       description: This will Configure particular `Table Group` with `tableGroupId`.
       requestBody:
         description: This is the JSON body of request containing configured Table group object.
@@ -1051,6 +1063,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: postSourcesBySourceIdTableGroupsByTableGroupIdConfigurations
+      x-operation-id-source: derived
   /sources/{source_id}/table-groups/{table_group_id}/audit-logs:
     parameters:
     - name: Content-Type
@@ -1076,7 +1090,7 @@ paths:
       - BearerAuth: []
       tags:
       - Table Groups
-      summary: This will fetch array of audit logs for table group with `tableGroupId`.
+      summary: This will fetch array of audit logs for table group with `tableGroupId`
       description: This will fetch array of audit logs for table group with `tableGroupId`.
       responses:
         '200':
@@ -1249,6 +1263,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTableGroupsByTableGroupIdAuditLogs
+      x-operation-id-source: derived
   /sources/{source_id}/tables-to-table-groups-mapping:
     parameters:
     - name: Content-Type
@@ -1268,7 +1284,7 @@ paths:
       - BearerAuth: []
       tags:
       - Table Groups
-      summary: Gets `Table to Table Group` Mapping.
+      summary: Gets `Table to Table Group` Mapping
       description: Gets `Table to Table Group` Mapping list.
       parameters:
       - name: offset
@@ -1479,6 +1495,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesToTableGroupsMapping
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

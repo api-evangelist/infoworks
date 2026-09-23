@@ -26,7 +26,7 @@ paths:
       operationId: getSchedules
       tags:
       - Admin Schedules
-      summary: Get details of all running schedules.
+      summary: Get details of all running schedules
       description: Get details of all running schedules.
       responses:
         '200':

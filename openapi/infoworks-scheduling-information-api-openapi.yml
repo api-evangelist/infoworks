@@ -28,7 +28,6 @@ paths:
       tags:
       - Scheduling Information
       summary: Get a particular entity schedule details
-      description: Get a particular entity schedule details
       parameters:
       - name: entity_id
         in: query
@@ -735,7 +734,6 @@ paths:
       tags:
       - Scheduling Information
       summary: Used to check whether scheduler service is working or not
-      description: Used to check whether scheduler service is working or not
       responses:
         '200':
           description: Success
@@ -848,7 +846,6 @@ paths:
       tags:
       - Scheduling Information
       summary: Used to save a particular entity schedule details
-      description: Used to save a particular entity schedule details
       deprecated: true
       parameters:
       - name: entity_id
@@ -1555,7 +1552,6 @@ paths:
       tags:
       - Scheduling Information
       summary: Used to save a particular entity schedule user details
-      description: Used to save a particular entity schedule user details
       deprecated: true
       parameters:
       - name: entity_id
@@ -1698,7 +1694,6 @@ paths:
       tags:
       - Scheduling Information
       summary: Used to save a particular entity schedule and its user details
-      description: Used to save a particular entity schedule and its user details
       parameters:
       - name: entity_id
         in: query

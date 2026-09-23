@@ -24,7 +24,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: getLockedEntityList
-      summary: Get All Currently Locked Entities.
+      summary: Get All Currently Locked Entities
       description: Get All Currently Locked Entities.
       tags:
       - Locked Entities
@@ -166,7 +166,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: unlockEntities
-      summary: Unlock Currently Locked Entities.
+      summary: Unlock Currently Locked Entities
       description: Unlocks all Currently Locked Entities.
       tags:
       - Locked Entities
@@ -297,7 +297,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: getLockedEntity
-      summary: Get a specific currently Locked Entity.
+      summary: Get a specific currently Locked Entity
       description: Get a specific currently Locked Entity.
       tags:
       - Locked Entities
@@ -440,7 +440,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: unlockEntity
-      summary: Unlock a Currently Locked Entity.
+      summary: Unlock a Currently Locked Entity
       description: Unlock a Currently Locked Entity.
       tags:
       - Locked Entities
@@ -564,7 +564,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: getLockedEntityForProdOps
-      summary: Get a specific currently Locked Entity.
+      summary: Get a specific currently Locked Entity
       description: Get a specific currently Locked Entity for Prodops user.
       tags:
       - Locked Entities
@@ -701,7 +701,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: getLockedEntitiesForProdOps
-      summary: Get All Currently Locked Entities.
+      summary: Get All Currently Locked Entities
       description: Get All Currently Locked Entities.
       tags:
       - Locked Entities
@@ -843,7 +843,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: unlockEntitiesForProdOps
-      summary: Unlock Currently Locked Entities.
+      summary: Unlock Currently Locked Entities
       description: Unlocks all Currently Locked Entities.
       tags:
       - Locked Entities

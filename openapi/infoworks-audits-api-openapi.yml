@@ -39,7 +39,6 @@ paths:
       tags:
       - Audits
       summary: Get the audit logs of the source
-      description: Get the audit logs of the source
       responses:
         '200':
           description: OK
@@ -211,6 +210,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdAuditLogs
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/audit-logs:
     parameters:
     - name: Content-Type
@@ -237,7 +238,6 @@ paths:
       tags:
       - Audits
       summary: Get the audit logs of the table
-      description: Get the audit logs of the table
       responses:
         '200':
           description: OK
@@ -409,6 +409,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdAuditLogs
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

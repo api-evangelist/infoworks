@@ -71,7 +71,6 @@ paths:
         schema:
           type: string
       summary: Get Generic Source Types List
-      description: Get Generic Source Types List
       responses:
         '200':
           description: Ok.
@@ -227,13 +226,14 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminGenericSourceType
+      x-operation-id-source: derived
     post:
       security:
       - BearerAuth: []
       tags:
       - Generic Source Types
       summary: Register or Create Generic Source Type
-      description: Register or Create Generic Source Type
       requestBody:
         content:
           multipart/form-data:
@@ -372,6 +372,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: postAdminGenericSourceType
+      x-operation-id-source: derived
   /admin/generic-source-type/{generic_source_type_id}:
     parameters:
     - name: Content-Type
@@ -397,7 +399,6 @@ paths:
       tags:
       - Generic Source Types
       summary: Get Generic Source Type By Id
-      description: Get Generic Source Type By Id
       responses:
         '200':
           description: Ok.
@@ -551,13 +552,14 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminGenericSourceTypeByGenericSourceTypeId
+      x-operation-id-source: derived
     patch:
       security:
       - BearerAuth: []
       tags:
       - Generic Source Types
       summary: Update Generic Source Type By Id
-      description: Update Generic Source Type By Id
       requestBody:
         content:
           multipart/form-data:
@@ -687,13 +689,14 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: patchAdminGenericSourceTypeByGenericSourceTypeId
+      x-operation-id-source: derived
     delete:
       security:
       - BearerAuth: []
       tags:
       - Generic Source Types
       summary: Delete Generic Source Type By Id
-      description: Delete Generic Source Type By Id
       responses:
         '200':
           description: Ok.
@@ -797,6 +800,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: deleteAdminGenericSourceTypeByGenericSourceTypeId
+      x-operation-id-source: derived
   /admin/generic-source-type/{generic_source_type_id}/dependencies:
     parameters:
     - name: Content-Type
@@ -1101,6 +1106,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminGenericSourceTypeByGenericSourceTypeIdFiles
+      x-operation-id-source: derived
     post:
       security:
       - BearerAuth: []
@@ -1219,6 +1226,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: postAdminGenericSourceTypeByGenericSourceTypeIdFiles
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

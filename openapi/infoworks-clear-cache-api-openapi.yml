@@ -26,7 +26,6 @@ paths:
       tags:
       - Clear Cache
       summary: To clear Admin cache
-      description: To clear Admin cache
       requestBody:
         content:
           application/json:
@@ -140,6 +139,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: postAdminClearCache
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

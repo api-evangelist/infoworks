@@ -182,9 +182,9 @@ paths:
       tags:
       - Environment
       summary: Create a new environment
-      description: 'Creates or clones a environment.  To clone an existing environment, add the `resource_id_to_clone` query parameter. <br> **Note:** Cloning an environment will clone all its clusters and storages.
+      description: 'Creates or clones a environment. To clone an existing environment, add the `resource_id_to_clone` query parameter.
 
-        '
+        **Note:** Cloning an environment will clone all its clusters and storages.'
       parameters:
       - name: resource_id_to_clone
         in: query
@@ -1602,7 +1602,6 @@ paths:
       tags:
       - Environment
       summary: Get the environment id details
-      description: Get the environment id details
       responses:
         '200':
           description: Ok.
@@ -1814,7 +1813,6 @@ paths:
       tags:
       - Environment
       summary: Delete an Environment
-      description: Delete an Environment
       responses:
         '200':
           description: Ok.
@@ -3176,7 +3174,6 @@ paths:
       tags:
       - Environment
       summary: Get the environment id storage details
-      description: Get the environment id storage details
       responses:
         '200':
           description: Ok.
@@ -3364,7 +3361,6 @@ paths:
       tags:
       - Environment
       summary: Create storage for environment id
-      description: Create storage for environment id
       requestBody:
         content:
           multipart/form-data:
@@ -4317,7 +4313,6 @@ paths:
       tags:
       - Environment
       summary: Get the environment storage id storage details
-      description: Get the environment storage id storage details
       responses:
         '200':
           description: Ok.
@@ -4488,7 +4483,6 @@ paths:
       tags:
       - Environment
       summary: Get list of pipelines using the storage
-      description: Get list of pipelines using the storage
       responses:
         '200':
           description: Ok.
@@ -4647,7 +4641,6 @@ paths:
       tags:
       - Environment
       summary: Get List of ephemeral computes for environment
-      description: Get List of ephemeral computes for environment
       responses:
         '200':
           description: Ok.
@@ -4882,7 +4875,6 @@ paths:
       tags:
       - Environment
       summary: Create ephemeral cluster
-      description: Create ephemeral cluster
       requestBody:
         content:
           application/json:
@@ -5806,7 +5798,6 @@ paths:
       tags:
       - Environment
       summary: Get ephemeral computes for environment by id
-      description: Get ephemeral computes for environment by id
       responses:
         '200':
           description: Ok.
@@ -6019,7 +6010,6 @@ paths:
       tags:
       - Environment
       summary: Get the list of environments interactive (persistent) templates
-      description: Get the list of environments interactive (persistent) templates
       responses:
         '200':
           description: Ok.
@@ -6247,7 +6237,6 @@ paths:
       tags:
       - Environment
       summary: Create an interactive compute
-      description: Create an interactive compute
       requestBody:
         content:
           application/json:
@@ -6936,7 +6925,6 @@ paths:
       tags:
       - Environment
       summary: Get persistent computes for environment by id
-      description: Get persistent computes for environment by id
       responses:
         '200':
           description: Ok.
@@ -7142,7 +7130,6 @@ paths:
       tags:
       - Environment
       summary: Get the accessible domains present within an environment accessible by a user
-      description: Get the accessible domains present within an environment accessible by a user
       responses:
         '200':
           description: Ok.
@@ -7270,7 +7257,7 @@ paths:
       - BearerAuth: []
       tags:
       - Environment
-      summary: Gets all environment clusters.
+      summary: Gets all environment clusters
       description: Gets all environment clusters.
       responses:
         '200':
@@ -7464,6 +7451,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminEnvironmentByEnvironmentIdEnvironmentClusters
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

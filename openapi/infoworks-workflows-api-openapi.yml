@@ -27,7 +27,7 @@ paths:
       operationId: getDomainWorkflows
       tags:
       - Workflows
-      summary: Get list of all Workflows for a `domain` with `{domain_id}`.
+      summary: Get list of all Workflows for a `domain` with `{domain_id}`
       description: Get list of all Workflows for a `domain` with `{domain_id}`.
       parameters:
       - name: domain_id
@@ -835,7 +835,7 @@ paths:
       operationId: createWorkflow
       tags:
       - Workflows
-      summary: Create Workflow for a `domain` with `{domain_id}`.
+      summary: Create Workflow for a `domain` with `{domain_id}`
       description: Create Workflow for a `domain` with `{domain_id}`.
       parameters:
       - name: domain_id
@@ -994,7 +994,7 @@ paths:
       operationId: getWorkflow
       tags:
       - Workflows
-      summary: Gets a `workflow` with `{workflow_id}` in `domain` with `{domain_id}`.
+      summary: Gets a `workflow` with `{workflow_id}` in `domain` with `{domain_id}`
       description: Gets a `workflow` with `{workflow_id}` in `domain` with `{domain_id}`.
       parameters:
       - name: domain_id
@@ -1727,7 +1727,7 @@ paths:
       operationId: submitJob
       tags:
       - Workflows
-      summary: Deletes a `workflow` with `{workflow_id}` in `domain` with `{domain_id}`.
+      summary: Deletes a `workflow` with `{workflow_id}` in `domain` with `{domain_id}`
       description: Deletes a `workflow` with `{workflow_id}` in `domain` with `{domain_id}`.
       parameters:
       - name: domain_id
@@ -1856,7 +1856,7 @@ paths:
       operationId: updateWorkflow
       tags:
       - Workflows
-      summary: Update a `workflow` with `{workflow_id}` in `domain` with `{domain_id}`.
+      summary: Update a `workflow` with `{workflow_id}` in `domain` with `{domain_id}`
       description: Update a `workflow` with `{workflow_id}` in `domain` with `{domain_id}`.
       parameters:
       - name: domain_id
@@ -3764,7 +3764,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: pauseWorkflow
-      summary: This will pause all running builds of `workflow` with `{workflow_id}`.
+      summary: This will pause all running builds of `workflow` with `{workflow_id}`
       description: This will pause all running builds of `workflow` with `{workflow_id}`.
       tags:
       - Workflows
@@ -3904,7 +3904,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: resumeWorkflow
-      summary: This will resume all paused builds of `workflow` with `{workflow_id}`.
+      summary: This will resume all paused builds of `workflow` with `{workflow_id}`
       description: This will resume all paused builds of `workflow` with `{workflow_id}`.
       tags:
       - Workflows
@@ -4045,9 +4045,7 @@ paths:
       - BearerAuth: []
       operationId: getWorkflowLineage
       summary: Get workflow lineage
-      description: 'Retrieves the workflow lineage
-
-        '
+      description: Retrieves the workflow lineage
       tags:
       - Workflows
       parameters:
@@ -4197,9 +4195,7 @@ paths:
       - BearerAuth: []
       operationId: getWorkflowAncestors
       summary: Get workflow ancestors
-      description: 'Retrieves the workflow ancestors
-
-        '
+      description: Retrieves the workflow ancestors
       tags:
       - Workflows
       parameters:
@@ -4330,7 +4326,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: getWorkflowRunsByWorkflowId
-      summary: This will get all builds of `workflow` with `{workflow_id}`.
+      summary: This will get all builds of `workflow` with `{workflow_id}`
       description: This will get all builds of `workflow` with `{workflow_id}`.
       tags:
       - Workflows
@@ -4742,7 +4738,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: getWorkflowRun
-      summary: This will get a specific build of `workflow` with `{workflow_id}`.
+      summary: This will get a specific build of `workflow` with `{workflow_id}`
       description: This will get a specific build of `workflow` with `{workflow_id}`.
       tags:
       - Workflows
@@ -5099,7 +5095,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: restartWorkflowRun
-      summary: This will restart running `workflow` with `{workflow_id}`.
+      summary: This will restart running `workflow` with `{workflow_id}`
       description: This will restart running `workflow` with `{workflow_id}`.
       tags:
       - Workflows
@@ -5249,7 +5245,7 @@ paths:
       security:
       - BearerAuth: []
       operationId: cancelWorkflowRun
-      summary: This will cancel running `workflow` with `{workflow_id}` for build with `workflow_run_id`.
+      summary: This will cancel running `workflow` with `{workflow_id}` for build with…
       description: This will cancel running `workflow` with `{workflow_id}` for build with `workflow_run_id`.
       tags:
       - Workflows
@@ -5389,9 +5385,7 @@ paths:
       - BearerAuth: []
       operationId: getWorkflowRunTaskLogsByAttempt
       summary: Get task logs for a workflow run
-      description: 'Retrieves the logs for a specific task in a workflow run.  It fetches logs for the latest attempt by default if `try_number` is not specified.
-
-        '
+      description: Retrieves the logs for a specific task in a workflow run. It fetches logs for the latest attempt by default if `try_number` is not specified.
       tags:
       - Workflows
       parameters:
@@ -5543,9 +5537,7 @@ paths:
       - BearerAuth: []
       operationId: downloadWorkflowRunTaskLogs
       summary: Download task logs for a workflow run
-      description: 'Downloads the logs for a specific task in a workflow run.  The downloaded zip file will contain logs for all attempts of that task for that particular workflow run.
-
-        '
+      description: Downloads the logs for a specific task in a workflow run. The downloaded zip file will contain logs for all attempts of that task for that particular workflow run.
       tags:
       - Workflows
       parameters:
@@ -6259,6 +6251,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: postProdopsWorkflowRuns
+      x-operation-id-source: derived
   /prodops/workflow_runs/{run_id}/jobs:
     parameters:
     - name: run_id

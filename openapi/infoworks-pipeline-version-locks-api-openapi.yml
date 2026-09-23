@@ -28,7 +28,6 @@ paths:
       tags:
       - Pipeline Version Locks
       summary: Get all pipeline version locks for pipeline with pipeline_id
-      description: Get all pipeline version locks for pipeline with pipeline_id
       parameters:
       - name: pipeline_id
         in: path

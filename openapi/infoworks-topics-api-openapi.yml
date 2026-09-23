@@ -40,7 +40,7 @@ paths:
       operationId: getTopicMappingsForSource
       tags:
       - Topics
-      summary: Get a list of all topics mapping.
+      summary: Get a list of all topics mapping
       description: Get a list of all topics mapping.
       responses:
         '200':
@@ -258,7 +258,6 @@ paths:
       tags:
       - Topics
       summary: Create Topic Mapping For Source
-      description: Create Topic Mapping For Source
       requestBody:
         content:
           application/json:
@@ -425,7 +424,7 @@ paths:
       operationId: getTopicMappingForSource
       tags:
       - Topics
-      summary: Get topic mapping id.
+      summary: Get topic mapping id
       description: Get topic mapping id.
       responses:
         '200':
@@ -637,7 +636,6 @@ paths:
       tags:
       - Topics
       summary: Update Topic Mapping For Source
-      description: Update Topic Mapping For Source
       requestBody:
         content:
           application/json:
@@ -785,7 +783,6 @@ paths:
       tags:
       - Topics
       summary: Delete Topic Mapping For Source
-      description: Delete Topic Mapping For Source
       responses:
         '200':
           description: Success
@@ -914,7 +911,6 @@ paths:
       tags:
       - Topics
       summary: Get topics From Source
-      description: Get topics From Source
       responses:
         '200':
           description: Success
@@ -1182,7 +1178,6 @@ paths:
       tags:
       - Topics
       summary: Crawl Schema For Topic Mapping
-      description: Crawl Schema For Topic Mapping
       responses:
         '200':
           description: Success
@@ -1322,7 +1317,6 @@ paths:
           type: string
         example: '[1, 2]'
       summary: Get Table Schema From Mapping
-      description: Get Table Schema From Mapping
       responses:
         '200':
           description: Success
@@ -1456,7 +1450,6 @@ paths:
       tags:
       - Topics
       summary: Create Streaming Table
-      description: Create Streaming Table
       requestBody:
         content:
           application/json:
@@ -1602,7 +1595,6 @@ paths:
       tags:
       - Topics
       summary: Get Streaming Table
-      description: Get Streaming Table
       responses:
         '200':
           description: Success
@@ -1841,7 +1833,6 @@ paths:
       tags:
       - Topics
       summary: Delete Streaming Table
-      description: Delete Streaming Table
       responses:
         '200':
           description: Success
@@ -1982,7 +1973,6 @@ paths:
       tags:
       - Topics
       summary: Delete JSON Source Table
-      description: Delete JSON Source Table
       responses:
         '200':
           description: Success

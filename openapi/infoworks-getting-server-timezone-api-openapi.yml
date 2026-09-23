@@ -27,7 +27,6 @@ paths:
       tags:
       - Getting Server Timezone
       summary: Use to get server timezone
-      description: Use to get server timezone
       responses:
         '200':
           description: Ok.
@@ -45,6 +44,8 @@ paths:
                     result:
                       type: string
                       example: IST
+      operationId: getServerTimezone
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

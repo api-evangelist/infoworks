@@ -26,7 +26,7 @@ paths:
       operationId: getPipelineVersionLock
       tags:
       - Pipeline Version Lock
-      summary: Put pipeline version lock for pipeline with pipeline_id and pipeline version with pipeline_version_id
+      summary: Put pipeline version lock for pipeline with pipeline_id and pipeline version…
       description: Put pipeline version lock for pipeline with pipeline_id and pipeline version with pipeline_version_id
       parameters:
       - name: pipeline_id
@@ -203,7 +203,7 @@ paths:
       operationId: putPipelineVersionLock
       tags:
       - Pipeline Version Lock
-      summary: Put pipeline version lock for pipeline with pipeline_id and pipeline version with pipeline_version_id
+      summary: Put pipeline version lock for pipeline with pipeline_id and pipeline version…
       description: Put pipeline version lock for pipeline with pipeline_id and pipeline version with pipeline_version_id
       parameters:
       - name: pipeline_id
@@ -472,7 +472,6 @@ paths:
       tags:
       - Pipeline Version Lock
       summary: get pipeline version lock status for pipeline_id, pipeline_version_id
-      description: get pipeline version lock status for pipeline_id, pipeline_version_id
       parameters:
       - name: pipeline_id
         in: path

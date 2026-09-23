@@ -464,7 +464,6 @@ paths:
       tags:
       - Configurations
       summary: Upload config migration json file
-      description: Upload config migration json file
       requestBody:
         content:
           application/octet-stream:

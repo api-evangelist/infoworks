@@ -58,7 +58,7 @@ paths:
         description: Filter results query
         schema:
           type: string
-      summary: Get a list of subscribers.
+      summary: Get a list of subscribers
       description: Get a list of subscribers.
       responses:
         '200':
@@ -211,7 +211,7 @@ paths:
       operationId: addSubscriber
       tags:
       - Admin Subscribers
-      summary: Create a new subscriber.
+      summary: Create a new subscriber
       description: Create a new subscriber.
       requestBody:
         content:
@@ -352,7 +352,7 @@ paths:
       operationId: getAdminSubscriber
       tags:
       - Admin Subscribers
-      summary: Get a subscriber.
+      summary: Get a subscriber
       description: Get a subscriber.
       responses:
         '200':
@@ -504,7 +504,7 @@ paths:
       operationId: updateSubscriber
       tags:
       - Admin Subscribers
-      summary: Update a subscriber.
+      summary: Update a subscriber
       description: Update a subscriber.
       requestBody:
         content:
@@ -630,7 +630,7 @@ paths:
       operationId: deleteSubscriber
       tags:
       - Admin Subscribers
-      summary: Delete a subscriber.
+      summary: Delete a subscriber
       description: Delete a subscriber.
       responses:
         '200':
@@ -757,7 +757,7 @@ paths:
       operationId: getSubscriptionList
       tags:
       - Admin Subscribers
-      summary: Get a Subscription List for a subscriber.
+      summary: Get a Subscription List for a subscriber
       description: Get a Subscription List for a subscriber.
       responses:
         '200':
@@ -905,7 +905,7 @@ paths:
       operationId: deleteSubscription
       tags:
       - Admin Subscribers
-      summary: Delete all the subscription for a subscriber.
+      summary: Delete all the subscription for a subscriber
       description: Delete all the subscription for a subscriber.
       responses:
         '200':
@@ -1026,7 +1026,7 @@ paths:
       operationId: getUserList
       tags:
       - Admin Subscribers
-      summary: Get a list of all external and internal users.
+      summary: Get a list of all external and internal users
       description: Get a list of all external and internal users.
       responses:
         '200':

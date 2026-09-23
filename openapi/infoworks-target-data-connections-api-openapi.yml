@@ -28,7 +28,6 @@ paths:
       tags:
       - Target Data Connections
       summary: Get the Target Data Connections
-      description: Get the Target Data Connections
       parameters:
       - name: filter
         in: query
@@ -403,7 +402,6 @@ paths:
       tags:
       - Target Data Connections
       summary: Get the Data Connections for each subtype
-      description: Get the Data Connections for each subtype
       parameters:
       - name: environment_platform
         in: query

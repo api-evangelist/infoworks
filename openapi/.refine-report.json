@@ -1,7 +1,7 @@
 {
   "provider": "infoworks",
   "sources": [
-    "infoworks-rest-api-v3-openapi.yml"
+    "_original/infoworks-rest-api-v3-openapi.yml"
   ],
   "outputs": [
     "infoworks-admin-configurations-api-openapi.yml",
@@ -69,12 +69,11 @@
     "infoworks-workflows-api-openapi.yml",
     "infoworks-workflows-schedules-api-openapi.yml"
   ],
-  "archived": [
-    "archived openapi/infoworks-rest-api-v3-openapi.yml"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "infoworks-rest-api-v3-openapi.yml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
     "infoworks-rest-api-v3-openapi.yml: tagged paths GET /server-time -> Server Time",
     "infoworks-rest-api-v3-openapi.yml: tagged paths GET /general-configs -> General Configs",
@@ -102,7 +101,72 @@
     "infoworks-rest-api-v3-openapi.yml: declared missing tag: Subscribers",
     "infoworks-rest-api-v3-openapi.yml: declared missing tag: User Notification Subscribe",
     "infoworks-rest-api-v3-openapi.yml: declared missing tag: Workflow Run Metering variables",
-    "apis.yml register: written (+64 apis, 64 total)"
+    "apis.yml register: already-registered"
   ],
-  "skipped": []
+  "skipped": [
+    "infoworks-admin-configurations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-admin-metadata-backup-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-admin-metadata-cleanup-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-admin-schedules-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-admin-subscribers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-admin-workflows-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-audits-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-billing-metering-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-clear-cache-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-configurations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-connections-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-custom-audit-columns-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-custom-tags-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-data-catalog-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-domains-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-engagement-metrics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-environment-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-environment-cluster-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-event-notifications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-favorites-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-file-mappings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-general-configs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-generic-source-types-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-get-cdata-connectors-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-getting-server-timezone-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-job-hooks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-jobflows-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-jobs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-license-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-locked-entities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-metrics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-misc-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-pipeline-extensions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-pipeline-groups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-pipeline-version-lock-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-pipeline-version-locks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-pipelines-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-presets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-scheduling-information-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-secret-store-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-secrets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-security-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-self-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-server-time-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-service-authentication-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-service-authentication-cache-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-source-configurations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-source-extensions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-sources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-stopstreaming-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-streaming-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-subscribers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-table-group-schedule-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-table-groups-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-tables-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-target-data-connections-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-topics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-user-notification-subscribe-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-users-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-validation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-workflow-run-metering-variables-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-workflow-versions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-workflows-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "infoworks-workflows-schedules-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

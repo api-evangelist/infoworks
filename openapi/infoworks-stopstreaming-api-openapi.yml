@@ -38,7 +38,7 @@ paths:
       - BearerAuth: []
       tags:
       - StopStreaming
-      summary: Stops the streaming jobs for tables listed in request.
+      summary: Stops the streaming jobs for tables listed in request
       description: Stops the streaming jobs for tables listed in request.
       operationId: StopStreaming
       requestBody:

@@ -1,0 +1,35 @@
+# Front Door AI Index — infoworks — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: infoworks
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.uniphore.com
+  final_host: www.uniphore.com
+  ownership: shared
+  owner: uniphore
+  shares_host_with:
+  - uniphore
+  inherited_from: null
+  verdict: scored
+  score: null
+  host_score: 87
+  density: null
+  words: 1584
+  tiers:
+    agentic: 18
+    core: 69
+    model: 0
+  ambiguous: 33
+  top_terms:
+    AI: 64
+    agent: 20
+    intelligence: 11
+    agentic: 10
+    AI agent: 4
+    LLMs: 4
+    fine-tune: 3
+    automation: 2
+    large language model: 1
+    prompts: 1

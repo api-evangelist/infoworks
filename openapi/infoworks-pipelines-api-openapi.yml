@@ -28,7 +28,6 @@ paths:
       tags:
       - Pipelines
       summary: Get all pipelines of all domains
-      description: Get all pipelines of all domains
       parameters:
       - name: offset
         in: query
@@ -220,7 +219,6 @@ paths:
       tags:
       - Pipelines
       summary: Change the active version of the Pipeline
-      description: Change the active version of the Pipeline
       parameters:
       - name: filter
         in: query
@@ -397,7 +395,6 @@ paths:
       tags:
       - Pipelines
       summary: Get all pipelines for domain with `domain_id`
-      description: Get all pipelines for domain with `domain_id`
       parameters:
       - name: offset
         in: query
@@ -696,7 +693,6 @@ paths:
       tags:
       - Pipelines
       summary: create new pipeline for domain with `domain_id`
-      description: create new pipeline for domain with `domain_id`
       requestBody:
         content:
           application/json:
@@ -868,7 +864,7 @@ paths:
       operationId: getPipeline
       tags:
       - Pipelines
-      summary: Gets a `pipeline` with `{pipeline_id}` in `domain` with `{domain_id}`.
+      summary: Gets a `pipeline` with `{pipeline_id}` in `domain` with `{domain_id}`
       description: Gets a `pipeline` with `{pipeline_id}` in `domain` with `{domain_id}`.
       responses:
         '200':
@@ -1039,7 +1035,7 @@ paths:
       operationId: deletePipeline
       tags:
       - Pipelines
-      summary: Deletes a `pipeline` with `{pipeline_id}` in `domain` with `{domain_id}`.
+      summary: Deletes a `pipeline` with `{pipeline_id}` in `domain` with `{domain_id}`
       description: Deletes a `pipeline` with `{pipeline_id}` in `domain` with `{domain_id}`.
       responses:
         '200':
@@ -1159,7 +1155,7 @@ paths:
       operationId: updatePipeline
       tags:
       - Pipelines
-      summary: Updates a `pipeline` with `{pipeline_id}` in `domain` with `{domain_id}`.
+      summary: Updates a `pipeline` with `{pipeline_id}` in `domain` with `{domain_id}`
       description: Updates a `pipeline` with `{pipeline_id}` in `domain` with `{domain_id}`.
       requestBody:
         content:
@@ -1323,7 +1319,7 @@ paths:
       operationId: PipelineImpactedWorkflows
       tags:
       - Pipelines
-      summary: Gets list of workflows using pipeline with `{pipeline_id}` in `domain` with `{domain_id}`.
+      summary: Gets list of workflows using pipeline with `{pipeline_id}` in `domain` with…
       description: Gets list of workflows using pipeline with `{pipeline_id}` in `domain` with `{domain_id}.
       responses:
         '200':
@@ -1481,7 +1477,7 @@ paths:
       operationId: getPipelineAnalyticsModelForMLEngine
       tags:
       - Pipelines
-      summary: Gets all `pipeline analytics models` for ML Engine with `{pipeline_id}` in `domain` with `{domain_id}`.
+      summary: Gets all `pipeline analytics models` for ML Engine with `{pipeline_id}` in…
       description: Gets all `pipeline analytics models` for ML Engine with `{pipeline_id}` in `domain` with `{domain_id}`.
       responses:
         '200':
@@ -1708,7 +1704,6 @@ paths:
       tags:
       - Pipelines
       summary: Get list of all versions of Pipeline
-      description: Get list of all versions of Pipeline
       parameters:
       - name: offset
         in: query
@@ -2117,7 +2112,7 @@ paths:
       operationId: getPipelineVersion
       tags:
       - Pipelines
-      summary: Gets a `pipelineVersion` with `pipeline_version_id` of `pipeline` with `{pipeline_id}` in `domain` with `{domain_id}`.
+      summary: Gets a `pipelineVersion` with `pipeline_version_id` of `pipeline` with…
       description: Gets a `pipelineVersion` with `pipeline_version_id` of `pipeline` with `{pipeline_id}` in `domain` with `{domain_id}`.
       responses:
         '200':
@@ -2290,7 +2285,7 @@ paths:
       operationId: removePipelineVersion
       tags:
       - Pipelines
-      summary: Deletes a `pipelineVersion` with `pipeline_version_id` of `pipeline` with `{pipeline_id}` in `domain` with `{domain_id}`.
+      summary: Deletes a `pipelineVersion` with `pipeline_version_id` of `pipeline` with…
       description: Deletes a `pipelineVersion` with `pipeline_version_id` of `pipeline` with `{pipeline_id}` in `domain` with `{domain_id}`.
       responses:
         '200':
@@ -2410,7 +2405,7 @@ paths:
       operationId: updatePipelineVersion
       tags:
       - Pipelines
-      summary: Update a `pipelineVersion` with `pipeline_version_id` of `pipeline` with `{pipeline_id}` in `domain` with `{domain_id}`.
+      summary: Update a `pipelineVersion` with `pipeline_version_id` of `pipeline` with…
       description: Update a `pipelineVersion` with `pipeline_version_id` of `pipeline` with `{pipeline_id}` in `domain` with `{domain_id}`.
       requestBody:
         content:
@@ -2612,7 +2607,7 @@ paths:
       operationId: importSql
       tags:
       - Pipelines
-      summary: ''
+      summary: Import sql
       description: import sql
       parameters:
       - name: domain_id
@@ -2807,6 +2802,7 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-summary-source: derived
   /domains/{domain_id}/pipelines/{pipeline_id}/config-migration:
     parameters:
     - name: domain_id
@@ -3411,7 +3407,7 @@ paths:
       operationId: getPipelineColumnLineage
       tags:
       - Pipelines
-      summary: Gets lineage for Pipeline Column.
+      summary: Gets lineage for Pipeline Column
       description: Gets lineage for Pipeline Column.
       responses:
         '200':
@@ -4184,8 +4180,7 @@ paths:
       operationId: getPipelineVersionAuditLogs
       tags:
       - Pipelines
-      summary: Get Pipeline Version Audit Logs.
-      description: Get Pipeline Version Audit Logs
+      summary: Get Pipeline Version Audit Logs
       responses:
         '200':
           description: Success
@@ -4330,7 +4325,6 @@ paths:
       tags:
       - Pipelines
       summary: Update Pipeline Version Audit Logs
-      description: Update Pipeline Version Audit Logs
       parameters:
       - name: domain_id
         in: path
@@ -4505,8 +4499,7 @@ paths:
       operationId: getPipelineAuditLogs
       tags:
       - Pipelines
-      summary: Get Pipeline Version Audit Logs.
-      description: Get Pipeline Version Audit Logs
+      summary: Get Pipeline Version Audit Logs
       responses:
         '200':
           description: Success
@@ -4654,7 +4647,6 @@ paths:
       tags:
       - Pipelines
       summary: getTablesfromPipelineSources
-      description: getTablesfromPipelineSources
       responses:
         '200':
           description: Success
@@ -4848,7 +4840,6 @@ paths:
       - BearerAuth: []
       operationId: file upload sql pipeline migration
       summary: File upload sql pipeline migration
-      description: File upload sql pipeline migration
       tags:
       - Pipelines
       requestBody:
@@ -4988,7 +4979,6 @@ paths:
       - BearerAuth: []
       operationId: Import sql pipeline migration
       summary: Import sql pipeline migration
-      description: Import sql pipeline migration
       tags:
       - Pipelines
       requestBody:

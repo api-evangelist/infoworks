@@ -34,7 +34,6 @@ paths:
       tags:
       - Sources
       summary: Get list of sources
-      description: Get list of sources
       operationId: getSourceList
       parameters:
       - name: limit
@@ -402,7 +401,6 @@ paths:
       tags:
       - Sources
       summary: Create source
-      description: Create source
       operationId: createSource
       requestBody:
         description: Source configurations
@@ -4323,7 +4321,6 @@ paths:
       tags:
       - Sources
       summary: Get Source Info
-      description: Get Source Info
       operationId: getSourceInfo
       responses:
         '200':
@@ -4690,7 +4687,6 @@ paths:
       tags:
       - Sources
       summary: Delete source
-      description: Delete source
       operationId: deleteSource
       responses:
         '200':
@@ -4808,7 +4804,6 @@ paths:
       tags:
       - Sources
       summary: Update source
-      description: Update source
       operationId: updateSource
       requestBody:
         description: Source configurations
@@ -4977,7 +4972,6 @@ paths:
       tags:
       - Sources
       summary: Browse source
-      description: Browse source
       operationId: browseSource
       responses:
         '200':
@@ -5112,7 +5106,6 @@ paths:
       tags:
       - Sources
       summary: Add query tables
-      description: Add query tables
       operationId: addQueryTables
       requestBody:
         description: Query table configurations
@@ -5272,7 +5265,6 @@ paths:
       tags:
       - Sources
       summary: Crawl Entity Schema
-      description: Crawl Entity Schema
       responses:
         '200':
           description: ''
@@ -5380,6 +5372,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdCrawlSchema
+      x-operation-id-source: derived
   /sources/{source_id}/bulk-crawl-schema:
     parameters:
     - name: source_id
@@ -5407,7 +5401,6 @@ paths:
       tags:
       - Sources
       summary: Bulk Crawl Entity Schema
-      description: Bulk Crawl Entity Schema
       responses:
         '200':
           description: ''
@@ -5515,6 +5508,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdBulkCrawlSchema
+      x-operation-id-source: derived
   /sources/{source_id}/crawl-status:
     parameters:
     - name: source_id
@@ -5542,7 +5537,6 @@ paths:
       tags:
       - Sources
       summary: Check status for crawling
-      description: Check status for crawling
       responses:
         '200':
           description: ''
@@ -5650,6 +5644,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdCrawlStatus
+      x-operation-id-source: derived
   /sources/{source_id}/bulk-crawl-status:
     parameters:
     - name: source_id
@@ -5677,7 +5673,6 @@ paths:
       tags:
       - Sources
       summary: Check status for bulk crawling
-      description: Check status for bulk crawling
       responses:
         '200':
           description: ''
@@ -5785,6 +5780,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdBulkCrawlStatus
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

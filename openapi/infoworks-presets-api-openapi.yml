@@ -533,7 +533,6 @@ paths:
       security:
       - BearerAuth: []
       summary: Update preset
-      description: Update preset
       operationId: updatePreset
       tags:
       - Presets
@@ -671,7 +670,6 @@ paths:
       security:
       - BearerAuth: []
       summary: Delete preset
-      description: Delete preset
       operationId: deletePreset
       tags:
       - Presets

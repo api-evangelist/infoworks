@@ -28,7 +28,6 @@ paths:
       tags:
       - Jobs
       summary: Get the jobs details
-      description: Get the jobs details
       parameters:
       - name: limit
         in: query
@@ -295,7 +294,6 @@ paths:
       tags:
       - Jobs
       summary: Get the job details with `job_id`
-      description: Get the job details with `job_id`
       responses:
         '200':
           description: Ok.
@@ -525,7 +523,6 @@ paths:
       tags:
       - Jobs
       summary: Resubmit Failed tables for ingestion
-      description: Resubmit Failed tables for ingestion
       responses:
         '200':
           description: Success
@@ -638,6 +635,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: postAdminJobsByJobIdResubmit
+      x-operation-id-source: derived
   /admin/jobs/{job_id}/logs:
     parameters:
     - name: job_id
@@ -659,7 +658,6 @@ paths:
       tags:
       - Jobs
       summary: Get the job log as text stream with `job_id`
-      description: Get the job log as text stream with `job_id`
       responses:
         '200':
           description: Ok.
@@ -876,6 +874,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminJobsByJobIdLogsDownload
+      x-operation-id-source: derived
   /admin/jobs/{job_id}/runs:
     parameters:
     - name: job_id
@@ -1107,6 +1107,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminJobsByJobIdRuns
+      x-operation-id-source: derived
   /admin/jobs/{job_id}/runs/{run_id}:
     parameters:
     - name: job_id
@@ -1316,6 +1318,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminJobsByJobIdRunsByRunId
+      x-operation-id-source: derived
   /admin/jobs/{job_id}/runs/{run_id}/logs:
     parameters:
     - name: job_id
@@ -1438,6 +1442,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminJobsByJobIdRunsByRunIdLogs
+      x-operation-id-source: derived
   /admin/admin-jobs:
     get:
       security:
@@ -1446,7 +1452,6 @@ paths:
       tags:
       - Jobs
       summary: Get the admin-jobs details
-      description: Get the admin-jobs details
       responses:
         '200':
           description: Ok.
@@ -1638,7 +1643,7 @@ paths:
       - BearerAuth: []
       tags:
       - Jobs
-      summary: Get List of All jobs of this Source and it's artifacts.
+      summary: Get List of All jobs of this Source and it's artifacts
       description: Get List of All jobs of this Source and it's artifacts.
       parameters:
       - name: filter
@@ -1901,6 +1906,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getSourcesBySourceIdJobs
+      x-operation-id-source: derived
     post:
       security:
       - BearerAuth: []
@@ -2425,7 +2432,7 @@ paths:
       - BearerAuth: []
       tags:
       - Jobs
-      summary: Get job with job id.
+      summary: Get job with job id
       description: Get job with job id.
       responses:
         '200':
@@ -2629,6 +2636,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdJobsByJobId
+      x-operation-id-source: derived
   /sources/{source_id}/jobs/{job_id}/resubmit:
     parameters:
     - name: Content-Type
@@ -2655,7 +2664,6 @@ paths:
       tags:
       - Jobs
       summary: Resubmit Failed tables for ingestion
-      description: Resubmit Failed tables for ingestion
       responses:
         '200':
           description: Success
@@ -2764,6 +2772,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: postSourcesBySourceIdJobsByJobIdResubmit
+      x-operation-id-source: derived
   /sources/{source_id}/jobs/{job_id}/summary:
     parameters:
     - name: Content-Type
@@ -2789,7 +2799,7 @@ paths:
       - BearerAuth: []
       tags:
       - Jobs
-      summary: Get crawl job info.
+      summary: Get crawl job info
       description: Get crawl job info.
       responses:
         '200':
@@ -2939,6 +2949,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdJobsByJobIdSummary
+      x-operation-id-source: derived
   /sources/{source_id}/jobs/{job_id}/logs:
     parameters:
     - name: Content-Type
@@ -2964,7 +2976,7 @@ paths:
       - BearerAuth: []
       tags:
       - Jobs
-      summary: Get Summary Logs for the Source Crawl Job.
+      summary: Get Summary Logs for the Source Crawl Job
       description: Get Summary Logs for the Source Crawl Job.
       parameters:
       - in: query
@@ -3075,6 +3087,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdJobsByJobIdLogs
+      x-operation-id-source: derived
   /sources/{source_id}/jobs/{job_id}/logs/download:
     parameters:
     - name: Content-Type
@@ -3100,7 +3114,7 @@ paths:
       - BearerAuth: []
       tags:
       - Jobs
-      summary: Get Summary Logs for the Source Crawl Job.
+      summary: Get Summary Logs for the Source Crawl Job
       description: Get Summary Logs for the Source Crawl Job.
       responses:
         '200':
@@ -3206,6 +3220,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdJobsByJobIdLogsDownload
+      x-operation-id-source: derived
   /sources/:source_id/reports/jobs/ingestion-metrics:
     parameters:
     - name: Content-Type
@@ -3225,7 +3241,7 @@ paths:
       - BearerAuth: []
       tags:
       - Jobs
-      summary: Get List of All jobs of this Source and it's artifacts.
+      summary: Get List of All jobs of this Source and it's artifacts
       description: Get List of All jobs of this Source and it's artifacts.
       parameters:
       - name: filter
@@ -3488,6 +3504,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getSources:sourceIdReportsJobsIngestionMetrics
+      x-operation-id-source: derived
   /sources/{source_id}/interactive-jobs:
     parameters:
     - name: source_id
@@ -3996,6 +4014,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: patchSourcesBySourceIdInteractiveJobsByInteractiveJobId
+      x-operation-id-source: derived
   /sources/{source_id}/interactive-jobs/{interactive_job_id}/logs/download:
     parameters:
     - name: source_id
@@ -4135,7 +4155,7 @@ paths:
       - BearerAuth: []
       tags:
       - Jobs
-      summary: Gets Jobs Model for a Source.
+      summary: Gets Jobs Model for a Source
       description: Gets Jobs Model for a Source.
       parameters:
       - name: offset
@@ -4520,6 +4540,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdJobsForSourceJobType
+      x-operation-id-source: derived
   /domains/{domain_id}/pipelines/{pipeline_id}/jobs:
     parameters:
     - name: domain_id
@@ -4549,7 +4571,7 @@ paths:
       operationId: getJobs_1
       tags:
       - Jobs
-      summary: Gets List of Pipeline Jobs.
+      summary: Gets List of Pipeline Jobs
       description: Gets List of Pipeline Jobs.
       parameters:
       - name: filter
@@ -4818,7 +4840,7 @@ paths:
       operationId: submitJob_2
       tags:
       - Jobs
-      summary: Submit Pipeline Job.
+      summary: Submit Pipeline Job
       description: Submit Pipeline Job.
       requestBody:
         content:
@@ -5044,7 +5066,7 @@ paths:
       operationId: getJobs
       tags:
       - Jobs
-      summary: Gets Pipeline Job.
+      summary: Gets Pipeline Job
       description: Gets Pipeline Job.
       responses:
         '200':
@@ -5276,7 +5298,7 @@ paths:
       operationId: submitJob_3
       tags:
       - Jobs
-      summary: Submit Pipeline Job.
+      summary: Submit Pipeline Job
       description: Submit Pipeline Job.
       requestBody:
         content:
@@ -6270,6 +6292,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getProdopsJobsByJobIdResubmit
+      x-operation-id-source: derived
   /domains/{domain_id}/pipeline-groups/{pipeline_group_id}/jobs:
     parameters:
     - name: domain_id
@@ -6289,7 +6313,7 @@ paths:
       operationId: getPipelineGroupsJobs_1
       tags:
       - Jobs
-      summary: Gets List of Pipeline Jobs.
+      summary: Gets List of Pipeline Jobs
       description: Gets List of Pipeline Jobs.
       parameters:
       - name: domain_id
@@ -6560,7 +6584,7 @@ paths:
       operationId: submitPipelineGroupJob_2
       tags:
       - Jobs
-      summary: Submit Pipeline Job.
+      summary: Submit Pipeline Job
       description: Submit Pipeline Job.
       requestBody:
         content:
@@ -6708,8 +6732,8 @@ paths:
       operationId: getPipelineGroupsJobviaJobID
       tags:
       - Jobs
-      summary: Gets Pipeline Groups Job.
-      description: Gets Pipeline  Groups Job.
+      summary: Gets Pipeline Groups Job
+      description: Gets Pipeline Groups Job.
       responses:
         '200':
           description: Success
@@ -6914,8 +6938,8 @@ paths:
       operationId: getJobs_job_id
       tags:
       - Jobs
-      summary: Gets Pipeline Groups Job.
-      description: Gets Pipeline  Groups Job.
+      summary: Gets Pipeline Groups Job
+      description: Gets Pipeline Groups Job.
       responses:
         '200':
           description: Success
@@ -7083,8 +7107,8 @@ paths:
       operationId: getJobs_runs
       tags:
       - Jobs
-      summary: Gets Pipeline Groups Job.
-      description: Gets Pipeline  Groups Job.
+      summary: Gets Pipeline Groups Job
+      description: Gets Pipeline Groups Job.
       responses:
         '200':
           description: Success
@@ -7312,7 +7336,6 @@ paths:
       tags:
       - Jobs
       summary: Get the job log as text stream with `job_id`
-      description: Get the job log as text stream with `job_id`
       responses:
         '200':
           description: Ok.
@@ -7540,6 +7563,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getDomainsByDomainIdPipelineGroupsByPipelineGroupIdJobsByJobIdLogsDownload
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

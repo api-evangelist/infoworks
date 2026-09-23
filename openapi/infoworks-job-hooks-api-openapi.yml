@@ -71,7 +71,6 @@ paths:
         schema:
           type: string
       summary: Get Job Hooks List
-      description: Get Job Hooks List
       responses:
         '200':
           description: Ok.
@@ -241,13 +240,14 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminJobHooks
+      x-operation-id-source: derived
     post:
       security:
       - BearerAuth: []
       tags:
       - Job Hooks
       summary: Create a Job Hook
-      description: Create a Job Hook
       requestBody:
         content:
           multipart/form-data:
@@ -416,6 +416,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: postAdminJobHooks
+      x-operation-id-source: derived
   /admin/job-hooks/{job_hook_id}:
     parameters:
     - name: Content-Type
@@ -440,7 +442,6 @@ paths:
       tags:
       - Job Hooks
       summary: Get Job Hook By Id
-      description: Get Job Hook By Id
       responses:
         '200':
           description: Ok.
@@ -608,13 +609,14 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminJobHooksByJobHookId
+      x-operation-id-source: derived
     patch:
       security:
       - BearerAuth: []
       tags:
       - Job Hooks
       summary: Update Job Hook Type By Id
-      description: Update Job Hook Type By Id
       requestBody:
         content:
           multipart/form-data:
@@ -778,13 +780,14 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: patchAdminJobHooksByJobHookId
+      x-operation-id-source: derived
     delete:
       security:
       - BearerAuth: []
       tags:
       - Job Hooks
       summary: Delete Job Hook By Id
-      description: Delete Job Hook By Id
       responses:
         '200':
           description: Ok.
@@ -888,6 +891,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: deleteAdminJobHooksByJobHookId
+      x-operation-id-source: derived
   /admin/job-hooks/{job_hook_id}/files:
     parameters:
     - name: Content-Type
@@ -1039,6 +1044,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminJobHooksByJobHookIdFiles
+      x-operation-id-source: derived
     post:
       security:
       - BearerAuth: []
@@ -1157,6 +1164,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: postAdminJobHooksByJobHookIdFiles
+      x-operation-id-source: derived
   /admin/audit/job-hooks/global:
     parameters:
     - name: Content-Type
@@ -1208,7 +1217,6 @@ paths:
         schema:
           type: string
       summary: Get Global Audit Job Hooks List
-      description: Get Global Audit Job Hooks List
       responses:
         '200':
           description: Ok.
@@ -1478,6 +1486,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminAuditJobHooksGlobal
+      x-operation-id-source: derived
   /admin/audit/job-hooks/{extension_id}:
     parameters:
     - name: Content-Type
@@ -1535,7 +1545,6 @@ paths:
         schema:
           type: string
       summary: Get Audit Job Hooks List
-      description: Get Audit Job Hooks List
       responses:
         '200':
           description: Ok.
@@ -1861,6 +1870,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminAuditJobHooksByExtensionId
+      x-operation-id-source: derived
   /admin/audit/pipeline-extensions/global:
     parameters:
     - name: Content-Type
@@ -1912,7 +1923,6 @@ paths:
         schema:
           type: string
       summary: Get Global Audit Pipeline Extension List
-      description: Get Global Audit Pipeline Extension List
       responses:
         '200':
           description: Ok.
@@ -2238,6 +2248,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminAuditPipelineExtensionsGlobal
+      x-operation-id-source: derived
   /admin/audit/pipeline-extensions/{extension_id}:
     parameters:
     - name: Content-Type
@@ -2295,7 +2307,6 @@ paths:
         schema:
           type: string
       summary: Get Audit Pipeline Extension List
-      description: Get Audit Pipeline Extension List
       responses:
         '200':
           description: Ok.
@@ -2565,6 +2576,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminAuditPipelineExtensionsByExtensionId
+      x-operation-id-source: derived
   /admin/audit/source-extensions/global:
     parameters:
     - name: Content-Type
@@ -2616,7 +2629,6 @@ paths:
         schema:
           type: string
       summary: Get Global Audit Source Extension List
-      description: Get Global Audit Source Extension List
       responses:
         '200':
           description: Ok.
@@ -2914,6 +2926,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminAuditSourceExtensionsGlobal
+      x-operation-id-source: derived
   /admin/audit/source-extensions/{extension_id}:
     parameters:
     - name: Content-Type
@@ -2971,7 +2985,6 @@ paths:
         schema:
           type: string
       summary: Get Audit Source Extension List
-      description: Get Audit Source Extension List
       responses:
         '200':
           description: Ok.
@@ -3269,6 +3282,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminAuditSourceExtensionsByExtensionId
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

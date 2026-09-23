@@ -65,7 +65,6 @@ paths:
         schema:
           type: string
       summary: Get Persistent Cluster Status
-      description: Get Persistent Cluster Status
       responses:
         '200':
           description: Ok.
@@ -174,6 +173,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminEnvironmentClusterComputeTemplateByComputeTemplateId
+      x-operation-id-source: derived
   /admin/environment/cluster/{environment_id}:
     parameters:
     - name: environment_id
@@ -219,7 +220,6 @@ paths:
         schema:
           type: string
       summary: Get Environment Status
-      description: Get Environment Status
       responses:
         '200':
           description: Ok.
@@ -328,6 +328,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminEnvironmentClusterByEnvironmentId
+      x-operation-id-source: derived
   /admin/environment/cluster/service/stop:
     post:
       security:
@@ -336,7 +338,6 @@ paths:
       tags:
       - Environment Cluster
       summary: Stop the persistent cluster
-      description: Stop  the persistent cluster
       requestBody:
         content:
           application/json:
@@ -462,7 +463,6 @@ paths:
       tags:
       - Environment Cluster
       summary: Terminate the persistent cluster
-      description: Terminate  the persistent cluster
       requestBody:
         content:
           application/json:
@@ -588,7 +588,6 @@ paths:
       tags:
       - Environment Cluster
       summary: Restart the cluster
-      description: Restart the  cluster
       requestBody:
         content:
           application/json:
@@ -716,7 +715,6 @@ paths:
       tags:
       - Environment Cluster
       summary: Stop the cluster
-      description: Stop  the cluster
       requestBody:
         content:
           application/json:
@@ -844,7 +842,6 @@ paths:
       tags:
       - Environment Cluster
       summary: Create the cluster
-      description: Create  the  cluster
       requestBody:
         content:
           application/json:

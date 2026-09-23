@@ -34,7 +34,6 @@ paths:
       tags:
       - General Configs
       summary: Get general configuration with key
-      description: Get general configuration with key
       requestBody:
         content:
           application/json:
@@ -169,7 +168,7 @@ paths:
     get:
       security:
       - BearerAuth: []
-      summary: Get values for 4 general configs(login_contact_info, login_welcome_text, login_message, is_quiescent_enabled)
+      summary: Get values for 4 general configs(login_contact_info, login_welcome_text…
       description: Get values for 4 general configs(login_contact_info, login_welcome_text, login_message, is_quiescent_enabled)
       responses:
         '200':
@@ -291,6 +290,8 @@ paths:
                       example: http://api.infoworks.io/help/IW10002
       tags:
       - General Configs
+      operationId: getGeneralConfigs
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

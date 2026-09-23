@@ -28,7 +28,6 @@ paths:
       tags:
       - Users
       summary: Get the User details
-      description: Get the User details
       responses:
         '200':
           description: Ok.
@@ -259,7 +258,6 @@ paths:
       tags:
       - Users
       summary: Create a new User
-      description: Create a new User
       requestBody:
         content:
           application/json:
@@ -420,7 +418,6 @@ paths:
       tags:
       - Users
       summary: Get the details of the user linked with the user_id
-      description: Get the details of the user linked with the user_id
       responses:
         '200':
           description: Ok.
@@ -606,7 +603,7 @@ paths:
       operationId: deleteUserForAdmin
       tags:
       - Users
-      summary: Delete a user.
+      summary: Delete a user
       description: Delete a user.
       responses:
         '200':
@@ -719,7 +716,6 @@ paths:
       tags:
       - Users
       summary: Update the User
-      description: Update the User
       requestBody:
         content:
           application/json:
@@ -880,7 +876,6 @@ paths:
       tags:
       - Users
       summary: Reset password for user
-      description: Reset password for user
       requestBody:
         content:
           application/json:
@@ -1014,7 +1009,6 @@ paths:
       tags:
       - Users
       summary: Delete all schedules for a specific user
-      description: Delete all schedules for a specific user
       responses:
         '200':
           description: Ok.
@@ -1133,7 +1127,6 @@ paths:
       tags:
       - Users
       summary: Toggle user login ability
-      description: Toggle user login ability
       responses:
         '200':
           description: Ok.
@@ -1259,7 +1252,6 @@ paths:
       tags:
       - Users
       summary: Add the domain to the user linked with the user_id
-      description: Add the domain to the user linked with the user_id
       requestBody:
         content:
           application/json:
@@ -1382,7 +1374,6 @@ paths:
       tags:
       - Users
       summary: Get the User details
-      description: Get the User details
       responses:
         '200':
           description: Ok.
@@ -1612,7 +1603,6 @@ paths:
       tags:
       - Users
       summary: Create a new User
-      description: Create a new User
       requestBody:
         content:
           application/json:
@@ -1772,7 +1762,6 @@ paths:
       tags:
       - Users
       summary: Get the details of the user linked with the user_id
-      description: Get the details of the user linked with the user_id
       responses:
         '200':
           description: Ok.
@@ -1957,7 +1946,7 @@ paths:
       operationId: deleteUserForAdmin
       tags:
       - Users
-      summary: Delete a user.
+      summary: Delete a user
       description: Delete a user.
       responses:
         '200':
@@ -2070,7 +2059,6 @@ paths:
       tags:
       - Users
       summary: Update the User
-      description: Update the User
       requestBody:
         content:
           application/json:
@@ -2230,7 +2218,6 @@ paths:
       tags:
       - Users
       summary: Reset password for user
-      description: Reset password for user
       requestBody:
         content:
           application/json:
@@ -2364,7 +2351,6 @@ paths:
       tags:
       - Users
       summary: Delete all schedules for a specific user
-      description: Delete all schedules for a specific user
       responses:
         '200':
           description: Ok.
@@ -2483,7 +2469,6 @@ paths:
       tags:
       - Users
       summary: Toggle user login ability
-      description: Toggle user login ability
       responses:
         '200':
           description: Ok.
@@ -2609,7 +2594,6 @@ paths:
       tags:
       - Users
       summary: Add the domain to the user linked with the user_id
-      description: Add the domain to the user linked with the user_id
       requestBody:
         content:
           application/json:

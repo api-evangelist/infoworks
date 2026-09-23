@@ -28,7 +28,6 @@ paths:
       tags:
       - License
       summary: Get Active License Violations
-      description: Get Active License Violations
       responses:
         '200':
           description: ok
@@ -450,7 +449,6 @@ paths:
       tags:
       - License
       summary: Get Active License
-      description: Get Active License
       responses:
         '200':
           description: ok
@@ -1114,7 +1112,6 @@ paths:
       tags:
       - License
       summary: Get All Licenses
-      description: Get All Licenses
       responses:
         '200':
           description: ok

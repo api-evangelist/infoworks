@@ -33,7 +33,6 @@ paths:
       tags:
       - Misc
       summary: Check if schema is unique
-      description: Check if schema is unique
       operationId: checkUniqueSchema
       requestBody:
         description: Source configurations
@@ -171,7 +170,6 @@ paths:
       tags:
       - Misc
       summary: Check if path is unique
-      description: Check if path is unique
       operationId: checkUniquePath
       requestBody:
         description: Source configurations

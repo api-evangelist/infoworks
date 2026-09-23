@@ -45,7 +45,7 @@ paths:
       - BearerAuth: []
       tags:
       - Tables
-      summary: Creates the file mapping (table) of the csv source.
+      summary: Creates the file mapping (table) of the csv source
       description: Creates the previously configured file mapping (table) of the csv source.
       operationId: createFileMappingForTable
       requestBody:
@@ -199,7 +199,7 @@ paths:
       - BearerAuth: []
       tags:
       - Tables
-      summary: Modifies the file mapping (table) of the csv source.
+      summary: Modifies the file mapping (table) of the csv source
       description: Modifies the previously configured file mapping (table) of the csv source.
       operationId: modifyFileMappingForTable
       requestBody:
@@ -351,7 +351,7 @@ paths:
       - BearerAuth: []
       tags:
       - Tables
-      summary: Updates the file mapping (table) of the csv source.
+      summary: Updates the file mapping (table) of the csv source
       description: Updates the previously configured file mapping (table) of the csv source.
       operationId: updateFileMappingForTable
       requestBody:
@@ -524,7 +524,6 @@ paths:
       tags:
       - Tables
       summary: update source metadata
-      description: update source metadata
       requestBody:
         description: Source Metadata
         content:
@@ -667,13 +666,14 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: putSourcesBySourceIdMetadata
+      x-operation-id-source: derived
     get:
       security:
       - BearerAuth: []
       tags:
       - Tables
       summary: get source metadata
-      description: get source metadata
       responses:
         '200':
           description: get source metadata
@@ -796,6 +796,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdMetadata
+      x-operation-id-source: derived
   /sources/{source_id}/edit-staging-fields:
     parameters:
     - name: Content-Type
@@ -816,7 +818,6 @@ paths:
       tags:
       - Tables
       summary: get whether staging fields can be edited
-      description: get whether staging fields can be edited
       responses:
         '200':
           description: get whether staging fields can be edited
@@ -927,6 +928,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdEditStagingFields
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/jobs/{job_id}/reports/sourceFilesPath:
     parameters:
     - name: Content-Type
@@ -959,7 +962,6 @@ paths:
       tags:
       - Tables
       summary: Get the list of Source Files paths of the table
-      description: Get the list of Source Files paths of the table
       responses:
         '200':
           description: OK
@@ -1102,6 +1104,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdJobsByJobIdReportsSourceFilesPath
+      x-operation-id-source: derived
   /sources/{source_id}/meta-crawled-table-count:
     parameters:
     - name: Content-Type
@@ -1130,7 +1134,6 @@ paths:
       tags:
       - Tables
       summary: Get meta crawled table count
-      description: Get meta crawled table count
       responses:
         '200':
           description: OK
@@ -1246,6 +1249,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdMetaCrawledTableCount
+      x-operation-id-source: derived
   /sources/{source_id}/source_tables/excluded-tables:
     parameters:
     - name: Content-Type
@@ -1388,6 +1393,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdSourceTablesExcludedTables
+      x-operation-id-source: derived
   /sources/{source_id}/source_tables/schema-for-source:
     parameters:
     - name: Content-Type
@@ -1527,6 +1534,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdSourceTablesSchemaForSource
+      x-operation-id-source: derived
   /sources/{source_id}/tables:
     parameters:
     - name: Content-Type
@@ -1557,7 +1566,6 @@ paths:
       tags:
       - Tables
       summary: list all the tables in the source
-      description: list all the tables in the source
       operationId: getTablesList
       parameters:
       - name: limit
@@ -1793,7 +1801,6 @@ paths:
       tags:
       - Tables
       summary: Add tables to a File Source
-      description: Add tables to a File Source
       requestBody:
         content:
           multipart/form-data:
@@ -2130,6 +2137,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: postSourcesBySourceIdTables
+      x-operation-id-source: derived
   /sources/{source_id}/fetch-tables:
     parameters:
     - name: Content-Type
@@ -2160,7 +2169,6 @@ paths:
       tags:
       - Tables
       summary: list all the tables in the source
-      description: list all the tables in the source
       operationId: fetchTablesList
       parameters:
       - name: limit
@@ -2416,7 +2424,6 @@ paths:
       tags:
       - Tables
       summary: Get Table Info
-      description: Get Table Info
       responses:
         '200':
           description: ''
@@ -2701,12 +2708,14 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableId
+      x-operation-id-source: derived
     patch:
       security:
       - BearerAuth: []
       tags:
       - Tables
-      summary: 'Update the Table '
+      summary: Update the Table
       description: Update the table Metadata
       requestBody:
         description: Update the table Metadata
@@ -2960,6 +2969,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: patchSourcesBySourceIdTablesByTableId
+      x-operation-id-source: derived
     delete:
       security:
       - BearerAuth: []
@@ -2967,7 +2978,6 @@ paths:
       tags:
       - Tables
       summary: Delete Table for a source
-      description: Delete Table for a source
       responses:
         '200':
           description: Success
@@ -3103,7 +3113,6 @@ paths:
       tags:
       - Tables
       summary: Crawl Table Schema
-      description: Crawl Table Schema
       responses:
         '200':
           description: ''
@@ -3211,6 +3220,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdCrawlSchema
+      x-operation-id-source: derived
   /sources/{source_id}/tables/source_tables:
     parameters:
     - name: Content-Type
@@ -3235,8 +3246,7 @@ paths:
       - BearerAuth: []
       tags:
       - Tables
-      summary: 'add the tables to a source and crawl metadata of those added tables '
-      description: add the tables to a source and crawl metadata of those added tables
+      summary: add the tables to a source and crawl metadata of those added tables
       operationId: getSourceTablesList
       requestBody:
         content:
@@ -4660,13 +4670,14 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: putSourcesBySourceIdTablesByTableIdConfigurationsIngestion
+      x-operation-id-source: derived
     get:
       security:
       - BearerAuth: []
       tags:
       - Tables
       summary: Get ingestion configuration of table
-      description: Get ingestion configuration of table
       responses:
         '200':
           description: get the ingestion configuration of table
@@ -4876,6 +4887,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdConfigurationsIngestion
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/configurations/advance:
     parameters:
     - name: Content-Type
@@ -4902,7 +4915,6 @@ paths:
       tags:
       - Tables
       summary: Get list of Entity advance configuration
-      description: Get list of Entity advance configuration
       responses:
         '200':
           description: Limitby list of all the entity advance configuration sorted on the format user provided
@@ -5070,13 +5082,14 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdConfigurationsAdvance
+      x-operation-id-source: derived
     post:
       security:
       - BearerAuth: []
       tags:
       - Tables
       summary: Add advance configuration for a table
-      description: Add advance configuration for a table
       requestBody:
         content:
           application/json:
@@ -5215,6 +5228,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: postSourcesBySourceIdTablesByTableIdConfigurationsAdvance
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/configurations/advance/{key}:
     parameters:
     - name: Content-Type
@@ -5247,7 +5262,6 @@ paths:
       tags:
       - Tables
       summary: Get table advance configuration
-      description: Get table advance configuration
       responses:
         '200':
           description: Ok
@@ -5379,13 +5393,14 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdConfigurationsAdvanceByKey
+      x-operation-id-source: derived
     put:
       security:
       - BearerAuth: []
       tags:
       - Tables
       summary: update advance configuration for a table
-      description: update advance configuration for a table
       requestBody:
         description: Table ingestion Configuration
         content:
@@ -5531,13 +5546,14 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: putSourcesBySourceIdTablesByTableIdConfigurationsAdvanceByKey
+      x-operation-id-source: derived
     delete:
       security:
       - BearerAuth: []
       tags:
       - Tables
       summary: Delete advance configuration for a table
-      description: Delete advance configuration for a table
       responses:
         '200':
           description: OK
@@ -5648,6 +5664,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: deleteSourcesBySourceIdTablesByTableIdConfigurationsAdvanceByKey
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/configurations/export:
     parameters:
     - name: Content-Type
@@ -5674,7 +5692,6 @@ paths:
       tags:
       - Tables
       summary: update table export configuration
-      description: update table export configuration
       requestBody:
         description: Table export Configuration
         content:
@@ -6297,13 +6314,14 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: putSourcesBySourceIdTablesByTableIdConfigurationsExport
+      x-operation-id-source: derived
     get:
       security:
       - BearerAuth: []
       tags:
       - Tables
       summary: get table export configuration
-      description: get table export configuration
       responses:
         '200':
           description: get table export configuration
@@ -6873,6 +6891,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdConfigurationsExport
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/column-order:
     parameters:
     - name: Content-Type
@@ -6899,7 +6919,6 @@ paths:
       tags:
       - Tables
       summary: update table column order
-      description: update table column order
       requestBody:
         description: Table Column Order
         content:
@@ -7028,6 +7047,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: patchSourcesBySourceIdTablesByTableIdColumnOrder
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/metadata:
     parameters:
     - name: Content-Type
@@ -7054,7 +7075,6 @@ paths:
       tags:
       - Tables
       summary: update table metadata
-      description: update table metadata
       requestBody:
         description: Table Metadata
         content:
@@ -7197,13 +7217,14 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: putSourcesBySourceIdTablesByTableIdMetadata
+      x-operation-id-source: derived
     get:
       security:
       - BearerAuth: []
       tags:
       - Tables
       summary: get table metadata
-      description: get table metadata
       responses:
         '200':
           description: get table metadata
@@ -7326,6 +7347,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdMetadata
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/configurations/export/connection:
     parameters:
     - name: Content-Type
@@ -7352,7 +7375,6 @@ paths:
       tags:
       - Tables
       summary: Get table export configuration connection properties
-      description: Get table export configuration connection properties
       responses:
         '200':
           description: OK
@@ -7611,13 +7633,14 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdConfigurationsExportConnection
+      x-operation-id-source: derived
     put:
       security:
       - BearerAuth: []
       tags:
       - Tables
       summary: update table export configuration Connection properties
-      description: update table export configuration Connection properties
       requestBody:
         description: Table export Configuration connection properties
         content:
@@ -7883,6 +7906,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: putSourcesBySourceIdTablesByTableIdConfigurationsExportConnection
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/segmentation/start:
     post:
       security:
@@ -7904,7 +7929,6 @@ paths:
       tags:
       - Tables
       summary: Start Segmentation on a Table
-      description: Start Segmentation on a Table
       requestBody:
         content:
           application/json:
@@ -8080,7 +8104,6 @@ paths:
       tags:
       - Tables
       summary: Crawl Segments Metadata on a Table
-      description: Crawl Segments Metadata on a Table
       responses:
         '200':
           description: Success
@@ -8216,7 +8239,6 @@ paths:
       tags:
       - Tables
       summary: Get Table Segments of a Table
-      description: Get Table Segments of a Table
       responses:
         '200':
           description: Success
@@ -8411,7 +8433,6 @@ paths:
       tags:
       - Tables
       summary: End Segmentation on a Table
-      description: End Segmentation on a Table
       responses:
         '200':
           description: Success
@@ -8541,7 +8562,6 @@ paths:
       tags:
       - Tables
       summary: Cancel Segmentation on a Table
-      description: Cancel Segmentation on a Table
       responses:
         '200':
           description: Success
@@ -8676,7 +8696,6 @@ paths:
       tags:
       - Tables
       summary: Get the schema of the table
-      description: Get the schema of the table
       responses:
         '200':
           description: OK
@@ -8796,13 +8815,14 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdConfigurationsSchema
+      x-operation-id-source: derived
     put:
       security:
       - BearerAuth: []
       tags:
       - Tables
       summary: Update the schema of the table
-      description: Update the schema of the table
       requestBody:
         content:
           application/json:
@@ -8974,6 +8994,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: putSourcesBySourceIdTablesByTableIdConfigurationsSchema
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/configurations:
     parameters:
     - name: Content-Type
@@ -9238,6 +9260,10 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      summary: Get sources by source id tables by table id configurations
+      x-summary-source: derived
+      operationId: getSourcesBySourceIdTablesByTableIdConfigurations
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/segments:
     parameters:
     - name: Content-Type
@@ -9263,7 +9289,7 @@ paths:
       - BearerAuth: []
       tags:
       - Tables
-      summary: Get a list of all table segments.
+      summary: Get a list of all table segments
       description: Get a list of all table segments.
       responses:
         '200':
@@ -9407,6 +9433,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdSegments
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/validation-specs:
     parameters:
     - name: source_id
@@ -9426,7 +9454,7 @@ paths:
       - BearerAuth: []
       tags:
       - Tables
-      summary: Gets Validation Specs for a Table.
+      summary: Gets Validation Specs for a Table
       description: Gets Validation Specs for a given TableId.
       parameters:
       - name: offset
@@ -9619,12 +9647,14 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdValidationSpecs
+      x-operation-id-source: derived
     post:
       security:
       - BearerAuth: []
       tags:
       - Tables
-      summary: Add Validation Specs to a Table.
+      summary: Add Validation Specs to a Table
       description: Add Validation Specs to a Table.
       requestBody:
         content:
@@ -9760,6 +9790,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: postSourcesBySourceIdTablesByTableIdValidationSpecs
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/validation-specs/{validation_spec_id}:
     parameters:
     - name: source_id
@@ -9785,7 +9817,7 @@ paths:
       - BearerAuth: []
       tags:
       - Tables
-      summary: Updates the Validation Specs for a table.
+      summary: Updates the Validation Specs for a table
       description: Updates the Validation Specs for a table.
       operationId: updateValidationSpecs
       requestBody:
@@ -10058,7 +10090,7 @@ paths:
       - BearerAuth: []
       tags:
       - Tables
-      summary: Get table preview.
+      summary: Get table preview
       description: Get table preview.
       responses:
         '200':
@@ -10343,6 +10375,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTableBySourceTableIdGetPreview
+      x-operation-id-source: derived
   /sources/{source_id}/table/{source_table_id}/generate-preview:
     parameters:
     - name: source_table_id
@@ -10362,7 +10396,7 @@ paths:
       - BearerAuth: []
       tags:
       - Tables
-      summary: Generate table preview.
+      summary: Generate table preview
       description: Generate table preview.
       responses:
         '200':
@@ -10482,6 +10516,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTableBySourceTableIdGeneratePreview
+      x-operation-id-source: derived
   /sources/{source_id}/query_table/generate-preview:
     parameters:
     - name: source_id
@@ -10506,7 +10542,7 @@ paths:
       - BearerAuth: []
       tags:
       - Tables
-      summary: Generate query table preview.
+      summary: Generate query table preview
       description: Generate query table preview.
       responses:
         '200':
@@ -10626,6 +10662,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdQueryTableGeneratePreview
+      x-operation-id-source: derived
   /sources/{source_id}/query_table/get-preview:
     parameters:
     - name: source_id
@@ -10645,7 +10683,7 @@ paths:
       - BearerAuth: []
       tags:
       - Tables
-      summary: Get query table preview.
+      summary: Get query table preview
       description: Get query table preview.
       responses:
         '200':
@@ -10930,6 +10968,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdQueryTableGetPreview
+      x-operation-id-source: derived
   /sources/{source_id}/tables/{table_id}/generateQueries:
     parameters:
     - name: source_id
@@ -10949,7 +10989,7 @@ paths:
       - BearerAuth: []
       tags:
       - Tables
-      summary: Get Preview Queries.
+      summary: Get Preview Queries
       description: Gets Preview Queries.
       responses:
         '200':
@@ -11087,6 +11127,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdTablesByTableIdGenerateQueries
+      x-operation-id-source: derived
   /tables/:
     get:
       security:
@@ -11094,7 +11136,6 @@ paths:
       tags:
       - Tables
       summary: Get multiple table Ids
-      description: Get multiple table Ids
       responses:
         '200':
           description: OK
@@ -11300,6 +11341,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getTables
+      x-operation-id-source: derived
   /tables/{table_id}/metadata:
     parameters:
     - name: table_id
@@ -11314,7 +11357,6 @@ paths:
       tags:
       - Tables
       summary: update table metadata
-      description: update table metadata
       requestBody:
         description: Table Metadata
         content:
@@ -11471,13 +11513,14 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: patchTablesByTableIdMetadata
+      x-operation-id-source: derived
     get:
       security:
       - BearerAuth: []
       tags:
       - Tables
       summary: get table metadata
-      description: get table metadata
       responses:
         '200':
           description: get table metadata
@@ -11600,6 +11643,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getTablesByTableIdMetadata
+      x-operation-id-source: derived
   /tables/{table_id}/lineage:
     parameters:
     - name: table_id
@@ -11614,7 +11659,6 @@ paths:
       tags:
       - Tables
       summary: get table lineage
-      description: get table lineage
       responses:
         '200':
           description: get table lineage
@@ -11760,6 +11804,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getTablesByTableIdLineage
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

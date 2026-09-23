@@ -163,7 +163,6 @@ paths:
       tags:
       - Custom Tags
       summary: Get List of Custom Tags
-      description: Get List of Custom Tags
       parameters:
       - name: filter
         in: query
@@ -376,7 +375,6 @@ paths:
       tags:
       - Custom Tags
       summary: Get custom tags
-      description: Get custom tags
       responses:
         '200':
           description: Ok.

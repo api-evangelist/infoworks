@@ -24,7 +24,7 @@ paths:
     get:
       tags:
       - Security
-      summary: Get `authentication_token` with `username` and `password`.
+      summary: Get `authentication_token` with `username` and `password`
       description: Get `authentication_token` with `username` and `password`.
       parameters:
       - name: service_id
@@ -146,11 +146,13 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getSecurityAuthenticate
+      x-operation-id-source: derived
   /security/token/access:
     get:
       tags:
       - Security
-      summary: Get `authentication_token` with `refresh_token`.
+      summary: Get `authentication_token` with `refresh_token`
       description: Get `authentication_token` with `refresh_token`.
       parameters:
       - name: Authorization
@@ -265,6 +267,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getSecurityTokenAccess
+      x-operation-id-source: derived
     delete:
       operationId: deleteAuthToken
       tags:
@@ -363,7 +367,7 @@ paths:
     get:
       tags:
       - Security
-      summary: Validate `authentication_token` if its active or not.
+      summary: Validate `authentication_token` if its active or not
       description: Validate `authentication_token` if its active or not.
       security:
       - BearerAuth: []
@@ -453,11 +457,13 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getSecurityTokenValidate
+      x-operation-id-source: derived
   /security/token/refresh:
     delete:
       tags:
       - Security
-      summary: Regenerate Refresh Token and blacklist old token.
+      summary: Regenerate Refresh Token and blacklist old token
       description: Regenerate Refresh Token and blacklist old token.
       security:
       - BasicAuth: []
@@ -544,11 +550,13 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: deleteSecurityTokenRefresh
+      x-operation-id-source: derived
   /security/authorise/user:
     post:
       tags:
       - Security
-      summary: Authorise User.
+      summary: Authorise User
       description: Authorise User.
       security:
       - BearerAuth: []
@@ -650,11 +658,13 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: postSecurityAuthoriseUser
+      x-operation-id-source: derived
   /security/sso/initialise:
     get:
       tags:
       - Security
-      summary: Get SAML Redirect URL.
+      summary: Get SAML Redirect URL
       description: Get SAML Redirect URL.
       security:
       - BearerAuth: []
@@ -737,11 +747,13 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getSecuritySsoInitialise
+      x-operation-id-source: derived
   /security/get/user/data:
     post:
       tags:
       - Security
-      summary: LDAP Authorise User.
+      summary: LDAP Authorise User
       description: LDAP Authorise User.
       security:
       - BearerAuth: []
@@ -838,12 +850,13 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: postSecurityGetUserData
+      x-operation-id-source: derived
   /security/bulk-ldap-sync:
     post:
       tags:
       - Security
       summary: bulk sync (add/update) ldap user by providing login attribute
-      description: bulk sync (add/update) ldap user by providing login attribute
       security:
       - BasicAuth: []
       requestBody:
@@ -1012,6 +1025,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: postSecurityBulkLdapSync
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

@@ -40,7 +40,6 @@ paths:
       tags:
       - Connections
       summary: Get source connection details
-      description: Get source connection details
       responses:
         '200':
           description: OK
@@ -198,13 +197,14 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesBySourceIdConfigurationsConnection
+      x-operation-id-source: derived
     put:
       security:
       - BearerAuth: []
       tags:
       - Connections
       summary: Update an existing source connection
-      description: Update an existing source connection
       requestBody:
         content:
           application/json:
@@ -2162,6 +2162,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: putSourcesBySourceIdConfigurationsConnection
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

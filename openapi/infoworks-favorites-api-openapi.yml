@@ -26,7 +26,6 @@ paths:
       tags:
       - Favorites
       summary: Check entity favorite tag
-      description: Check entity favorite tag
       parameters:
       - name: entity_id
         in: query
@@ -153,6 +152,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: getSourcesFavoritesCheckFavorite
+      x-operation-id-source: derived
   /sources/favorites/toggle-favorite:
     patch:
       security:
@@ -160,7 +161,6 @@ paths:
       tags:
       - Favorites
       summary: Toggle entity favorite tag
-      description: Toggle entity favorite tag
       parameters:
       - name: entity_id
         in: query
@@ -282,6 +282,8 @@ paths:
                         code:
                           type: string
                           example: IW1004
+      operationId: patchSourcesFavoritesToggleFavorite
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

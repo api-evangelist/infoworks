@@ -27,7 +27,7 @@ paths:
       operationId: getDomainSchedules
       tags:
       - Workflows Schedules
-      summary: Schedules of Workflows belonging to this Domain.
+      summary: Schedules of Workflows belonging to this Domain
       description: Schedules of Workflows belonging to this Domain.
       parameters:
       - name: domain_id
@@ -721,7 +721,7 @@ paths:
       operationId: getWorkflowSchedule
       tags:
       - Workflows Schedules
-      summary: Schedules of particular Workflow belonging to this Domain.
+      summary: Schedules of particular Workflow belonging to this Domain
       description: Schedules of particular Workflow belonging to this Domain.
       parameters:
       - name: domain_id
@@ -1415,7 +1415,6 @@ paths:
       - BearerAuth: []
       operationId: setWorkflowSchedule
       summary: Enable Workflow Schedule
-      description: Enable Workflow Schedule
       tags:
       - Workflows Schedules
       parameters:
@@ -2102,7 +2101,6 @@ paths:
       - BearerAuth: []
       operationId: disableWorkflowSchedule
       summary: Disable Workflow Schedule
-      description: Disable Workflow Schedule
       tags:
       - Workflows Schedules
       parameters:
@@ -2232,7 +2230,6 @@ paths:
       - BearerAuth: []
       operationId: changeWorkflowScheduleUser
       summary: Change Workflow Schedule User
-      description: Change Workflow Schedule User
       tags:
       - Workflows Schedules
       parameters:

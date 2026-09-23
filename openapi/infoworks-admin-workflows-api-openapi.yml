@@ -27,7 +27,6 @@ paths:
       tags:
       - Admin Workflows
       summary: Pause Multiple Workflows
-      description: Pause Multiple Workflows
       requestBody:
         content:
           application/json:
@@ -186,7 +185,6 @@ paths:
       tags:
       - Admin Workflows
       summary: Resume Multiple Workflows
-      description: Resume Multiple Workflows
       requestBody:
         content:
           application/json:
@@ -345,7 +343,6 @@ paths:
       tags:
       - Admin Workflows
       summary: Restart Multiple Workflows
-      description: Restart Multiple Workflows
       requestBody:
         content:
           application/json:
@@ -500,7 +497,6 @@ paths:
       tags:
       - Admin Workflows
       summary: Cancel Multiple Workflows
-      description: Cancel Multiple Workflows
       requestBody:
         content:
           application/json:
@@ -1212,12 +1208,13 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminWorkflowsRuns
+      x-operation-id-source: derived
   /admin/workflows/tasks:
     get:
       security:
       - BearerAuth: []
       summary: Get Workflows tasks
-      description: Get Workflows tasks
       tags:
       - Admin Workflows
       responses:
@@ -1400,6 +1397,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminWorkflowsTasks
+      x-operation-id-source: derived
   /admin/workflows/{workflow_id}/runs/{run_id}:
     parameters:
     - name: run_id
@@ -1416,7 +1415,6 @@ paths:
       security:
       - BearerAuth: []
       summary: Get Workflow run Id details
-      description: Get Workflow run Id details
       tags:
       - Admin Workflows
       responses:
@@ -1592,6 +1590,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminWorkflowsByWorkflowIdRunsByRunId
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

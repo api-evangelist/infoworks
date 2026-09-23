@@ -71,7 +71,6 @@ paths:
         schema:
           type: string
       summary: Get Pipeline Extensions List
-      description: Get Pipeline Extensions List
       responses:
         '200':
           description: Ok.
@@ -300,6 +299,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminPipelineExtensions
+      x-operation-id-source: derived
     post:
       security:
       - BearerAuth: []
@@ -318,7 +319,6 @@ paths:
           - text/plain
           default: application/json
       summary: Get Pipeline Extensions List
-      description: Get Pipeline Extensions List
       requestBody:
         content:
           multipart/form-data:
@@ -508,6 +508,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: postAdminPipelineExtensions
+      x-operation-id-source: derived
   /admin/pipeline-extensions/{pipeline_extension_id}:
     parameters:
     - name: Content-Type
@@ -732,6 +734,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminPipelineExtensionsByPipelineExtensionId
+      x-operation-id-source: derived
     put:
       security:
       - BearerAuth: []
@@ -915,6 +919,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: putAdminPipelineExtensionsByPipelineExtensionId
+      x-operation-id-source: derived
     delete:
       security:
       - BearerAuth: []
@@ -1026,6 +1032,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: deleteAdminPipelineExtensionsByPipelineExtensionId
+      x-operation-id-source: derived
   /admin/pipeline-extensions/{pipeline_extension_id}/files:
     parameters:
     - name: Content-Type
@@ -1178,6 +1186,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: getAdminPipelineExtensionsByPipelineExtensionIdFiles
+      x-operation-id-source: derived
     post:
       security:
       - BearerAuth: []
@@ -1296,6 +1306,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: postAdminPipelineExtensionsByPipelineExtensionIdFiles
+      x-operation-id-source: derived
   /admin/source-extensions:
     parameters:
     - name: Content-Type
@@ -1327,7 +1339,6 @@ paths:
           - text/plain
           default: application/json
       summary: Get Pipeline Extensions List
-      description: Get Pipeline Extensions List
       requestBody:
         content:
           multipart/form-data:
@@ -1501,6 +1512,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      operationId: postAdminSourceExtensions
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

@@ -288,7 +288,6 @@ paths:
       security:
       - BearerAuth: []
       summary: Create a service authentication mechanism
-      description: Create a service authentication mechanism
       operationId: createServiceAuth
       tags:
       - Service Authentication
@@ -526,7 +525,6 @@ paths:
       security:
       - BearerAuth: []
       summary: Get service authentication mechanism
-      description: Get service authentication mechanism
       operationId: getServiceAuth
       tags:
       - Service Authentication
@@ -728,7 +726,6 @@ paths:
       security:
       - BearerAuth: []
       summary: Update service authentication mechanism
-      description: Update service authentication mechanism
       operationId: updateServiceAuth
       tags:
       - Service Authentication
@@ -894,7 +891,6 @@ paths:
       security:
       - BearerAuth: []
       summary: Delete service authentication mechanism
-      description: Delete service authentication mechanism
       operationId: deleteServiceAuth
       tags:
       - Service Authentication
