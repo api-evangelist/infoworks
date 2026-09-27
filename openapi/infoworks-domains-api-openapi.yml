@@ -929,7 +929,7 @@ paths:
     get:
       security:
       - BearerAuth: []
-      operationId: Domain Accessible Sources
+      operationId: DomainAccessibleSources
       tags:
       - Domains
       summary: Get List of Domains
@@ -1158,6 +1158,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: Domain Accessible Sources
   /admin/domains/{domain_id}/domain-users:
     parameters:
     - name: domain_id
@@ -1168,7 +1170,7 @@ paths:
     get:
       security:
       - BearerAuth: []
-      operationId: Domain Users
+      operationId: DomainUsers
       tags:
       - Domains
       summary: Get List of Domains Users
@@ -1346,6 +1348,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: Domain Users
   /admin/domains/{domain_id}/accessible-domains-to-add:
     parameters:
     - name: domain_id
@@ -1356,7 +1360,7 @@ paths:
     get:
       security:
       - BearerAuth: []
-      operationId: Domain Accessible
+      operationId: DomainAccessible
       tags:
       - Domains
       summary: Get List of Accessible Domains
@@ -1540,6 +1544,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: Domain Accessible
   /admin/domains/{domain_id}/accessible-pipeline-extensions-to-add:
     parameters:
     - name: domain_id
@@ -1550,7 +1556,7 @@ paths:
     get:
       security:
       - BearerAuth: []
-      operationId: Domain Pipeline Extensions
+      operationId: DomainPipelineExtensions
       tags:
       - Domains
       summary: Get List of Domains Pipeline Extensions
@@ -1728,6 +1734,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: Domain Pipeline Extensions
   /domains:
     get:
       security:
@@ -6319,7 +6327,7 @@ paths:
     get:
       security:
       - BearerAuth: []
-      operationId: Get Table Orders With Hierachy
+      operationId: GetTableOrdersWithHierachy
       tags:
       - Domains
       summary: Get Table Orders With Hierachy
@@ -6603,6 +6611,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: Get Table Orders With Hierachy
   /domains/{domain_id}/environment_details_pipelines_accessible_sources:
     parameters:
     - name: domain_id
@@ -6613,7 +6623,7 @@ paths:
     get:
       security:
       - BearerAuth: []
-      operationId: Get Domains Pipeline and Accessibele Sources
+      operationId: GetDomainsPipelineAndAccessibeleSources
       tags:
       - Domains
       summary: Get Domains Pipeline and Accessibele Sources
@@ -6743,6 +6753,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: Get Domains Pipeline and Accessibele Sources
 components:
   securitySchemes:
     BearerAuth:

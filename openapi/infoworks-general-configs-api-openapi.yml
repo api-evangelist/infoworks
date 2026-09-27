@@ -30,7 +30,7 @@ paths:
     post:
       security:
       - BearerAuth: []
-      operationId: Get general configuration with key
+      operationId: GetGeneralConfigurationWithKey
       tags:
       - General Configs
       summary: Get general configuration with key
@@ -164,6 +164,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: Get general configuration with key
   /general-configs:
     get:
       security:

@@ -383,7 +383,7 @@ paths:
       - BearerAuth: []
       summary: List Job status
       description: Get Job status
-      operationId: list job-status
+      operationId: listJob-status
       tags:
       - Engagement Metrics
       parameters:
@@ -575,6 +575,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: list job-status
 components:
   securitySchemes:
     BearerAuth:

@@ -334,7 +334,7 @@ paths:
     post:
       security:
       - BearerAuth: []
-      operationId: persistent cluster stop
+      operationId: persistentClusterStop
       tags:
       - Environment Cluster
       summary: Stop the persistent cluster
@@ -455,11 +455,13 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: persistent cluster stop
   /admin/environment/cluster/terminate-async:
     put:
       security:
       - BearerAuth: []
-      operationId: terminate stop
+      operationId: terminateStop
       tags:
       - Environment Cluster
       summary: Terminate the persistent cluster
@@ -580,11 +582,13 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: terminate stop
   /admin/environment/cluster/restart:
     put:
       security:
       - BearerAuth: []
-      operationId: cluster restart
+      operationId: clusterRestart
       tags:
       - Environment Cluster
       summary: Restart the cluster
@@ -707,11 +711,13 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: cluster restart
   /admin/environment/cluster/stop:
     put:
       security:
       - BearerAuth: []
-      operationId: cluster stop
+      operationId: clusterStop
       tags:
       - Environment Cluster
       summary: Stop the cluster
@@ -834,11 +840,13 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: cluster stop
   /admin/environment/cluster/:
     post:
       security:
       - BearerAuth: []
-      operationId: cluster create
+      operationId: clusterCreate
       tags:
       - Environment Cluster
       summary: Create the cluster
@@ -961,6 +969,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: cluster create
 components:
   securitySchemes:
     BearerAuth:

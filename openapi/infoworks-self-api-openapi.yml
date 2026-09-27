@@ -216,7 +216,7 @@ paths:
                       example: http://api.infoworks.io/help/IW10002
   /users/self:
     get:
-      operationId: GetSelf
+      operationId: getUsersSelf
       tags:
       - Self
       summary: Get the self details
@@ -408,6 +408,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: GetSelf
 components:
   securitySchemes:
     BearerAuth:

@@ -1370,7 +1370,7 @@ paths:
     get:
       security:
       - BearerAuth: []
-      operationId: GetUsers
+      operationId: getUsers
       tags:
       - Users
       summary: Get the User details
@@ -1596,10 +1596,12 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: GetUsers
     post:
       security:
       - BearerAuth: []
-      operationId: createUser
+      operationId: postUsers
       tags:
       - Users
       summary: Create a new User
@@ -1748,6 +1750,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: createUser
   /users/{user_id}:
     parameters:
     - name: user_id
@@ -1758,7 +1762,7 @@ paths:
     get:
       security:
       - BearerAuth: []
-      operationId: GetUserIdForAdmin
+      operationId: getUsersByUserId
       tags:
       - Users
       summary: Get the details of the user linked with the user_id
@@ -1940,10 +1944,12 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: GetUserIdForAdmin
     delete:
       security:
       - BearerAuth: []
-      operationId: deleteUserForAdmin
+      operationId: deleteUsersByUserId
       tags:
       - Users
       summary: Delete a user
@@ -2052,10 +2058,12 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: deleteUserForAdmin
     patch:
       security:
       - BearerAuth: []
-      operationId: updateUserForAdmin
+      operationId: patchUsersByUserId
       tags:
       - Users
       summary: Update the User
@@ -2204,6 +2212,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: updateUserForAdmin
   /users/{user_id}/reset-password:
     parameters:
     - name: user_id
@@ -2214,7 +2224,7 @@ paths:
     patch:
       security:
       - BearerAuth: []
-      operationId: resetUserPassword
+      operationId: patchUsersByUserIdResetPassword
       tags:
       - Users
       summary: Reset password for user
@@ -2337,6 +2347,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: resetUserPassword
   /users/{user_id}/delete-schedules:
     parameters:
     - name: user_id
@@ -2347,7 +2359,7 @@ paths:
     delete:
       security:
       - BearerAuth: []
-      operationId: deleteSchedulesForUser
+      operationId: deleteUsersByUserIdDeleteSchedules
       tags:
       - Users
       summary: Delete all schedules for a specific user
@@ -2455,6 +2467,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: deleteSchedulesForUser
   /users/{user_id}/toggle-user-login:
     parameters:
     - name: user_id
@@ -2465,7 +2479,7 @@ paths:
     patch:
       security:
       - BearerAuth: []
-      operationId: toggleUserLoginAbility
+      operationId: patchUsersByUserIdToggleUserLogin
       tags:
       - Users
       summary: Toggle user login ability
@@ -2580,6 +2594,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: toggleUserLoginAbility
   /users/{user_id}/accessible-domains:
     parameters:
     - name: user_id
@@ -2590,7 +2606,7 @@ paths:
     post:
       security:
       - BearerAuth: []
-      operationId: AddDomainsToUser
+      operationId: postUsersByUserIdAccessibleDomains
       tags:
       - Users
       summary: Add the domain to the user linked with the user_id
@@ -2708,11 +2724,13 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: AddDomainsToUser
   /users/unlock:
     post:
       security:
       - BearerAuth: []
-      operationId: unlock user
+      operationId: unlockUser
       tags:
       - Users
       parameters:
@@ -2828,6 +2846,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: unlock user
 components:
   securitySchemes:
     BearerAuth:

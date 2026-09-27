@@ -4321,7 +4321,7 @@ paths:
     patch:
       security:
       - BearerAuth: []
-      operationId: Update Pipeline Version Audit Logs
+      operationId: UpdatePipelineVersionAuditLogs
       tags:
       - Pipelines
       summary: Update Pipeline Version Audit Logs
@@ -4465,6 +4465,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: Update Pipeline Version Audit Logs
   /domains/{domain_id}/pipelines/{pipeline_id}/pipeline-audits:
     parameters:
     - name: domain_id
@@ -4838,7 +4840,7 @@ paths:
     put:
       security:
       - BearerAuth: []
-      operationId: file upload sql pipeline migration
+      operationId: fileUploadSqlPipelineMigration
       summary: File upload sql pipeline migration
       tags:
       - Pipelines
@@ -4956,6 +4958,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: file upload sql pipeline migration
   /domains/{domain_id}/pipelines/{pipeline_id}/import-sql-mappings:
     parameters:
     - name: domain_id
@@ -4977,7 +4981,7 @@ paths:
     put:
       security:
       - BearerAuth: []
-      operationId: Import sql pipeline migration
+      operationId: ImportSqlPipelineMigration
       summary: Import sql pipeline migration
       tags:
       - Pipelines
@@ -5166,6 +5170,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: Import sql pipeline migration
 components:
   securitySchemes:
     BearerAuth:

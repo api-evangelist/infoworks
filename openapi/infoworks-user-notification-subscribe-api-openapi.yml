@@ -37,7 +37,7 @@ paths:
       security:
       - BearerAuth: []
       summary: Get Entity Subscriber
-      operationId: list Entity Subscriber
+      operationId: listEntitySubscriber
       tags:
       - User Notification Subscribe
       parameters:
@@ -223,11 +223,13 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: list Entity Subscriber
     post:
       security:
       - BearerAuth: []
       summary: Update Entity Subscriber
-      operationId: Update Entity Subscriber
+      operationId: UpdateEntitySubscriber
       tags:
       - User Notification Subscribe
       requestBody:
@@ -423,12 +425,14 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: Update Entity Subscriber
   /notification/subscribe:
     post:
       security:
       - BearerAuth: []
       summary: Subscribe Notification
-      operationId: Subscribe Notification
+      operationId: SubscribeNotification
       tags:
       - User Notification Subscribe
       parameters:
@@ -615,12 +619,14 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: Subscribe Notification
   /notification/unsubscribe:
     put:
       security:
       - BearerAuth: []
       summary: Unsubscribe Notification
-      operationId: Unsubscribe Notification
+      operationId: UnsubscribeNotification
       tags:
       - User Notification Subscribe
       parameters:
@@ -783,6 +789,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: Unsubscribe Notification
 components:
   securitySchemes:
     BearerAuth:

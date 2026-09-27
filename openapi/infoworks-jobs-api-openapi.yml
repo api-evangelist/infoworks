@@ -290,7 +290,7 @@ paths:
     get:
       security:
       - BearerAuth: []
-      operationId: getjobs id details
+      operationId: getjobsIdDetails
       tags:
       - Jobs
       summary: Get the job details with `job_id`
@@ -498,6 +498,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: getjobs id details
   /admin/jobs/{job_id}/resubmit:
     parameters:
     - name: Content-Type
@@ -5063,7 +5065,7 @@ paths:
     get:
       security:
       - BearerAuth: []
-      operationId: getJobs
+      operationId: getDomainsByDomainIdPipelinesByPipelineIdJobsByJobId
       tags:
       - Jobs
       summary: Gets Pipeline Job
@@ -5263,6 +5265,8 @@ paths:
                     help:
                       type: string
                       example: http://api.infoworks.io/help/IW10002
+      x-operation-id-source: normalized
+      x-operation-id-original: getJobs
   /domains/{domain_id}/pipelines/{pipeline_id}/version/{pipeline_version_id}/jobs:
     parameters:
     - name: pipeline_version_id
